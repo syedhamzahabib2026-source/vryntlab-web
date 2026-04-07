@@ -2,7 +2,20 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 5.5rem;
+  /* Header + breathing room — tighter on phones so anchors land correctly */
+  scroll-padding-top: 4.5rem;
+}
+
+@media (min-width: 640px) {
+  html {
+    scroll-padding-top: 5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  html {
+    scroll-padding-top: 5.5rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -11,9 +24,44 @@ html {
   }
 }
 
+/* Warm paper + restrained accent — premium agency baseline */
 :root {
-  --background: #fafafa;
+  color-scheme: light;
+  --background: #f5f4f0;
   --foreground: #0a0a0a;
+  --surface: #ffffff;
+  --surface-soft: #eeede8;
+  --border: rgba(10, 10, 10, 0.09);
+  --accent: #2a3d31;
+  --accent-muted: rgba(42, 61, 49, 0.12);
+  --ring-focus: rgba(42, 61, 49, 0.35);
+  /* Aligns with motion `motionEase` — use for CSS-only transitions */
+  --ease-out-premium: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Layered shadows — depth without glass or neon */
+  --shadow-xs: 0 1px 0 rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 2px 8px -2px rgba(0, 0, 0, 0.06),
+    0 8px 28px -12px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 16px -4px rgba(0, 0, 0, 0.08),
+    0 20px 48px -24px rgba(0, 0, 0, 0.12);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --background: #0b0b0b;
+    --foreground: #f2f1ec;
+    --surface: #131312;
+    --surface-soft: #1a1a18;
+    --border: rgba(255, 255, 255, 0.1);
+    --accent: #9cb0a2;
+    --accent-muted: rgba(156, 176, 162, 0.15);
+    --ring-focus: rgba(156, 176, 162, 0.45);
+    --shadow-xs: 0 1px 0 rgba(255, 255, 255, 0.04);
+    --shadow-sm: 0 2px 12px -2px rgba(0, 0, 0, 0.4),
+      0 12px 40px -16px rgba(0, 0, 0, 0.55);
+    --shadow-md: 0 4px 20px -4px rgba(0, 0, 0, 0.45),
+      0 24px 56px -24px rgba(0, 0, 0, 0.65);
+  }
 }
 
 @theme inline {
@@ -22,15 +70,12 @@ html {
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #fafafa;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
   text-rendering: geometricPrecision;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--accent) 22%, transparent);
 }

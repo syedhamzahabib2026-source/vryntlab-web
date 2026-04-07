@@ -1,5 +1,8 @@
-import { HoverLift, Reveal } from "@/components/motion/Reveal";
+import { Reveal } from "@/components/motion/Reveal";
 import { StaggerGroup, StaggerItem } from "@/components/motion/StaggerGroup";
+import { narrowMeasure } from "@/components/layout/layoutTokens";
+import { SectionIntro } from "@/components/layout/SectionIntro";
+import { SectionShell } from "@/components/layout/SectionShell";
 
 const services = [
   {
@@ -26,52 +29,63 @@ const services = [
 ] as const;
 
 const cardClassName =
-  "group flex h-full flex-col rounded-2xl border border-zinc-200/90 bg-white p-8 shadow-[0_1px_0_0_rgba(0,0,0,0.04)] transition-shadow duration-300 hover:shadow-[0_20px_50px_-24px_rgba(0,0,0,0.1)] sm:p-9 dark:border-zinc-800 dark:bg-zinc-950/60 dark:shadow-none dark:hover:shadow-[0_24px_55px_-20px_rgba(0,0,0,0.55)]";
+  "group/card flex h-full flex-col rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[var(--shadow-sm)] ring-1 ring-black/[0.02] transition-[box-shadow,border-color,transform] duration-300 ease-[var(--ease-out-premium)] motion-reduce:transform-none motion-reduce:duration-150 active:scale-[0.995] sm:p-7 md:p-8 lg:p-9 dark:ring-white/[0.04] [@media(hover:hover)]:hover:-translate-y-0.5 [@media(hover:hover)]:hover:border-zinc-300/80 [@media(hover:hover)]:hover:shadow-[var(--shadow-md)] dark:[@media(hover:hover)]:hover:border-zinc-600/45";
 
 export function Services() {
   return (
-    <section id="services" className="scroll-mt-28" aria-labelledby="services-heading">
-      <Reveal>
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-zinc-500">
-            Services
-          </p>
-          <h2
-            id="services-heading"
-            className="mt-5 text-4xl font-semibold tracking-[-0.03em] text-zinc-950 md:text-5xl dark:text-zinc-50"
+    <SectionShell id="services" labelledBy="services-heading">
+      <div className="flex flex-col gap-9 sm:gap-10 md:gap-12 lg:gap-14 xl:gap-16">
+        <Reveal>
+          <SectionIntro
+            eyebrow="Services"
+            titleId="services-heading"
+            title="What we actually do"
+            description={
+              <>
+                Three buckets—most client work fits one or two. We&apos;ll tell
+                you straight if something needs a different specialist.
+              </>
+            }
+            align="start"
+          />
+        </Reveal>
+
+        <StaggerGroup className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-3 md:gap-5 lg:gap-8 xl:gap-10">
+          {services.map((item) => (
+            <StaggerItem key={item.title}>
+              <article className={cardClassName}>
+                <div
+                  className="h-0.5 w-11 bg-[var(--accent)] opacity-85 transition-opacity [@media(hover:hover)]:group-hover/card:opacity-100 dark:opacity-75"
+                  aria-hidden
+                />
+                <h3 className="mt-5 text-[1.0625rem] font-semibold tracking-[-0.02em] text-zinc-950 sm:text-lg md:mt-6 md:text-xl dark:text-zinc-50">
+                  {item.title}
+                </h3>
+                <p className="mt-2.5 flex-1 text-[14px] leading-[1.62] text-zinc-600 sm:mt-3 sm:text-[15px] sm:leading-[1.65] dark:text-zinc-400">
+                  {item.description}
+                </p>
+                <div className="mt-6 rounded-xl border border-[var(--border)] bg-[color-mix(in_oklab,var(--surface-soft)_70%,var(--surface))] px-3.5 py-3 sm:mt-7 sm:px-4 sm:py-3.5 dark:border-zinc-800/90">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-zinc-500 sm:text-[12px] sm:tracking-[0.12em] dark:text-zinc-500">
+                    Typical scope
+                  </p>
+                  <p className="mt-1.5 text-[13px] leading-relaxed text-zinc-600 sm:mt-2 dark:text-zinc-400">
+                    {item.scope}
+                  </p>
+                </div>
+              </article>
+            </StaggerItem>
+          ))}
+        </StaggerGroup>
+
+        <Reveal>
+          <p
+            className={`${narrowMeasure} border-l-2 border-[var(--accent)]/30 py-0.5 pl-3.5 text-[13px] leading-relaxed text-zinc-600 sm:pl-4 sm:text-[14px] dark:border-[var(--accent)]/35 dark:text-zinc-500`}
           >
-            What we actually do
-          </h2>
-          <p className="mt-6 text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">
-            Three buckets—most client work fits one or two. We&apos;ll tell you
-            straight if something needs a different specialist.
+            We turn down work when we&apos;re not the right fit—better than
+            overpromising and under-delivering.
           </p>
-        </div>
-      </Reveal>
-      <StaggerGroup className="mt-16 grid gap-8 md:mt-20 md:grid-cols-3 md:gap-10">
-        {services.map((item) => (
-          <StaggerItem key={item.title}>
-            <HoverLift className={cardClassName}>
-              <div className="h-px w-10 bg-zinc-950 dark:bg-zinc-50" aria-hidden />
-              <h3 className="mt-7 text-xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
-                {item.title}
-              </h3>
-              <p className="mt-4 flex-1 text-[15px] leading-relaxed text-zinc-600 dark:text-zinc-400">
-                {item.description}
-              </p>
-              <p className="mt-8 border-t border-zinc-100 pt-6 text-[13px] leading-relaxed text-zinc-500 dark:border-zinc-800/80 dark:text-zinc-500">
-                {item.scope}
-              </p>
-            </HoverLift>
-          </StaggerItem>
-        ))}
-      </StaggerGroup>
-      <Reveal>
-        <p className="mx-auto mt-16 max-w-md text-center text-[14px] leading-relaxed text-zinc-500 md:mt-20 dark:text-zinc-500">
-          We say no sometimes. Better than saying yes and delivering something
-          mediocre.
-        </p>
-      </Reveal>
-    </section>
+        </Reveal>
+      </div>
+    </SectionShell>
   );
 }

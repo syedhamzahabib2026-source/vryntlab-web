@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 /**
  * Thin viewport-wide progress bar — subtle scroll affordance without distraction.
+ * Uses transform (scaleX) so updates stay on the compositor.
  */
 export function ScrollProgress() {
   const [progress, setProgress] = useState(0);
@@ -31,8 +32,11 @@ export function ScrollProgress() {
       aria-hidden
     >
       <div
-        className="h-full bg-zinc-950/35 dark:bg-zinc-100/45"
-        style={{ width: `${progress * 100}%` }}
+        className="h-full w-full origin-left bg-zinc-950/35 will-change-transform dark:bg-zinc-100/45"
+        style={{
+          transform: `scaleX(${progress})`,
+          transformOrigin: "left center",
+        }}
       />
     </div>
   );

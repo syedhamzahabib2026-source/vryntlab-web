@@ -1,13 +1,19 @@
 "use client";
 
-import { motion, type HTMLMotionProps } from "motion/react";
+import {
+  motion,
+  useReducedMotion,
+  type HTMLMotionProps,
+} from "motion/react";
 
-/** Premium ease — adjust here to change global reveal feel */
-export const motionEase = [0.22, 1, 0.36, 1] as const;
+/**
+ * Calm ease-out: settles without bounce. Tune here for sitewide scroll reveals.
+ */
+export const motionEase = [0.16, 1, 0.3, 1] as const;
 
 export const revealDefaults = {
-  duration: 0.55,
-  y: 20,
+  duration: 0.58,
+  y: 10,
 } as const;
 
 type RevealProps = {
@@ -23,13 +29,23 @@ export function Reveal({
   delay = 0,
   id,
 }: RevealProps) {
+  const reduceMotion = useReducedMotion();
+
+  if (reduceMotion) {
+    return (
+      <div id={id} className={className}>
+        {children}
+      </div>
+    );
+  }
+
   return (
     <motion.div
       id={id}
       className={className}
-      initial={{ opacity: 0, y: revealDefaults.y }}
+      initial={{ opacity: 1, y: revealDefaults.y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-48px", amount: 0.2 }}
+      viewport={{ once: true, margin: "-36px 0px -32px 0px", amount: 0.16 }}
       transition={{
         duration: revealDefaults.duration,
         delay,
@@ -43,23 +59,25 @@ export function Reveal({
 
 type HoverLiftProps = {
   children: React.ReactNode;
-  /**
-   * Include base card styles plus Tailwind `transition-shadow` and
-   * `hover:shadow-*` for a soft shadow lift alongside motion `y`.
-   */
   className?: string;
 };
 
 /**
- * Subtle lift on hover for cards — combine with hover shadow classes on className.
+ * Subtle lift on hover for cards — pair with shadow/border transitions on className.
  */
 export function HoverLift({ children, className }: HoverLiftProps) {
+  const reduceMotion = useReducedMotion();
+
+  if (reduceMotion) {
+    return <article className={className}>{children}</article>;
+  }
+
   return (
     <motion.article
       className={className}
       whileHover={{
-        y: -3,
-        transition: { duration: 0.22, ease: motionEase },
+        y: -1,
+        transition: { duration: 0.32, ease: motionEase },
       }}
     >
       {children}

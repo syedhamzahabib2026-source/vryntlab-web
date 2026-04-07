@@ -13,13 +13,16 @@ type VisualPlaceholderProps = {
   className?: string;
   previewTone?: PreviewTone;
   children?: ReactNode;
+  /** Fake browser chrome on showcase frames — off for editorial / case-study crops */
+  showChrome?: boolean;
 };
 
 const aspectClass: Record<NonNullable<VisualPlaceholderProps["aspect"]>, string> =
   {
-    cinematic: "aspect-[2/1] min-h-[240px] sm:min-h-[300px] md:min-h-[340px]",
-    video: "aspect-video min-h-[200px]",
-    photo: "aspect-[4/3] min-h-[200px]",
+    cinematic:
+      "aspect-[16/11] min-h-[210px] sm:aspect-[2/1] sm:min-h-[270px] md:min-h-[310px] lg:min-h-[340px] xl:min-h-[360px]",
+    video: "aspect-video min-h-[220px] sm:min-h-[240px]",
+    photo: "aspect-[4/3] min-h-[220px] sm:min-h-[260px]",
   };
 
 export function VisualPlaceholder({
@@ -29,13 +32,16 @@ export function VisualPlaceholder({
   className = "",
   previewTone = "default",
   children,
+  showChrome = true,
 }: VisualPlaceholderProps) {
   const isHero = variant === "hero";
   const hasMedia = Boolean(children);
 
   const frameClass = isHero
-    ? "rounded-[2rem] shadow-[0_0_0_1px_rgba(0,0,0,0.05),0_32px_100px_-40px_rgba(0,0,0,0.14)] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_40px_100px_-44px_rgba(0,0,0,0.55)] md:rounded-[2.25rem]"
-    : "rounded-2xl shadow-[0_0_0_1px_rgba(0,0,0,0.05),0_16px_48px_-28px_rgba(0,0,0,0.1)] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_20px_56px_-28px_rgba(0,0,0,0.45)]";
+    ? "rounded-[2rem] ring-1 ring-black/[0.05] shadow-[0_0_0_1px_rgba(0,0,0,0.05),0_28px_90px_-36px_rgba(0,0,0,0.14),0_56px_120px_-48px_rgba(0,0,0,0.08)] dark:ring-white/[0.07] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_36px_100px_-40px_rgba(0,0,0,0.5),0_64px_140px_-52px_rgba(0,0,0,0.35)] md:rounded-[2.25rem] xl:rounded-[2.4rem]"
+    : showChrome
+      ? "rounded-2xl shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_20px_56px_-32px_rgba(0,0,0,0.12)] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.07),0_24px_60px_-28px_rgba(0,0,0,0.5)]"
+      : "rounded-2xl shadow-[0_0_0_1px_rgba(0,0,0,0.05),0_24px_64px_-36px_rgba(0,0,0,0.14)] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_28px_72px_-36px_rgba(0,0,0,0.55)]";
 
   return (
     <figure className={`group/placeholder ${className}`}>
@@ -45,9 +51,9 @@ export function VisualPlaceholder({
         {hasMedia ? (
           <>
             <div className="absolute inset-0 z-[5]">{children}</div>
-            {variant === "showcase" ? (
+            {variant === "showcase" && showChrome ? (
               <div
-                className="absolute left-0 right-0 top-0 z-20 flex h-9 items-center border-b border-white/10 bg-zinc-950/20 px-3 backdrop-blur-md dark:border-white/5 dark:bg-black/30"
+                className="absolute left-0 right-0 top-0 z-20 flex h-9 items-center border-b border-white/10 bg-zinc-950/25 px-3 backdrop-blur-md dark:border-white/5 dark:bg-black/35"
                 aria-hidden
               >
                 <div className="flex gap-1.5 opacity-70">
@@ -59,14 +65,14 @@ export function VisualPlaceholder({
               </div>
             ) : null}
             <div
-              className="pointer-events-none absolute inset-0 z-[25] shadow-[inset_0_0_100px_rgba(0,0,0,0.08)] dark:shadow-[inset_0_0_120px_rgba(0,0,0,0.45)]"
+              className={`pointer-events-none absolute inset-0 z-[25] shadow-[inset_0_1px_0_rgba(255,255,255,0.22),inset_0_0_80px_rgba(0,0,0,0.05)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06),inset_0_0_100px_rgba(0,0,0,0.38)] ${variant === "showcase" && showChrome ? "" : "rounded-[inherit]"}`}
               aria-hidden
             />
           </>
         ) : (
           <>
             <PlaceholderLayers variant={variant} previewTone={previewTone} />
-            {variant === "showcase" ? (
+            {variant === "showcase" && showChrome ? (
               <div
                 className="absolute left-0 right-0 top-0 z-20 flex h-9 items-center border-b border-zinc-200/80 bg-zinc-100/95 px-3 backdrop-blur-[2px] dark:border-zinc-700/80 dark:bg-zinc-950/60"
                 aria-hidden
@@ -80,7 +86,7 @@ export function VisualPlaceholder({
               </div>
             ) : null}
             <div
-              className={`absolute inset-0 z-10 flex items-center justify-center overflow-hidden px-6 ${variant === "showcase" ? "pt-9" : ""}`}
+              className={`absolute inset-0 z-10 flex items-center justify-center overflow-hidden px-6 ${variant === "showcase" && showChrome ? "pt-9" : ""}`}
             >
               <div
                 className="pointer-events-none flex flex-col items-center gap-3 text-center"
@@ -101,7 +107,9 @@ export function VisualPlaceholder({
         )}
       </div>
       {caption ? (
-        <figcaption className="mt-5 text-center text-[12px] leading-snug text-zinc-500 dark:text-zinc-500">
+        <figcaption
+          className={`text-center text-[12px] leading-snug tracking-[0.02em] text-zinc-500 dark:text-zinc-500 ${isHero ? "mt-6 sm:mt-7" : "mt-5"}`}
+        >
           {caption}
         </figcaption>
       ) : null}

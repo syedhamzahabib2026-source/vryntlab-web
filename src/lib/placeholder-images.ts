@@ -1,6 +1,7 @@
 /**
  * Editorial stand-ins for Featured Work until you ship real screenshots.
- * Replace src in FeaturedWork or swap URLs here; credit Unsplash in production if required.
+ * Hero showcase uses `/brand/figma-example.png` from `site.ts` — not this map.
+ * Credit Unsplash in production if required.
  */
 export const placeholderImages = {
   hero:

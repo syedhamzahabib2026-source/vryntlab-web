@@ -1,48 +1,57 @@
-import { navLinks, siteEmail, siteTagline } from "@/lib/site";
+import { focusRing } from "@/components/layout/layoutTokens";
+import { SocialLinks } from "@/components/layout/SocialLinks";
+import { navLinks, siteBrandName, siteEmail, siteTagline } from "@/lib/site";
+
+const footerLinkClass = `inline-flex min-h-11 items-center rounded-md px-0.5 text-[13px] font-medium text-zinc-600 underline decoration-transparent underline-offset-[6px] transition-[color,text-decoration-color] duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 ${focusRing} [@media(hover:hover)]:hover:text-zinc-950 [@media(hover:hover)]:hover:decoration-[var(--accent)]/45 dark:text-zinc-400 dark:[@media(hover:hover)]:hover:text-zinc-50 dark:[@media(hover:hover)]:hover:decoration-[var(--accent)]/40`;
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-auto border-t border-zinc-200/80 pt-14 pb-10 dark:border-zinc-800/80">
-      <div className="grid gap-12 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:gap-16">
-        <div className="max-w-md">
+    <footer className="mt-auto border-t border-[var(--border)] pt-11 pb-10 sm:pt-12 sm:pb-11 md:pt-14">
+      <div className="grid gap-9 sm:gap-10 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:gap-14 lg:gap-16">
+        <div className="max-w-xs sm:max-w-sm">
           <p className="text-[15px] font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
-            Trellisify
+            {siteBrandName}
           </p>
-          <p className="mt-3 text-[15px] leading-relaxed text-zinc-600 dark:text-zinc-400">
+          <p className="mt-2.5 text-[14px] leading-[1.6] text-zinc-600 sm:mt-3 sm:text-[15px] sm:leading-[1.62] dark:text-zinc-400">
             {siteTagline}
           </p>
         </div>
-        <div className="flex flex-col gap-8 sm:flex-row sm:justify-end sm:gap-16 md:flex-col md:items-end">
+        <div className="flex flex-col gap-7 sm:flex-row sm:justify-end sm:gap-14 md:flex-col md:items-end md:gap-8">
           <nav aria-label="Footer">
-            <ul className="flex flex-col gap-2.5">
+            <ul className="flex flex-col gap-0.5 sm:gap-1">
               {navLinks.map((link) => (
                 <li key={link.href}>
-                  <a
-                    href={link.href}
-                    className="text-[13px] font-medium text-zinc-600 transition-colors hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-zinc-50"
-                  >
+                  <a href={link.href} className={footerLinkClass}>
                     {link.label}
                   </a>
                 </li>
               ))}
             </ul>
           </nav>
-          <a
-            href={`mailto:${siteEmail}`}
-            className="text-[13px] font-medium text-zinc-950 underline decoration-zinc-300 underline-offset-4 transition-colors hover:decoration-zinc-500 dark:text-zinc-50 dark:decoration-zinc-600 dark:hover:decoration-zinc-400"
-          >
-            {siteEmail}
-          </a>
+          <div className="flex w-full flex-col gap-4 sm:max-w-none sm:items-end md:w-auto">
+            <a
+              href={`mailto:${siteEmail}`}
+              className={`inline-flex min-h-11 w-fit max-w-full items-center rounded-md text-[13px] font-semibold text-zinc-950 underline decoration-zinc-300/90 underline-offset-[5px] transition-[text-decoration-color,color] duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 ${focusRing} [@media(hover:hover)]:hover:decoration-[var(--accent)]/50 dark:text-zinc-50 dark:decoration-zinc-600 dark:[@media(hover:hover)]:hover:decoration-[var(--accent)]/45`}
+            >
+              {siteEmail}
+            </a>
+            <div className="w-full border-t border-[var(--border)] pt-4 sm:w-auto sm:max-w-none dark:border-zinc-800/80">
+              <p className="mb-2 text-left text-[10px] font-semibold uppercase tracking-[0.16em] text-zinc-400 sm:text-right dark:text-zinc-500">
+                Social
+              </p>
+              <SocialLinks className="justify-start sm:justify-end" />
+            </div>
+          </div>
         </div>
       </div>
-      <div className="mt-14 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+      <div className="mt-10 flex flex-col gap-2 border-t border-[var(--border)] pt-6 sm:mt-12 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:pt-7">
         <p className="text-[12px] text-zinc-500 dark:text-zinc-500">
-          © {year} Trellisify. All rights reserved.
+          © {year} {siteBrandName}. All rights reserved.
         </p>
         <p className="text-[11px] text-zinc-400 dark:text-zinc-600">
-          Preview build — Trellisify Test 1
+          Preview build — {siteBrandName}
         </p>
       </div>
     </footer>

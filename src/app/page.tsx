@@ -8,7 +8,7 @@ import { Services } from "@/components/home/Services";
 
 export default function Home() {
   return (
-    <div className="flex flex-1 flex-col gap-28 pb-24 md:gap-40 md:pb-32">
+    <div className="flex flex-1 flex-col pb-2 sm:pb-4 md:pb-6">
       <Hero />
       <CredibilityStrip />
       <Services />

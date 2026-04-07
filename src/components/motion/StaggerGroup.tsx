@@ -1,12 +1,19 @@
 "use client";
 
-import { motion } from "motion/react";
+import { createContext, useContext } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import { motionEase } from "./Reveal";
 
-/** Stagger timing — tune staggerChildren / delayChildren here */
+/** Tight stagger: readable sequence without a long cascade */
 export const staggerTiming = {
-  staggerChildren: 0.085,
-  delayChildren: 0.06,
+  staggerChildren: 0.055,
+  delayChildren: 0.035,
+} as const;
+
+/** Above-the-fold / mount: same motion language, no opacity blackout before paint */
+export const staggerTimingImmediate = {
+  staggerChildren: 0.036,
+  delayChildren: 0,
 } as const;
 
 export const staggerContainer = {
@@ -16,14 +23,32 @@ export const staggerContainer = {
   },
 };
 
+export const staggerContainerImmediate = {
+  hidden: {},
+  visible: {
+    transition: staggerTimingImmediate,
+  },
+};
+
 export const staggerItem = {
-  hidden: { opacity: 0, y: 16 },
+  hidden: { opacity: 0, y: 11 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.48, ease: motionEase },
+    transition: { duration: 0.54, ease: motionEase },
   },
 };
+
+export const staggerItemImmediate = {
+  hidden: { opacity: 1, y: 9 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.46, ease: motionEase },
+  },
+};
+
+const StaggerItemVariantsContext = createContext(staggerItem);
 
 type StaggerGroupProps = {
   children: React.ReactNode;
@@ -40,29 +65,39 @@ export function StaggerGroup({
   className,
   mode = "inView",
 }: StaggerGroupProps) {
+  const reduceMotion = useReducedMotion();
+
+  if (reduceMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
   if (mode === "immediate") {
     return (
-      <motion.div
-        className={className}
-        initial="hidden"
-        animate="visible"
-        variants={staggerContainer}
-      >
-        {children}
-      </motion.div>
+      <StaggerItemVariantsContext.Provider value={staggerItemImmediate}>
+        <motion.div
+          className={className}
+          initial="hidden"
+          animate="visible"
+          variants={staggerContainerImmediate}
+        >
+          {children}
+        </motion.div>
+      </StaggerItemVariantsContext.Provider>
     );
   }
 
   return (
-    <motion.div
-      className={className}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-72px", amount: 0.12 }}
-      variants={staggerContainer}
-    >
-      {children}
-    </motion.div>
+    <StaggerItemVariantsContext.Provider value={staggerItem}>
+      <motion.div
+        className={className}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-48px 0px -40px 0px", amount: 0.14 }}
+        variants={staggerContainer}
+      >
+        {children}
+      </motion.div>
+    </StaggerItemVariantsContext.Provider>
   );
 }
 
@@ -72,8 +107,15 @@ type StaggerItemProps = {
 };
 
 export function StaggerItem({ children, className }: StaggerItemProps) {
+  const reduceMotion = useReducedMotion();
+  const itemVariants = useContext(StaggerItemVariantsContext);
+
+  if (reduceMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
   return (
-    <motion.div className={className} variants={staggerItem}>
+    <motion.div className={className} variants={itemVariants}>
       {children}
     </motion.div>
   );

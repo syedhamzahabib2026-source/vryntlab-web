@@ -1,39 +1,43 @@
 import { Reveal } from "@/components/motion/Reveal";
+import { proseComfort } from "@/components/layout/layoutTokens";
+import { SectionShell } from "@/components/layout/SectionShell";
+
+const headingClass =
+  "mt-3 max-w-[22ch] text-[1.5rem] font-semibold leading-[1.12] tracking-[-0.03em] text-zinc-950 text-balance sm:mt-4 sm:max-w-none sm:text-[1.875rem] sm:leading-[1.08] md:text-[2.125rem] md:tracking-[-0.033em] lg:text-[2.375rem] dark:text-zinc-50";
+
+const bodyClass = `${proseComfort} max-w-[40ch] space-y-4 border-l-0 py-0 pl-0 text-[15px] leading-[1.62] text-zinc-600 sm:max-w-[42ch] sm:space-y-5 sm:border-l-2 sm:border-[var(--accent)]/22 sm:py-0.5 sm:pl-5 sm:text-[16px] sm:leading-[1.64] md:max-w-[44ch] lg:col-span-7 lg:col-start-6 lg:max-w-none lg:pl-8 dark:border-[var(--accent)]/28 dark:text-zinc-400`;
 
 export function About() {
   return (
-    <Reveal>
-      <section
-        id="about"
-        className="scroll-mt-28"
-        aria-labelledby="about-heading"
-      >
-        <div className="grid gap-14 lg:grid-cols-2 lg:gap-16 lg:items-start">
-          <div>
-            <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-zinc-500">
+    <SectionShell id="about" labelledBy="about-heading">
+      <Reveal>
+        <div className="grid gap-7 border-t border-[var(--border)] pt-9 sm:gap-8 sm:pt-10 md:gap-9 md:pt-11 lg:grid-cols-12 lg:items-start lg:gap-x-14 lg:gap-y-0 lg:pt-14 xl:pt-[3.25rem]">
+          <header className="lg:col-span-4 lg:max-w-none">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--accent)] opacity-90 sm:tracking-[0.24em] dark:opacity-95">
               About
             </p>
-            <h2
-              id="about-heading"
-              className="mt-5 text-4xl font-semibold tracking-[-0.03em] text-zinc-950 md:text-5xl dark:text-zinc-50"
-            >
-              A small studio, not a department store
+            <h2 id="about-heading" className={headingClass}>
+              A small studio. Not a department store.
             </h2>
-          </div>
-          <div className="space-y-6 text-[17px] leading-[1.65] text-zinc-600 dark:text-zinc-400">
+          </header>
+          <div className={bodyClass}>
             <p>
-              Trellisify is a handful of people who spend most of their time on
-              the web: shipping pages, fixing what broke, and plugging tools
-              together. You talk to whoever is actually building—not a rotating
-              cast of account managers.
+              VryntLab is a small team that spends most of its time building on the
+              web—shipping pages, fixing what breaks, and connecting the pieces
+              behind the scenes.
             </p>
             <p>
-              We&apos;re picky about fit. If the timeline, budget, or problem
-              isn&apos;t right, we&apos;d rather say so than drag something out.
+              You talk directly to the people doing the work. No layers, no
+              handoffs.
+            </p>
+            <p>
+              We&apos;re straightforward about fit, budget, and timing. If
+              something&apos;s off, we&apos;ll tell you early—before it turns into a
+              bigger problem.
             </p>
           </div>
         </div>
-      </section>
-    </Reveal>
+      </Reveal>
+    </SectionShell>
   );
 }
