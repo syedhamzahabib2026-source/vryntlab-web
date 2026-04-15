@@ -1,5 +1,7 @@
 # VryntLab — marketing site (Next.js)
 
+**Repository:** [github.com/syedhamzahabib2026-source/vryntlab-web](https://github.com/syedhamzahabib2026-source/vryntlab-web) (this app is the repo root).
+
 Production site for VryntLab: App Router, `src/` layout, Tailwind 4, Motion, conversion flows (quick estimate, contact), and an **integrated AI chat** assistant.
 
 ## Getting started
