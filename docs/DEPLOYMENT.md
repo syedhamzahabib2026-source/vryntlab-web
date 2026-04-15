@@ -19,10 +19,20 @@ This machine may have **no git repo** at the workspace root. Choose one:
 
 ## 3. Vercel
 
-1. **Import** the GitHub repo → **New Project**.
+1. **Import** the GitHub repo → **New Project** (or connect an existing project — see below).
 2. **Root directory:** `trellisify-project` if using monorepo (approach B); leave blank if repo root is the app (approach A).
 3. Framework: **Next.js** (auto-detected).
 4. **Production branch:** usually `main`.
+
+### Production project (current)
+
+| | |
+|--|--|
+| **Vercel project** | `vryntlab-1` (team: `syedhamzahabib2026-sources-projects`) |
+| **GitHub repo** | `syedhamzahabib2026-source/vryntlab-web` |
+| **Production domain** | `vryntlab.com` (also `vryntlab-1.vercel.app`) |
+
+Reconnect or change repo: **`vercel git connect https://github.com/syedhamzahabib2026-source/vryntlab-web`** from this app directory (CLI), or **Project → Settings → Git** in the dashboard.
 
 ### Which Vercel project to use
 
@@ -59,6 +69,8 @@ Set these in **Vercel → Project → Settings → Environment Variables** (Prod
 - `OPENROUTER_MODEL`, `OPENROUTER_EXTRACT_MODEL`
 
 Do **not** commit secrets; Vercel stores them per environment.
+
+**Preview deployments:** If `OPENROUTER_*` is set only for **Production**, chat may return **503** on **Preview** URLs. Add the same OpenRouter variables for **Preview** if you need the assistant on PR previews.
 
 ## 5. Verify after deploy
 

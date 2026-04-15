@@ -1,5 +1,19 @@
 # Build log
 
+## 2026-04-15 — Production: `vryntlab-1` → `vryntlab-web` + live domain
+
+**Vercel:** Existing project **`vryntlab-1`** (not a new project). **Git:** Reconnected with `vercel git connect` to **`syedhamzahabib2026-source/vryntlab-web`** (replacing prior `vryntlab_1` linkage). Latest production deployment metadata shows **`githubRepo`: `vryntlab-web`**, commit **`b6d01e0`** (README repo link).
+
+**Domains:** Production deployment **aliased to `https://vryntlab.com`**. Deployment URL pattern: `vryntlab-1-*.vercel.app` (per-build hostname).
+
+**Env (Production):** `OPENROUTER_API_KEY`, `OPENROUTER_SITE_URL` (= `https://vryntlab.com`), `OPENROUTER_APP_NAME`, plus Resend/contact vars (`RESEND_API_KEY`, `CONTACT_*`) for **Production** (contact also on Preview/Development from earlier setup). Optional Supabase/Slack not required for basic chat + contact.
+
+**CLI:** `vercel deploy --prod` triggered successful build (Next 16.2.1). **Preview:** OpenRouter vars are **Production-only** — add to **Preview** if chat must work on PR preview URLs.
+
+**Docs:** `docs/DEPLOYMENT.md` updated with project/repo/domain table and preview note.
+
+---
+
 ## 2026-04-15 — Deployment handoff (GitHub + Vercel)
 
 **Context:** Integrated app is **`trellisify-project/`** only; **`vryntlab-ai/`** is not deployed.
