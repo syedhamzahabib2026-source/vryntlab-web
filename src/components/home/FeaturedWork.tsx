@@ -1,149 +1,247 @@
 "use client";
 
-import { useCallback, useState, type KeyboardEvent } from "react";
+import type { ReactNode } from "react";
+import Link from "next/link";
+import { useConversion } from "@/components/conversion/ConversionContext";
 import { Reveal } from "@/components/motion/Reveal";
 import { StaggerGroup, StaggerItem } from "@/components/motion/StaggerGroup";
-import { focusRing } from "@/components/layout/layoutTokens";
+import {
+  contentWell,
+  focusRing,
+  slabBleed,
+  slabContent,
+} from "@/components/layout/layoutTokens";
 import { SectionIntro } from "@/components/layout/SectionIntro";
 import { SectionShell } from "@/components/layout/SectionShell";
 import type { CaseStudy } from "@/lib/case-studies";
+import { brandWorkIntentNudge, brandWorkSection } from "@/lib/brand-knowledge";
 import { caseStudies } from "@/lib/case-studies";
-import { CaseStudyModal } from "./CaseStudyModal";
 import { CaseStudyPreviewMedia } from "./CaseStudyPreviewMedia";
 
-/** Editorial card — matted media, calmer chrome, clearer depth on hover */
-const cardShell = `group/case relative cursor-pointer overflow-hidden rounded-[1.85rem] border border-[var(--border)] bg-[var(--surface)] text-left shadow-[var(--shadow-sm)] ring-1 ring-black/[0.03] transition-[box-shadow,border-color,transform] duration-[480ms] ease-[var(--ease-out-premium)] active:scale-[0.997] dark:border-zinc-800/80 dark:ring-white/[0.04] [@media(hover:hover)]:hover:-translate-y-1 [@media(hover:hover)]:hover:border-zinc-300/65 [@media(hover:hover)]:hover:shadow-[var(--shadow-md)] dark:[@media(hover:hover)]:hover:border-zinc-600/42 motion-reduce:transform-none ${focusRing}`;
+const cardBase = `group/case relative block cursor-pointer overflow-hidden rounded-2xl border text-left transition-[box-shadow,border-color,transform,filter] duration-500 ease-[var(--ease-out-premium)] active:scale-[0.997] motion-reduce:transform-none motion-reduce:duration-200 ${focusRing}`;
 
-export function FeaturedWork() {
-  const [openStudy, setOpenStudy] = useState<CaseStudy | null>(null);
+const cardFeatured = `${cardBase} border-white/[0.08] bg-gradient-to-br from-white/[0.07] to-white/[0.02] shadow-[0_0_0_1px_rgba(255,255,255,0.07),0_32px_100px_-32px_rgba(0,0,0,0.58),0_0_80px_-24px_var(--slab-glow)] sm:rounded-[1.9rem] [@media(hover:hover)]:hover:-translate-y-[5px] [@media(hover:hover)]:hover:border-teal-400/30 [@media(hover:hover)]:hover:shadow-[0_0_0_1px_rgba(94,234,212,0.14),0_40px_110px_-32px_rgba(0,0,0,0.65),0_0_100px_-28px_rgba(94,234,212,0.14)]`;
 
-  const open = useCallback((study: CaseStudy) => setOpenStudy(study), []);
-  const close = useCallback(() => setOpenStudy(null), []);
+const cardCompact = `${cardBase} border-white/[0.07] bg-white/[0.035] shadow-[0_0_0_1px_rgba(255,255,255,0.05),0_24px_64px_-28px_rgba(0,0,0,0.52)] sm:rounded-[1.7rem] [@media(hover:hover)]:hover:-translate-y-[3px] [@media(hover:hover)]:hover:border-teal-400/25 [@media(hover:hover)]:hover:shadow-[0_0_0_1px_rgba(94,234,212,0.11),0_32px_80px_-28px_rgba(0,0,0,0.58)]`;
 
-  const onCardKeyDown = useCallback(
-    (e: KeyboardEvent, study: CaseStudy) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        open(study);
+function CaseStudyCardContent({
+  study,
+  index,
+  layout,
+}: {
+  study: CaseStudy;
+  index: number;
+  layout: "featured" | "compact";
+}) {
+  const n = String(index + 1).padStart(2, "0");
+  const isFeatured = layout === "featured";
+
+  const copyBlock = (
+    <div
+      className={
+        isFeatured
+          ? "order-2 flex flex-col justify-center border-t border-white/[0.08] px-5 py-7 sm:px-8 sm:py-10 md:px-10 md:py-12 lg:order-2 lg:col-span-5 lg:border-t-0 lg:border-l lg:border-white/[0.08] lg:bg-white/[0.03] lg:px-10 lg:py-14 xl:px-12"
+          : "order-2 flex flex-col justify-center border-t border-white/[0.08] px-5 py-6 sm:px-7 sm:py-8"
       }
-    },
-    [open],
+    >
+      <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-teal-300/90">
+        Case study · {n}
+      </p>
+      <span className="mt-3 inline-flex w-fit rounded-full border border-white/15 bg-white/[0.06] px-2.5 py-0.5 text-[10px] font-medium tracking-tight text-zinc-300 sm:py-1 sm:text-[11px]">
+        {study.typeLabel}
+      </span>
+      <h3
+        className={`mt-4 text-balance font-display font-normal tracking-[-0.02em] text-zinc-50 sm:mt-5 ${isFeatured ? "text-xl sm:text-2xl md:text-[1.65rem]" : "text-lg sm:text-xl"}`}
+      >
+        {study.client}
+      </h3>
+      <p className="mt-2 max-w-[36ch] text-[14px] font-medium leading-snug tracking-[-0.012em] text-zinc-200 sm:text-[15px]">
+        {study.shortTitle}
+      </p>
+      <p className="mt-3 max-w-[42ch] text-[13px] leading-relaxed text-zinc-400 sm:mt-3.5 sm:text-[14px] sm:leading-relaxed">
+        {study.problem}
+      </p>
+      <p className="mt-6 sm:mt-7">
+        <span className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.05] px-3.5 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-200 shadow-[0_8px_32px_-20px_rgba(0,0,0,0.5)] transition-[border-color,background-color,box-shadow,transform] duration-400 ease-[var(--ease-out-premium)] [@media(hover:hover)]:group-hover/case:border-teal-400/35 [@media(hover:hover)]:group-hover/case:bg-white/[0.08]">
+          View case study
+          <span
+            aria-hidden
+            className="text-[0.95em] transition-transform duration-400 ease-[var(--ease-out-premium)] [@media(hover:hover)]:group-hover/case:translate-x-0.5"
+          >
+            →
+          </span>
+        </span>
+      </p>
+      <span className="sr-only">
+        Opens the full case study on a new page.
+      </span>
+    </div>
   );
+
+  const mediaMin = isFeatured
+    ? "aspect-[4/5] min-h-[240px] sm:aspect-[4/3] sm:min-h-[280px] md:aspect-[16/10] md:min-h-[340px] lg:aspect-auto lg:min-h-[min(56vh,480px)] xl:min-h-[min(58vh,520px)]"
+    : "aspect-[4/5] min-h-[200px] sm:aspect-[4/3] sm:min-h-[220px] md:min-h-[240px] lg:aspect-[16/11] lg:min-h-[260px]";
+
+  const mediaBlock = (
+    <div
+      className={
+        isFeatured
+          ? "order-1 overflow-hidden bg-zinc-950 lg:order-1 lg:col-span-7 lg:bg-gradient-to-br lg:from-zinc-950 lg:to-black lg:p-0"
+          : "order-1 overflow-hidden bg-zinc-950"
+      }
+    >
+      <figure className="relative m-0 flex h-full min-h-0 flex-col lg:overflow-hidden lg:rounded-[1.35rem] lg:ring-1 lg:ring-white/[0.1] lg:shadow-[0_28px_70px_-32px_rgba(0,0,0,0.75)]">
+        <div className={`relative w-full min-w-0 ${mediaMin}`}>
+          <div className="absolute inset-0 flex items-center justify-center overflow-hidden lg:rounded-t-[1.35rem]">
+            <div className="relative h-full w-full origin-center transition-transform duration-500 ease-[var(--ease-out-premium)] [@media(hover:hover)]:group-hover/case:scale-[1.02] motion-reduce:transform-none">
+              <CaseStudyPreviewMedia
+                study={study}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 56vw"
+              />
+            </div>
+          </div>
+          <div
+            className="pointer-events-none absolute inset-0 z-[2] ring-1 ring-inset ring-white/[0.06]"
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-t from-black/35 via-transparent to-transparent [@media(hover:hover)]:group-hover/case:from-black/45"
+            aria-hidden
+          />
+        </div>
+        <figcaption className="border-t border-white/[0.08] bg-white/[0.04] px-5 py-3 text-left text-[10px] font-medium uppercase tracking-[0.18em] text-zinc-500 sm:px-6 sm:py-3.5 lg:rounded-b-[1.35rem] lg:px-8">
+          {study.caption}
+        </figcaption>
+      </figure>
+    </div>
+  );
+
+  if (isFeatured) {
+    return (
+      <div className="grid grid-cols-1 lg:grid-cols-12 lg:items-stretch">
+        {mediaBlock}
+        {copyBlock}
+      </div>
+    );
+  }
 
   return (
     <>
-      <SectionShell id="work" labelledBy="work-heading">
-        <div className="flex flex-col gap-10 border-t border-[var(--border)] pt-10 sm:gap-11 sm:pt-11 md:gap-12 md:pt-12 lg:gap-14 lg:pt-14 xl:gap-[3.75rem] xl:pt-16">
-          <Reveal>
-            <SectionIntro
-              eyebrow="Selected work"
-              titleId="work-heading"
-              title="Recent work"
-              description={
-                <>
-                  Three live builds—presented here as case studies. Co-shipped
-                  with each client&apos;s developers; VryntLab led what you see
-                  and click.
-                </>
-              }
-              align="start"
-            />
-          </Reveal>
+      {mediaBlock}
+      {copyBlock}
+    </>
+  );
+}
 
-          <StaggerGroup className="flex flex-col gap-12 sm:gap-14 md:gap-16 lg:gap-[4.25rem] xl:gap-24">
-            {caseStudies.map((study, index) => {
-              const mediaFirstVisual = index % 2 === 0;
-              const n = String(index + 1).padStart(2, "0");
+export function FeaturedWork() {
+  const [primary, ...rest] = caseStudies;
+  const { selectedIntent } = useConversion();
+  const workNudge =
+    selectedIntent != null ? brandWorkIntentNudge[selectedIntent] : null;
 
-              const copyCell = mediaFirstVisual
-                ? "lg:col-span-5 lg:col-start-8 lg:row-start-1 lg:border-l lg:border-[var(--border)] lg:bg-[color-mix(in_oklab,var(--surface-soft)_38%,var(--surface))] lg:px-10 lg:py-14 xl:px-12 xl:py-[3.65rem] dark:lg:bg-[color-mix(in_oklab,var(--surface-soft)_28%,var(--surface))]"
-                : "lg:col-span-5 lg:col-start-1 lg:row-start-1 lg:border-r lg:border-[var(--border)] lg:bg-[color-mix(in_oklab,var(--surface-soft)_38%,var(--surface))] lg:px-10 lg:py-14 xl:px-12 xl:py-[3.65rem] dark:lg:bg-[color-mix(in_oklab,var(--surface-soft)_28%,var(--surface))]";
+  return (
+    <div className={slabBleed}>
+      <SectionShell
+        id="work"
+        labelledBy="work-heading"
+        pad="compact"
+        className={`${slabContent} !scroll-mt-[calc(4.5rem+0.25rem)] border-0 sm:!scroll-mt-24 md:!scroll-mt-28`}
+      >
+        <div className={`flex flex-col gap-7 pt-2 sm:gap-10 sm:pt-3 md:gap-11 md:pt-4 lg:gap-14 lg:pt-5`}>
+          <div className={contentWell}>
+            <Reveal>
+              <SectionIntro
+                eyebrow={brandWorkSection.eyebrow}
+                titleId="work-heading"
+                title={brandWorkSection.title}
+                tone="onDark"
+                description={<>{brandWorkSection.description}</>}
+                align="start"
+              />
+              {workNudge ? (
+                <p className="mt-4 max-w-xl border-l-2 border-teal-400/35 py-0.5 pl-3.5 text-[13px] leading-relaxed text-zinc-300 sm:mt-5 sm:pl-4 sm:text-[14px]">
+                  {workNudge}
+                </p>
+              ) : null}
+            </Reveal>
+          </div>
 
-              const mediaCell = mediaFirstVisual
-                ? "lg:col-span-7 lg:col-start-1 lg:row-start-1 lg:bg-[color-mix(in_oklab,var(--surface-soft)_22%,var(--background))] lg:p-3.5 xl:p-4 dark:lg:bg-[color-mix(in_oklab,var(--surface)_40%,var(--background))]"
-                : "lg:col-span-7 lg:col-start-6 lg:row-start-1 lg:bg-[color-mix(in_oklab,var(--surface-soft)_22%,var(--background))] lg:p-3.5 xl:p-4 dark:lg:bg-[color-mix(in_oklab,var(--surface)_40%,var(--background))]";
-
-              return (
-                <StaggerItem key={study.id}>
-                  <article
-                    className={`grid grid-cols-1 lg:grid-cols-12 lg:items-stretch ${cardShell}`}
-                    role="button"
-                    tabIndex={0}
-                    aria-label={`Open case study: ${study.client}`}
-                    onClick={() => open(study)}
-                    onKeyDown={(e) => onCardKeyDown(e, study)}
-                  >
-                    <div
-                      className={`order-2 flex flex-col justify-center border-t border-[var(--border)] px-5 py-9 dark:border-zinc-800/80 sm:px-7 sm:py-10 md:px-8 md:py-11 lg:order-none lg:border-t-0 ${copyCell}`}
-                    >
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--accent)] dark:opacity-90">
-                        Case study · {n}
-                      </p>
-                      <span className="mt-4 inline-flex w-fit rounded-full border border-[var(--border)] bg-[var(--surface-soft)] px-2.5 py-0.5 text-[10px] font-medium tracking-tight text-zinc-600 dark:text-zinc-400 sm:py-1 sm:text-[11px]">
-                        {study.typeLabel}
-                      </span>
-                      <h3 className="mt-4 text-lg font-semibold tracking-[-0.025em] text-zinc-950 sm:mt-5 sm:text-xl md:text-[1.35rem] dark:text-zinc-50">
-                        {study.client}
-                      </h3>
-                      <p className="mt-2 max-w-[34ch] text-[14px] font-medium leading-snug tracking-[-0.012em] text-zinc-800 sm:text-[15px] dark:text-zinc-200">
-                        {study.shortTitle}
-                      </p>
-                      <p className="mt-3 max-w-[38ch] text-[13px] leading-[1.55] text-zinc-600 dark:text-zinc-400 sm:mt-3.5">
-                        {study.problem}
-                      </p>
-                      <p className="mt-6 sm:mt-7">
-                        <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface)] px-3.5 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-700 shadow-[var(--shadow-xs)] transition-[border-color,background-color,box-shadow,transform] duration-[480ms] ease-[var(--ease-out-premium)] dark:border-zinc-700/85 dark:bg-[var(--surface)] dark:text-zinc-200 [@media(hover:hover)]:group-hover/case:border-[var(--accent)]/35 [@media(hover:hover)]:group-hover/case:bg-[color-mix(in_oklab,var(--surface)_92%,var(--accent-muted))] [@media(hover:hover)]:group-hover/case:shadow-[var(--shadow-sm)] dark:[@media(hover:hover)]:group-hover/case:border-[var(--accent)]/30">
-                          View case study
-                          <span
-                            aria-hidden
-                            className="text-[0.95em] transition-transform duration-[480ms] ease-[var(--ease-out-premium)] [@media(hover:hover)]:group-hover/case:translate-x-0.5"
-                          >
-                            →
-                          </span>
-                        </span>
-                      </p>
-                      <span className="sr-only">
-                        Opens a detailed panel with solution, outcome, and live
-                        link.
-                      </span>
-                    </div>
-
-                    <div
-                      className={`order-1 overflow-hidden bg-zinc-100 dark:bg-zinc-950 lg:order-none ${mediaCell}`}
-                    >
-                      <figure className="relative m-0 flex h-full min-h-0 flex-col lg:overflow-hidden lg:rounded-[1.35rem] lg:ring-1 lg:ring-black/[0.06] lg:shadow-[var(--shadow-xs)] dark:lg:ring-white/[0.07]">
-                        <div className="relative aspect-[4/5] min-h-[228px] w-full min-w-0 sm:aspect-[4/3] sm:min-h-[248px] md:aspect-[16/10] md:min-h-[272px] lg:aspect-auto lg:min-h-[min(44vh,360px)] xl:min-h-[min(48vh,400px)]">
-                          <div className="absolute inset-0 flex items-center justify-center overflow-hidden lg:rounded-t-[1.35rem]">
-                            <div className="relative h-full w-full origin-center transition-transform duration-[640ms] ease-[var(--ease-out-premium)] [@media(hover:hover)]:group-hover/case:scale-[1.012] motion-reduce:transform-none">
-                              <CaseStudyPreviewMedia
-                                study={study}
-                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 56vw"
-                              />
-                            </div>
-                          </div>
-                          <div
-                            className="pointer-events-none absolute inset-0 z-[2] ring-1 ring-inset ring-black/[0.05] dark:ring-white/[0.07]"
-                            aria-hidden
-                          />
-                          <div
-                            className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-t from-zinc-950/[0.14] via-transparent to-transparent [@media(hover:hover)]:group-hover/case:from-zinc-950/[0.22] dark:from-black/28 dark:[@media(hover:hover)]:group-hover/case:from-black/38"
-                            aria-hidden
-                          />
-                        </div>
-                        <figcaption className="border-t border-[var(--border)] bg-[var(--surface)] px-5 py-3 text-left text-[10px] font-medium uppercase tracking-[0.18em] text-zinc-500 dark:border-zinc-800/70 dark:bg-[var(--surface)] dark:text-zinc-500 sm:px-6 sm:py-3.5 lg:rounded-b-[1.35rem] lg:px-8">
-                          {study.caption}
-                        </figcaption>
-                      </figure>
-                    </div>
-                  </article>
+          <div className={`${contentWell} flex flex-col gap-8 sm:gap-10 lg:gap-12`}>
+            {primary ? (
+              <StaggerGroup
+                className="flex flex-col"
+                inViewMargin="-10% 0px -8% 0px"
+                inViewAmount={0.12}
+              >
+                <StaggerItem>
+                  <CaseStudyCardLink study={primary} className={cardFeatured}>
+                    <CaseStudyCardContent
+                      study={primary}
+                      index={0}
+                      layout="featured"
+                    />
+                  </CaseStudyCardLink>
                 </StaggerItem>
-              );
-            })}
-          </StaggerGroup>
+              </StaggerGroup>
+            ) : null}
+
+            {primary && rest.length > 0 ? (
+              <div
+                className="flex flex-col items-center gap-3 py-2 sm:py-3"
+                aria-hidden
+              >
+                <div className="h-px w-full max-w-xs bg-gradient-to-r from-transparent via-white/25 to-transparent sm:max-w-md" />
+                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-zinc-500">
+                  More work
+                </p>
+              </div>
+            ) : null}
+
+            {rest.length > 0 ? (
+              <StaggerGroup
+                className="grid grid-cols-1 gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-8 xl:gap-10"
+                inViewMargin="-10% 0px -8% 0px"
+                inViewAmount={0.12}
+              >
+                {rest.map((study, i) => (
+                  <StaggerItem key={study.id}>
+                    <CaseStudyCardLink
+                      study={study}
+                      className={`grid grid-cols-1 ${cardCompact}`}
+                    >
+                      <CaseStudyCardContent
+                        study={study}
+                        index={i + 1}
+                        layout="compact"
+                      />
+                    </CaseStudyCardLink>
+                  </StaggerItem>
+                ))}
+              </StaggerGroup>
+            ) : null}
+          </div>
         </div>
       </SectionShell>
+    </div>
+  );
+}
 
-      <CaseStudyModal study={openStudy} onClose={close} />
-    </>
+function CaseStudyCardLink({
+  study,
+  className,
+  children,
+}: {
+  study: CaseStudy;
+  className: string;
+  children: ReactNode;
+}) {
+  return (
+    <Link
+      href={`/work/${study.id}`}
+      className={className}
+      aria-label={`View case study: ${study.client}`}
+    >
+      {children}
+    </Link>
   );
 }

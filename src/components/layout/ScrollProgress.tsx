@@ -28,11 +28,11 @@ export function ScrollProgress() {
 
   return (
     <div
-      className="pointer-events-none fixed left-0 right-0 top-0 z-[60] h-[2px] bg-zinc-200/40 dark:bg-zinc-800/70"
+      className="pointer-events-none fixed left-0 right-0 top-0 z-[60] h-[2px] bg-zinc-200/25 dark:bg-zinc-800/45"
       aria-hidden
     >
       <div
-        className="h-full w-full origin-left bg-zinc-950/35 will-change-transform dark:bg-zinc-100/45"
+        className="h-full w-full origin-left bg-zinc-950/22 will-change-transform dark:bg-zinc-100/30"
         style={{
           transform: `scaleX(${progress})`,
           transformOrigin: "left center",

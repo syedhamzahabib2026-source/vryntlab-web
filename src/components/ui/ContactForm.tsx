@@ -1,7 +1,9 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { focusRing } from "@/components/layout/layoutTokens";
+import { brandContactForm } from "@/lib/brand-knowledge";
+import { getIntentById, readStoredIntentId } from "@/lib/intent";
 import { siteBrandName } from "@/lib/site";
 
 const inputClass =
@@ -10,7 +12,7 @@ const inputClass =
 const labelClass =
   "mb-2 block text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-500";
 
-const primaryBtnClass = `inline-flex min-h-12 w-full items-center justify-center rounded-full bg-zinc-950 px-8 text-[13px] font-semibold tracking-tight text-white shadow-[var(--shadow-md)] transition-[background-color,box-shadow,transform] duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 active:scale-[0.98] ${focusRing} enabled:[@media(hover:hover)]:hover:bg-zinc-800 enabled:[@media(hover:hover)]:hover:shadow-[0_8px_28px_-8px_rgba(0,0,0,0.35)] disabled:cursor-not-allowed disabled:opacity-60 dark:bg-zinc-50 dark:text-zinc-950 dark:enabled:[@media(hover:hover)]:hover:bg-zinc-200 sm:w-auto sm:px-10`;
+const primaryBtnClass = `inline-flex min-h-12 w-full items-center justify-center rounded-full bg-[var(--surface-ink)] px-8 text-[13px] font-semibold tracking-tight text-white shadow-[var(--shadow-md)] transition-[background-color,box-shadow,transform] duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 active:scale-[0.98] ${focusRing} enabled:[@media(hover:hover)]:hover:shadow-[var(--shadow-glow)] disabled:cursor-not-allowed disabled:opacity-60 dark:bg-white dark:text-zinc-950 dark:enabled:[@media(hover:hover)]:hover:bg-zinc-200 sm:w-auto sm:px-10`;
 
 const errorTextClass =
   "rounded-2xl border border-red-200/80 bg-red-50/90 px-4 py-3 text-sm leading-relaxed text-red-900 dark:border-red-900/50 dark:bg-red-950/40 dark:text-red-200";
@@ -29,6 +31,19 @@ export function ContactForm({ className = "" }: ContactFormProps) {
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const intentPrefillDone = useRef(false);
+
+  useEffect(() => {
+    if (intentPrefillDone.current) return;
+    const id = readStoredIntentId();
+    const opt = getIntentById(id);
+    if (!opt) return;
+    intentPrefillDone.current = true;
+    setDescription((prev) => {
+      if (prev.trim().length > 0) return prev;
+      return `${opt.summary}\n\n`;
+    });
+  }, []);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -80,15 +95,13 @@ export function ContactForm({ className = "" }: ContactFormProps) {
         aria-live="polite"
       >
         <p className="text-[1.0625rem] font-semibold tracking-tight text-zinc-950 sm:text-lg dark:text-zinc-50">
-          Thanks — we&apos;ve got your note.
+          {brandContactForm.sentTitle}
         </p>
         <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-          We read every message and usually reply within two business days with
-          next steps—often a short reply, sometimes a few clarifying questions, or
-          a time to talk if it looks like a fit.
+          {brandContactForm.sentBody}
         </p>
         <p className="mt-3 text-sm leading-relaxed text-zinc-500 dark:text-zinc-500">
-          No auto-spam, no obligation.
+          {brandContactForm.sentFooter}
         </p>
       </div>
     );

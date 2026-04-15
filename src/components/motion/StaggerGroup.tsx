@@ -31,11 +31,11 @@ export const staggerContainerImmediate = {
 };
 
 export const staggerItem = {
-  hidden: { opacity: 0, y: 11 },
+  hidden: { opacity: 0, y: 18 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.54, ease: motionEase },
+    transition: { duration: 0.62, ease: motionEase },
   },
 };
 
@@ -58,12 +58,17 @@ type StaggerGroupProps = {
    * `inView` — animate when scrolled into view.
    */
   mode?: "immediate" | "inView";
+  /** When `mode` is `inView`, forwarded to Framer `viewport.margin` (e.g. earlier trigger). */
+  inViewMargin?: string;
+  inViewAmount?: number | "some" | "all";
 };
 
 export function StaggerGroup({
   children,
   className,
   mode = "inView",
+  inViewMargin = "-48px 0px -40px 0px",
+  inViewAmount = 0.14,
 }: StaggerGroupProps) {
   const reduceMotion = useReducedMotion();
 
@@ -92,7 +97,7 @@ export function StaggerGroup({
         className={className}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-48px 0px -40px 0px", amount: 0.14 }}
+        viewport={{ once: true, margin: inViewMargin, amount: inViewAmount }}
         variants={staggerContainer}
       >
         {children}

@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# VryntLab — marketing site (Next.js)
 
-## Getting Started
+Production site for VryntLab: App Router, `src/` layout, Tailwind 4, Motion, conversion flows (quick estimate, contact), and an **integrated AI chat** assistant.
 
-First, run the development server:
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). Copy `.env.example` → `.env.local` and fill values for contact email and (if you use chat) OpenRouter / optional Supabase.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project documentation (team)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Doc | Purpose |
+|-----|---------|
+| [`docs/BUILD_LOG.md`](docs/BUILD_LOG.md) | Chronological implementation notes — **append a dated entry for meaningful changes** |
+| [`docs/CHAT_INTEGRATION.md`](docs/CHAT_INTEGRATION.md) | Merged AI chat: **API location, UI map, site context, env, QA** |
+| [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) | **GitHub + Vercel**: root directory, env vars, go-live checks |
 
-## Learn More
+## Scripts
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run dev    # development
+npm run build  # production build
+npm run lint   # ESLint
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploy
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Deploy on [Vercel](https://vercel.com) or any Next.js host; set server env per [`.env.example`](.env.example) (never commit `.env.local`).
 
-## Deploy on Vercel
+**Before production**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. `npm run lint` and `npm run build` pass locally.
+2. Copy env: contact (`RESEND_*`, `CONTACT_*`) + chat (`OPENROUTER_API_KEY`, optional Supabase/notifications). Align `OPENROUTER_SITE_URL` with the public URL.
+3. Follow **Manual QA** in [`docs/CHAT_INTEGRATION.md`](docs/CHAT_INTEGRATION.md) (site + quick estimate + chat on mobile and desktop).
+4. Append a short note to [`docs/BUILD_LOG.md`](docs/BUILD_LOG.md) if you change behavior or env contracts.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Local smoke:** `npm run dev` → `http://localhost:3000` — verify rendering, one contact or estimate submission, and one chat turn if OpenRouter is configured.

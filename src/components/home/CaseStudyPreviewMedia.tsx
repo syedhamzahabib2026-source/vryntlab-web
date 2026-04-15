@@ -1,8 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { caseStudyPosterUrl, type CaseStudy } from "@/lib/case-studies";
+
+type CaseStudyMediaMode = "hoverCard" | "inViewAutoplay";
 
 type CaseStudyPreviewMediaProps = {
   study: CaseStudy;
@@ -12,6 +20,24 @@ type CaseStudyPreviewMediaProps = {
 const easeMedia =
   "duration-[520ms] ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none";
 
+/** Wide desktop with real hover: card hover/focus. Otherwise: in-view autoplay (touch, tablets, narrow windows). */
+function useCaseStudyMediaMode(): CaseStudyMediaMode | null {
+  const [mode, setMode] = useState<CaseStudyMediaMode | null>(null);
+
+  useLayoutEffect(() => {
+    const mq = window.matchMedia(
+      "(min-width: 1024px) and (hover: hover) and (pointer: fine)",
+    );
+    const sync = () =>
+      setMode(mq.matches ? "hoverCard" : "inViewAutoplay");
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  return mode;
+}
+
 export function CaseStudyPreviewMedia({
   study,
   sizes,
@@ -19,6 +45,8 @@ export function CaseStudyPreviewMedia({
   const rootRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const hoveringRef = useRef(false);
+  const mediaMode = useCaseStudyMediaMode();
+
   const [reduceMotion, setReduceMotion] = useState(false);
   const [videoPrimed, setVideoPrimed] = useState(false);
   const [videoReady, setVideoReady] = useState(false);
@@ -45,7 +73,6 @@ export function CaseStudyPreviewMedia({
       });
   }, []);
 
-  /** Pause + poster while hovered card is still on screen (video stays mounted). */
   const leaveHover = useCallback(() => {
     hoveringRef.current = false;
     const v = videoRef.current;
@@ -61,11 +88,6 @@ export function CaseStudyPreviewMedia({
     setVideoRevealed(false);
   }, []);
 
-  /**
-   * Card left the viewport: tear down the `<video>` so later cards are not all
-   * holding decode/buffer state, and scroll-back + hover gets a clean remount
-   * (matches the “first card” experience more closely).
-   */
   const resetWhenOffscreen = useCallback(() => {
     hoveringRef.current = false;
     const v = videoRef.current;
@@ -86,15 +108,10 @@ export function CaseStudyPreviewMedia({
   const prime = useCallback(() => {
     hoveringRef.current = true;
     setVideoPrimed(true);
-    queueMicrotask(() => {
-      const el = videoRef.current;
-      if (
-        el &&
-        el.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA &&
-        hoveringRef.current
-      ) {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
         tryPlayAndReveal();
-      }
+      });
     });
   }, [tryPlayAndReveal]);
 
@@ -106,10 +123,13 @@ export function CaseStudyPreviewMedia({
     return () => mq.removeEventListener("change", sync);
   }, []);
 
+  /** Desktop / wide + fine pointer: hover + focus inside card; pause when card leaves view. */
   useEffect(() => {
-    if (!videoSrc || reduceMotion || !rootRef.current) return;
-    const article = rootRef.current.closest("article");
-    if (!article) return;
+    if (!videoSrc || reduceMotion || mediaMode !== "hoverCard") return;
+    const root = rootRef.current;
+    if (!root) return;
+    const hoverSurface = root.closest("a");
+    if (!hoverSurface) return;
 
     const onIntersect: IntersectionObserverCallback = (entries) => {
       const e = entries[0];
@@ -120,8 +140,8 @@ export function CaseStudyPreviewMedia({
       }
       requestAnimationFrame(() => {
         try {
-          const hovered = article.matches(":hover");
-          const focusedInside = article.contains(document.activeElement);
+          const hovered = hoverSurface.matches(":hover");
+          const focusedInside = hoverSurface.contains(document.activeElement);
           if (hovered || focusedInside) {
             prime();
           }
@@ -136,34 +156,100 @@ export function CaseStudyPreviewMedia({
       threshold: 0,
       rootMargin: "32px 0px 48px 0px",
     });
-    io.observe(article);
+    io.observe(hoverSurface);
 
     const onFocusOut = (ev: FocusEvent) => {
       const next = ev.relatedTarget;
-      if (next instanceof Node && article.contains(next)) return;
+      if (next instanceof Node && hoverSurface.contains(next)) return;
       leaveHover();
     };
 
-    article.addEventListener("mouseenter", prime);
-    article.addEventListener("mouseleave", leaveHover);
-    article.addEventListener("focusin", prime);
-    article.addEventListener("focusout", onFocusOut);
-    article.addEventListener("pointerdown", prime, { passive: true });
+    hoverSurface.addEventListener("mouseenter", prime);
+    hoverSurface.addEventListener("mouseleave", leaveHover);
+    hoverSurface.addEventListener("focusin", prime);
+    hoverSurface.addEventListener("focusout", onFocusOut);
+    hoverSurface.addEventListener("pointerdown", prime, { passive: true });
 
     return () => {
       io.disconnect();
-      article.removeEventListener("mouseenter", prime);
-      article.removeEventListener("mouseleave", leaveHover);
-      article.removeEventListener("focusin", prime);
-      article.removeEventListener("focusout", onFocusOut);
-      article.removeEventListener("pointerdown", prime);
+      hoverSurface.removeEventListener("mouseenter", prime);
+      hoverSurface.removeEventListener("mouseleave", leaveHover);
+      hoverSurface.removeEventListener("focusin", prime);
+      hoverSurface.removeEventListener("focusout", onFocusOut);
+      hoverSurface.removeEventListener("pointerdown", prime);
     };
-  }, [videoSrc, reduceMotion, prime, leaveHover, resetWhenOffscreen]);
+  }, [
+    videoSrc,
+    reduceMotion,
+    mediaMode,
+    prime,
+    leaveHover,
+    resetWhenOffscreen,
+  ]);
+
+  /**
+   * Touch, tablets, narrow viewports: autoplay when the media region is clearly in view;
+   * pause when mostly scrolled away. Hysteresis + center-weighted rootMargin keeps behavior deliberate.
+   */
+  useEffect(() => {
+    if (!videoSrc || reduceMotion || mediaMode !== "inViewAutoplay") return;
+    const root = rootRef.current;
+    if (!root) return;
+
+    const PLAY_RATIO = 0.15;
+    const STOP_RATIO = 0.05;
+
+    const onIntersect: IntersectionObserverCallback = (entries) => {
+      const entry = entries[0];
+      if (!entry) return;
+      const ratio = entry.intersectionRatio;
+      const shouldPlay = entry.isIntersecting && ratio >= PLAY_RATIO;
+      const shouldStop = !entry.isIntersecting || ratio < STOP_RATIO;
+
+      if (shouldPlay) {
+        hoveringRef.current = true;
+        setVideoPrimed(true);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            tryPlayAndReveal();
+          });
+        });
+      } else if (shouldStop) {
+        resetWhenOffscreen();
+      }
+    };
+
+    const io = new IntersectionObserver(onIntersect, {
+      root: null,
+      threshold: [
+        0, 0.03, 0.05, 0.06, 0.08, 0.1, 0.12, 0.14, 0.15, 0.18, 0.2, 0.25,
+        0.3, 0.35, 0.4, 0.5, 0.6, 0.75, 1,
+      ],
+      rootMargin: "-6% 0px -8% 0px",
+    });
+    io.observe(root);
+    return () => io.disconnect();
+  }, [
+    videoSrc,
+    reduceMotion,
+    mediaMode,
+    tryPlayAndReveal,
+    resetWhenOffscreen,
+  ]);
 
   const onVideoLoadedData = useCallback(() => {
     setVideoReady(true);
     if (hoveringRef.current) tryPlayAndReveal();
   }, [tryPlayAndReveal]);
+
+  useLayoutEffect(() => {
+    if (!videoPrimed || !videoSrc || reduceMotion) return;
+    const v = videoRef.current;
+    if (!v || !hoveringRef.current) return;
+    if (v.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+      tryPlayAndReveal();
+    }
+  }, [videoPrimed, videoSrc, reduceMotion, tryPlayAndReveal]);
 
   if (videoSrc && !reduceMotion) {
     return (
@@ -202,6 +288,19 @@ export function CaseStudyPreviewMedia({
             quality={92}
           />
         </div>
+
+        {mediaMode === "inViewAutoplay" && videoRevealed && videoReady ? (
+          <div
+            className="pointer-events-none absolute bottom-3 left-3 z-[4] flex items-center gap-1.5 rounded-full border border-white/15 bg-black/55 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.14em] text-zinc-200 shadow-lg backdrop-blur-sm sm:bottom-4 sm:left-4"
+            aria-hidden
+          >
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/50 opacity-70 motion-reduce:animate-none" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
+            </span>
+            In-view preview
+          </div>
+        ) : null}
       </div>
     );
   }

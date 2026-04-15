@@ -49,11 +49,20 @@ export type CaseStudy = {
   role?: string;
 };
 
+/** URL segment for `/work/[slug]` — matches each study’s `id`. */
+export function getCaseStudyBySlug(slug: string): CaseStudy | undefined {
+  return caseStudies.find((s) => s.id === slug);
+}
+
+export function getAllCaseStudySlugs(): readonly string[] {
+  return caseStudies.map((s) => s.id);
+}
+
 export const caseStudies: readonly CaseStudy[] = [
   {
     id: "living-silica",
     client: "Living Silica",
-    shortTitle: "A Shopify store shoppers can actually use",
+    shortTitle: "A Shopify store people can actually use",
     typeLabel: "DTC e-commerce · live",
     problem:
       "Dense supplement science was getting in the way of trust and checkout—shoppers needed clarity without losing the brand voice.",
@@ -79,7 +88,7 @@ export const caseStudies: readonly CaseStudy[] = [
   {
     id: "globalservices",
     client: "Global Ship Services",
-    shortTitle: "Marine services positioning that reads globally",
+    shortTitle: "Marine services positioning that actually feels global",
     typeLabel: "B2B marine supplies · live",
     problem:
       "A multi-port ship chandler needed a credible first impression—buyers had to see coverage, services, and certifications without wading through noise.",
@@ -104,7 +113,7 @@ export const caseStudies: readonly CaseStudy[] = [
   {
     id: "crypto",
     client: "Zebra Crypto (TheZ)",
-    shortTitle: "Launch hub for a phased NFT drop",
+    shortTitle: "A launch hub built for a phased NFT drop",
     typeLabel: "Web3 launch · live app",
     problem:
       "Holders needed to understand mint timing, tiers, and wallet steps in real time as the drop evolved—confusion would have killed momentum.",

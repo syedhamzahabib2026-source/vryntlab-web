@@ -10,11 +10,11 @@ export function SiteFooter() {
   return (
     <footer className="mt-auto border-t border-[var(--border)] pt-11 pb-10 sm:pt-12 sm:pb-11 md:pt-14">
       <div className="grid gap-9 sm:gap-10 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:gap-14 lg:gap-16">
-        <div className="max-w-xs sm:max-w-sm">
+        <div className="max-w-sm md:max-w-md">
           <p className="text-[15px] font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
             {siteBrandName}
           </p>
-          <p className="mt-2.5 text-[14px] leading-[1.6] text-zinc-600 sm:mt-3 sm:text-[15px] sm:leading-[1.62] dark:text-zinc-400">
+          <p className="mt-2.5 text-pretty text-[14px] leading-[1.58] text-zinc-600 sm:mt-3 sm:text-[15px] sm:leading-[1.6] dark:text-zinc-400">
             {siteTagline}
           </p>
         </div>
@@ -46,12 +46,9 @@ export function SiteFooter() {
           </div>
         </div>
       </div>
-      <div className="mt-10 flex flex-col gap-2 border-t border-[var(--border)] pt-6 sm:mt-12 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:pt-7">
+      <div className="mt-10 border-t border-[var(--border)] pt-6 sm:mt-12 sm:pt-7">
         <p className="text-[12px] text-zinc-500 dark:text-zinc-500">
           © {year} {siteBrandName}. All rights reserved.
-        </p>
-        <p className="text-[11px] text-zinc-400 dark:text-zinc-600">
-          Preview build — {siteBrandName}
         </p>
       </div>
     </footer>

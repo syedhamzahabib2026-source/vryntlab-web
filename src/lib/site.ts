@@ -1,5 +1,11 @@
 /** Shared site copy and navigation — edit once, use in header & footer */
 
+import {
+  brandFooterTagline,
+  brandMetaDescription,
+  brandSiteTitle,
+} from "@/lib/brand-knowledge";
+
 export const siteBrandName = "VryntLab";
 
 /** Public paths under `/public` */
@@ -8,19 +14,19 @@ export const siteHeroShowcaseSrc = "/brand/figma-example.png";
 
 export const siteEmail = "hello@vryntlab.com";
 
-export const siteTitle = "VryntLab — Web, Systems & Automation";
+export const siteTitle = brandSiteTitle;
 
-export const siteDescription =
-  "Websites, automations, and custom builds for teams that need the web to work—not just look good.";
+export const siteDescription = brandMetaDescription;
 
-/** One-line positioning in footer (kept in sync with public-facing description) */
-export const siteTagline = siteDescription;
+/** One-line positioning in footer */
+export const siteTagline = brandFooterTagline;
 
 /** Primary / secondary CTAs — keep labels consistent site-wide */
 export const ctaStartProject = "Start a Project";
 export const ctaViewWork = "View Work";
 
 export const navLinks = [
+  { href: "#path", label: "Start" },
   { href: "#work", label: "Work" },
   { href: "#services", label: "Services" },
   { href: "#process", label: "Process" },

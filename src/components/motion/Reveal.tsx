@@ -43,7 +43,7 @@ export function Reveal({
     <motion.div
       id={id}
       className={className}
-      initial={{ opacity: 1, y: revealDefaults.y }}
+      initial={{ opacity: 0, y: revealDefaults.y }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-36px 0px -32px 0px", amount: 0.16 }}
       transition={{

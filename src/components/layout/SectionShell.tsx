@@ -11,10 +11,10 @@ type SectionShellProps = {
 };
 
 const padClass: Record<NonNullable<SectionShellProps["pad"]>, string> = {
-  /** Mobile-tighter vertical rhythm; scales up for tablet/desktop */
+  /** Tighter on phones to reduce scroll fatigue; opens up from `sm` */
   default:
-    "py-10 sm:py-12 md:py-[3.75rem] lg:py-[4.75rem] xl:py-[5.25rem]",
-  compact: "py-8 sm:py-9 md:py-11",
+    "py-7 sm:py-10 md:py-[3.25rem] lg:py-[4rem] xl:py-[4.5rem]",
+  compact: "py-6 sm:py-8 md:py-10",
   none: "",
 };
 

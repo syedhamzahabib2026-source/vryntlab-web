@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Geist, Instrument_Serif } from "next/font/google";
+import { ConversionProvider } from "@/components/conversion/ConversionContext";
+import { QuickEstimateSheet } from "@/components/conversion/QuickEstimateSheet";
+import { StickyMobileCta } from "@/components/conversion/StickyMobileCta";
+import { SiteChat } from "@/components/chat/SiteChat";
 import { ScrollProgress } from "@/components/layout/ScrollProgress";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
@@ -9,6 +13,14 @@ import "./globals.css";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+});
+
+/** Display serif for headings — body stays Geist */
+const instrumentSerif = Instrument_Serif({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -31,18 +43,23 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${instrumentSerif.variable} h-full antialiased`}
     >
       <body
         suppressHydrationWarning
         className="min-h-screen font-sans text-[15px] leading-relaxed md:text-base"
       >
-        <ScrollProgress />
-        <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 pb-[max(2.75rem,env(safe-area-inset-bottom,0px))] pt-5 sm:px-8 sm:pb-14 sm:pt-7 md:px-10 lg:px-16 lg:pb-16">
+        <ConversionProvider>
+          <ScrollProgress />
           <SiteHeader />
-          <main className="flex flex-1 flex-col">{children}</main>
-          <SiteFooter />
-        </div>
+          <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 pb-[max(5.75rem,env(safe-area-inset-bottom,0px))] pt-0 sm:px-8 md:px-10 lg:px-16 lg:pb-[max(4rem,env(safe-area-inset-bottom,0px))]">
+            <main className="flex flex-1 flex-col pt-4 sm:pt-5">{children}</main>
+            <SiteFooter />
+          </div>
+          <QuickEstimateSheet />
+          <StickyMobileCta />
+          <SiteChat />
+        </ConversionProvider>
       </body>
     </html>
   );
