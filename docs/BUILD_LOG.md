@@ -1,5 +1,25 @@
 # Build log
 
+## 2026-04-15 — Vercel: lead pipeline env (Supabase + Slack + lead email)
+
+**Project:** `vryntlab-1`. **Production** env now includes `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `SLACK_LEAD_WEBHOOK_URL`, `LEAD_NOTIFY_EMAIL`, `RESEND_FROM_EMAIL` (values sourced from local `vryntlab-ai/.env.local` / team keys). **`vercel deploy --prod`** run so `https://vryntlab.com` picks up the new variables.
+
+**Preview:** CLI may require a Git branch qualifier for Preview-scoped vars; production path is complete. Add Preview copies in the dashboard if PR previews need lead + Slack testing.
+
+---
+
+## 2026-04-15 — Diagnosis: human-handoff Slack/email (lead pipeline)
+
+**Root cause (typical production):** Slack and lead **email** only fire **after** a **Supabase `leads` insert**. In **production**, `createSupabaseLeadWriteClient()` is **`null`** unless **`SUPABASE_URL`** + **`SUPABASE_SERVICE_ROLE_KEY`** are set — otherwise `[lead] lead_gate_blocked: supabase_unconfigured` and **no** notifications.
+
+**Slack:** Requires **`SLACK_LEAD_WEBHOOK_URL`** and/or bot + channel/DM envs (see `lead-notifications.ts`). If unset, behavior was silent; added log: `[notify] notification_slack_skipped: …`.
+
+**Lead email:** Previously expected **`LEAD_NOTIFY_EMAIL`** / **`RESEND_FROM_EMAIL`** only. **`serverEnv.lead`** now falls back to **`CONTACT_TO_EMAIL`** / **`CONTACT_FROM_EMAIL`** when lead-specific vars are unset (same Resend inbox as contact).
+
+**Docs:** `CHAT_INTEGRATION.md` — subsection **Lead save + human-handoff notifications**.
+
+---
+
 ## 2026-04-15 — Production: `vryntlab-1` → `vryntlab-web` + live domain
 
 **Vercel:** Existing project **`vryntlab-1`** (not a new project). **Git:** Reconnected with `vercel git connect` to **`syedhamzahabib2026-source/vryntlab-web`** (replacing prior `vryntlab_1` linkage). Latest production deployment metadata shows **`githubRepo`: `vryntlab-web`**, commit **`b6d01e0`** (README repo link).
