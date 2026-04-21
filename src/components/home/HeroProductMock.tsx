@@ -6,29 +6,27 @@ import { siteBrandName, siteHeroShowcaseSrc } from "@/lib/site";
 
 const spring = { type: "spring" as const, stiffness: 380, damping: 28 };
 
-function HeroMobileProcessCard() {
+function HeroMobileProofCard() {
   return (
-    <div className="w-full rounded-2xl border border-[var(--border-strong)] bg-[var(--surface)] p-5 shadow-[0_8px_32px_-12px_rgba(13,111,100,0.12),0_24px_60px_-28px_rgba(0,0,0,0.12)] ring-1 ring-white/40 dark:border-white/14 dark:bg-zinc-900/55 dark:shadow-[0_0_0_1px_rgba(255,255,255,0.07),0_32px_80px_-36px_rgba(0,0,0,0.65)] dark:ring-white/10">
-      <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-500">
-        Live layout exploration
-      </p>
-      <p className="font-display mt-2 text-lg font-normal tracking-[-0.02em] text-zinc-950 dark:text-zinc-50">
-        Staging-first, milestone-driven
-      </p>
-      <p className="mt-2 text-[13px] leading-relaxed text-zinc-600 dark:text-zinc-400">
-        Staged previews and milestone checkpoints before anything goes live — so you
-        always see structure first, then polish, with no surprises at launch.
-      </p>
-      <div className="mt-4 flex flex-wrap items-center gap-2">
-        <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-400/10 px-2.5 py-1 text-[10px] font-semibold text-emerald-900 dark:text-emerald-100">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/45 opacity-50 motion-reduce:animate-none" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.5)]" />
-          </span>
-          Build in review
+    <div className="w-full rounded-2xl border border-zinc-700/90 bg-zinc-950/90 px-4 py-4 shadow-[0_24px_80px_-40px_rgba(0,0,0,0.65)] ring-1 ring-white/[0.06] backdrop-blur-md dark:border-zinc-700/90 dark:bg-zinc-950/92 sm:px-5 sm:py-5">
+      <div className="flex items-baseline justify-between gap-3 border-b border-white/[0.06] pb-3">
+        <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500">
+          Built & deployed
         </span>
-        <span className="rounded-full border border-[var(--border)] bg-[var(--surface-soft)] px-2.5 py-1 text-[10px] font-semibold text-zinc-600 shadow-[var(--shadow-xs)] dark:border-zinc-600 dark:bg-zinc-800/80 dark:text-zinc-300">
-          Milestone 1 · Structure
+        <span className="shrink-0 text-right font-display text-[0.9375rem] font-normal tracking-[-0.02em] text-teal-300/95">
+          48hrs avg turnaround
+        </span>
+      </div>
+      <p className="mt-3 text-center text-[12px] font-medium tracking-wide text-zinc-400 sm:text-[13px]">
+        Websites · Chatbots · Automation
+      </p>
+      <div className="mt-3 flex items-center justify-center gap-2 border-t border-white/[0.06] pt-3">
+        <span className="relative flex h-2 w-2 shrink-0">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/40 opacity-70 motion-reduce:animate-none" />
+          <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.55)]" />
+        </span>
+        <span className="text-[12px] font-medium tabular-nums text-zinc-300">
+          All systems live
         </span>
       </div>
     </div>
@@ -44,7 +42,7 @@ export function HeroProductMock() {
   return (
     <>
       <div className="md:hidden">
-        <HeroMobileProcessCard />
+        <HeroMobileProofCard />
       </div>
 
       <div className="relative mx-auto hidden w-full max-w-[min(100%,40rem)] md:block md:max-w-[min(100%,44rem)] md:px-0 lg:mx-0 lg:max-w-none lg:pr-5 xl:pr-6">

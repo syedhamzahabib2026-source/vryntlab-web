@@ -111,17 +111,13 @@ function AnimatedExampleChat({ active }: { active: boolean }) {
     timeoutRefs.current = [];
   }, []);
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
     if (!active) return;
-    const end = messagesEndRef.current;
-    if (!end) return;
-    const instantSnap = lines.length === 0 && !typingBeforeBot;
-    end.scrollIntoView({
-      block: "end",
-      behavior: instantSnap ? "instant" : "smooth",
-    });
+    const el = messagesContainerRef.current;
+    if (!el) return;
+    el.scrollTop = el.scrollHeight;
   }, [lines, typingBeforeBot, active]);
 
   useEffect(() => {
@@ -235,6 +231,7 @@ function AnimatedExampleChat({ active }: { active: boolean }) {
       </header>
 
       <div
+        ref={messagesContainerRef}
         className={`min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain px-4 py-4 transition-opacity duration-500 ease-out motion-reduce:transition-none sm:px-5 sm:py-5 ${
           transcriptFade ? "opacity-0" : "opacity-100"
         }`}
@@ -311,12 +308,6 @@ function AnimatedExampleChat({ active }: { active: boolean }) {
             </motion.div>
           ) : null}
         </AnimatePresence>
-
-        <div
-          ref={messagesEndRef}
-          aria-hidden
-          className="h-0 w-full shrink-0 scroll-mt-4"
-        />
       </div>
     </div>
   );
