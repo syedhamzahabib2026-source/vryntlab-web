@@ -311,3 +311,35 @@ dialog::backdrop {
     animation: none !important;
   }
 }
+
+/** Persistent teal ring on floating launcher (when chat panel is closed). */
+@keyframes chat-launcher-alive-ring {
+  0%,
+  100% {
+    box-shadow:
+      var(--shadow-sm),
+      var(--shadow-glow),
+      0 0 0 1px color-mix(in oklab, var(--accent) 38%, transparent),
+      0 0 18px -8px var(--accent-glow);
+  }
+  50% {
+    box-shadow:
+      var(--shadow-md),
+      var(--shadow-glow),
+      0 0 0 2px color-mix(in oklab, var(--accent) 58%, transparent),
+      0 0 26px -6px var(--accent-glow);
+  }
+}
+
+.chat-widget-launcher--alive:not(.chat-widget-launcher--hidden) {
+  animation: chat-launcher-alive-ring 2.75s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chat-widget-launcher--alive:not(.chat-widget-launcher--hidden) {
+    animation: none;
+    box-shadow:
+      var(--shadow-sm),
+      0 0 0 1px color-mix(in oklab, var(--accent) 45%, transparent);
+  }
+}

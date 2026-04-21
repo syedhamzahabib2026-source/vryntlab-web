@@ -13,7 +13,6 @@ import {
   siteBrandName,
 } from "@/lib/site";
 import { caseStudies } from "@/lib/case-studies";
-import { HeroProductMock } from "./HeroProductMock";
 
 const tapButton = `min-h-12 w-full justify-center rounded-full px-6 text-[13px] font-semibold tracking-tight transition-[transform,background-color,box-shadow,border-color] duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 active:scale-[0.98] ${focusRing} sm:w-auto sm:min-w-[160px] sm:px-8 md:min-w-[168px] md:px-9`;
 
@@ -52,23 +51,11 @@ export function Hero() {
     [0, reduceMotion ? 0 : -14],
   );
 
-  const mediaScale = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [1, reduceMotion ? 1 : 0.985],
-  );
-
-  const mediaY = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [0, reduceMotion ? 0 : 8],
-  );
-
   return (
     <section
       id="top"
       ref={sectionRef}
-      className="relative overflow-x-visible overflow-y-visible pb-9 pt-1 sm:pb-12 sm:pt-2 md:pb-14 md:pt-3 lg:pb-16 lg:pt-4"
+      className="relative overflow-x-visible overflow-y-visible pb-10 pt-1 sm:pb-14 sm:pt-2 md:pb-16 md:pt-3 lg:pb-20 lg:pt-4"
       aria-labelledby="hero-heading"
     >
       {reduceMotion ? (
@@ -89,14 +76,14 @@ export function Hero() {
       )}
 
       <div
-        className={`relative grid w-full min-w-0 gap-7 sm:gap-9 md:gap-10 lg:grid-cols-12 lg:items-center lg:gap-x-16 lg:gap-y-10 xl:gap-x-20 ${contentWell}`}
+        className={`relative flex w-full min-w-0 flex-col gap-7 sm:gap-9 md:gap-10 ${contentWell}`}
       >
         <StaggerGroup
           mode="immediate"
-          className="flex min-w-0 flex-col items-stretch overflow-x-visible text-left lg:col-span-5 lg:col-start-1 lg:row-start-1"
+          className="flex min-w-0 max-w-3xl flex-col items-stretch overflow-x-visible text-left lg:max-w-[42rem]"
         >
           <StaggerItem>
-            <header className="min-w-0 max-w-none lg:max-w-[min(100%,36rem)]">
+            <header className="min-w-0 max-w-none">
               <div className="flex min-w-0 flex-col gap-2 sm:gap-2.5">
                 <p className="min-w-0 text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--accent)] opacity-90 sm:tracking-[0.26em] dark:opacity-95">
                   {siteBrandName}
@@ -108,22 +95,22 @@ export function Hero() {
               </div>
               <h1
                 id="hero-heading"
-                className="font-display mt-4 max-w-[min(100%,36rem)] text-balance text-[1.8125rem] font-normal leading-[1.1] tracking-[-0.024em] text-zinc-950 sm:mt-5 sm:text-[2.125rem] sm:leading-[1.08] md:mt-6 md:text-[2.625rem] md:leading-[1.06] lg:text-[2.95rem] lg:tracking-[-0.028em] xl:text-[3.15rem] dark:text-zinc-50"
+                className="font-display mt-4 max-w-[min(100%,40rem)] text-balance text-[1.8125rem] font-normal leading-[1.1] tracking-[-0.024em] text-zinc-950 sm:mt-5 sm:text-[2.125rem] sm:leading-[1.08] md:mt-6 md:text-[2.625rem] md:leading-[1.06] lg:text-[2.95rem] lg:tracking-[-0.028em] xl:text-[3.15rem] dark:text-zinc-50"
               >
                 {brandHero.headline}
               </h1>
             </header>
           </StaggerItem>
           <StaggerItem>
-            <p className="mt-4 max-w-[36rem] text-pretty text-[0.9375rem] leading-[1.62] text-zinc-600 sm:mt-5 sm:text-[1.0625rem] sm:leading-[1.64] md:mt-6 md:max-w-[44ch] md:text-[1.0625rem] md:leading-[1.66] dark:text-zinc-400">
+            <p className="mt-4 max-w-[40rem] text-pretty text-[0.9375rem] leading-[1.62] text-zinc-600 sm:mt-5 sm:text-[1.0625rem] sm:leading-[1.64] md:mt-6 md:max-w-[44ch] md:text-[1.0625rem] md:leading-[1.66] dark:text-zinc-400">
               {brandHero.subheadline}
             </p>
           </StaggerItem>
           <StaggerItem>
-            <p className="mt-3 max-w-[36rem] border-l-2 border-[var(--accent)]/40 py-0.5 pl-3.5 text-[12px] font-semibold uppercase tracking-[0.12em] text-zinc-500 sm:mt-4 sm:pl-4 sm:text-[11px] sm:tracking-[0.14em] dark:border-teal-400/35 dark:text-zinc-400">
+            <p className="mt-3 max-w-[40rem] border-l-2 border-[var(--accent)]/40 py-0.5 pl-3.5 text-[12px] font-semibold uppercase tracking-[0.12em] text-zinc-500 sm:mt-4 sm:pl-4 sm:text-[11px] sm:tracking-[0.14em] dark:border-teal-400/35 dark:text-zinc-400">
               {brandHero.proofLabel}
             </p>
-            <p className="mt-1.5 max-w-[36rem] pl-3.5 text-[13px] font-medium leading-relaxed text-zinc-700 sm:pl-4 sm:text-[14px] dark:text-zinc-300">
+            <p className="mt-1.5 max-w-[40rem] pl-3.5 text-[13px] font-medium leading-relaxed text-zinc-700 sm:pl-4 sm:text-[14px] dark:text-zinc-300">
               {caseStudyProofLine()}
             </p>
           </StaggerItem>
@@ -151,29 +138,11 @@ export function Hero() {
               <p className="mt-3 max-w-md text-pretty text-[12px] leading-relaxed text-zinc-500 sm:max-w-lg dark:text-zinc-500">
                 {brandHero.ctaSub}
               </p>
-              <Link href="/#path" className={pathLinkClass}>
+              <Link href="/services#path" className={pathLinkClass}>
                 {brandHero.pathLink}
                 <span aria-hidden>→</span>
               </Link>
             </div>
-          </StaggerItem>
-        </StaggerGroup>
-
-        <StaggerGroup
-          mode="immediate"
-          className="w-full min-w-0 max-lg:overflow-x-visible lg:col-span-7 lg:col-start-6 lg:row-start-1 lg:overflow-x-clip lg:pl-1 xl:pl-2"
-        >
-          <StaggerItem>
-            {reduceMotion ? (
-              <HeroProductMock />
-            ) : (
-              <motion.div
-                className="w-full will-change-transform"
-                style={{ scale: mediaScale, y: mediaY }}
-              >
-                <HeroProductMock />
-              </motion.div>
-            )}
           </StaggerItem>
         </StaggerGroup>
       </div>

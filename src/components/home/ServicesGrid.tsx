@@ -14,27 +14,10 @@ import {
 const cardClass =
   `flex h-full flex-col rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow-xs)] ring-1 ring-black/[0.02] transition-[border-color,box-shadow] duration-300 ease-[var(--ease-out-premium)] sm:p-6 dark:border-zinc-800/85 dark:bg-[color-mix(in_oklab,var(--surface)_92%,var(--surface-soft))] dark:ring-white/[0.04] [@media(hover:hover)]:hover:border-zinc-300/70 [@media(hover:hover)]:hover:shadow-[var(--shadow-sm)] dark:[@media(hover:hover)]:hover:border-zinc-600/45`;
 
-/** Preserves `#service-*` scroll targets for `NeedPathSelector` pulse. */
-function ServiceScrollAnchors() {
-  const anchorClass =
-    "pointer-events-none absolute left-0 top-0 h-px w-px scroll-mt-28 opacity-0";
-  return (
-    <div
-      aria-hidden
-      className="pointer-events-none absolute left-0 top-[-5.5rem] h-0 w-full sm:top-[-6rem] md:top-[-6.5rem]"
-    >
-      <div id="service-websites" className={anchorClass} />
-      <div id="service-systems" className={anchorClass} />
-      <div id="service-custom" className={anchorClass} />
-    </div>
-  );
-}
-
 export function ServicesGrid() {
   return (
     <SectionShell id="services" labelledBy="services-heading">
       <div className="relative flex flex-col gap-5 border-t border-[var(--border)] pt-6 sm:gap-8 sm:pt-8 md:gap-9 md:pt-9 lg:gap-10 lg:pt-10 xl:pt-11">
-        <ServiceScrollAnchors />
         <Reveal>
           <SectionIntro
             eyebrow={brandServicesSection.eyebrow}

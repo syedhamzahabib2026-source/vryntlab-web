@@ -12,6 +12,8 @@ import {
 } from "./assistant-split";
 import "./chat-widget.css";
 
+const LAUNCHER_TIP_SESSION_KEY = "vryntlab-chat-launcher-tip-dismissed";
+
 export type ChatMessage = { role: "user" | "assistant"; content: string; id: string };
 
 export type VryntLabChatbotProps = {
@@ -92,6 +94,7 @@ export function VryntLabChatbot({
   const [assistantTyping, setAssistantTyping] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [leadAlreadySaved, setLeadAlreadySaved] = useState(false);
+  const [launcherTipVisible, setLauncherTipVisible] = useState(false);
   /** Empty on SSR/first paint; synced from sessionStorage after mount to avoid hydration mismatch. */
   const [conversationId, setConversationId] = useState<string>("");
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -101,6 +104,41 @@ export function VryntLabChatbot({
   useEffect(() => {
     setConversationId(readOrCreateSessionId(sessionKey));
   }, [sessionKey]);
+
+  const dismissLauncherTip = useCallback(() => {
+    setLauncherTipVisible(false);
+    try {
+      sessionStorage.setItem(LAUNCHER_TIP_SESSION_KEY, "1");
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      if (sessionStorage.getItem(LAUNCHER_TIP_SESSION_KEY)) return;
+    } catch {
+      return;
+    }
+    const showTimer = window.setTimeout(() => setLauncherTipVisible(true), 3000);
+    const hideTimer = window.setTimeout(() => {
+      setLauncherTipVisible(false);
+      try {
+        sessionStorage.setItem(LAUNCHER_TIP_SESSION_KEY, "1");
+      } catch {
+        /* ignore */
+      }
+    }, 8000);
+    return () => {
+      clearTimeout(showTimer);
+      clearTimeout(hideTimer);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (open) dismissLauncherTip();
+  }, [open, dismissLauncherTip]);
 
   useEffect(() => {
     if (!open) return;
@@ -372,31 +410,46 @@ export function VryntLabChatbot({
         </div>
       </div>
 
-      <button
-        type="button"
-        className={"chat-widget-launcher " + (open ? "chat-widget-launcher--hidden" : "")}
-        onClick={() => setOpen(true)}
-        aria-expanded={open}
-        aria-controls="chat-widget-panel"
-        aria-label={chatWidgetDefaults.launcherAriaLabel}
-        aria-hidden={open}
-        tabIndex={open ? -1 : 0}
-      >
-        {launcherImageSrc ? (
-          <Image
-            src={launcherImageSrc}
-            alt=""
-            width={26}
-            height={26}
-            unoptimized
-            priority
-            className="chat-widget-launcher-img"
-          />
-        ) : (
-          <ChatLauncherGlyph />
-        )}
-        <span className="chat-widget-launcher-label">{chatWidgetDefaults.launcherButtonLabel}</span>
-      </button>
+      <div className="chat-widget-launcher-wrap">
+        {launcherTipVisible && !open ? (
+          <div className="chat-widget-launcher-tip" role="status">
+            Ask VryntLab →
+          </div>
+        ) : null}
+        <button
+          type="button"
+          className={
+            "chat-widget-launcher chat-widget-launcher--alive " +
+            (open ? "chat-widget-launcher--hidden" : "")
+          }
+          onClick={() => {
+            dismissLauncherTip();
+            setOpen(true);
+          }}
+          aria-expanded={open}
+          aria-controls="chat-widget-panel"
+          aria-label={chatWidgetDefaults.launcherAriaLabel}
+          aria-hidden={open}
+          tabIndex={open ? -1 : 0}
+        >
+          {launcherImageSrc ? (
+            <Image
+              src={launcherImageSrc}
+              alt=""
+              width={26}
+              height={26}
+              unoptimized
+              priority
+              className="chat-widget-launcher-img"
+            />
+          ) : (
+            <ChatLauncherGlyph />
+          )}
+          <span className="chat-widget-launcher-label">
+            {chatWidgetDefaults.launcherButtonLabel}
+          </span>
+        </button>
+      </div>
     </div>
   );
 }

@@ -1,5 +1,22 @@
 # Build log
 
+## 2026-04-21 — Homepage slim-down, `/services` hub, VL favicon text, chat launcher, contact form
+
+**What changed:**
+
+1. **Favicons:** `scripts/generate-favicons.mjs` now renders **“VL”** (bold sans SVG → sharp) on white at 512 / 180 / 32 / 16 — readable at favicon size. Run `npm run generate-favicons` after edits.
+2. **Header logo:** Taller steps — `h-[5.5rem]` → `xl:h-[9rem]`; `max-w-[min(88vw,20rem)]` on mobile, `sm:max-w-[min(70vw,22rem)]`, `md+`: `max-w-none`.
+3. **`/services`:** New `src/app/services/page.tsx` — title “What we do — VryntLab”, `NeedPathSelector`, `ServicesGrid`, new `ServiceLanePanels` (three `brandServiceLanes`), bottom CTA to `/#contact`.
+4. **Homepage:** Removed `NeedPathSelector`, full services grid, lane panels, `CredibilityStrip`, and hero product mock (`HeroProductMock.tsx` deleted). Added `ServicesHomeTeaser` (three lines + “See all services →”). Hero is **text + CTAs only**; new headline/subhead in `brand-knowledge.ts`; path link → `/services#path`.
+5. **Nav (`site.ts`):** `Start` → `/services#path`, `Services` → `/services`.
+6. **Chat launcher:** Tooltip after 3s, dismiss at 8s or click/open; `sessionStorage` key `vryntlab-chat-launcher-tip-dismissed`; `.chat-widget-launcher-wrap` + `chat-widget-launcher--alive` + `chat-launcher-alive-ring` in `globals.css`.
+7. **Contact form:** Removed intent-based message prefill; honeypot field only (no “Website” label); textarea label **Message** (name, email, message only).
+8. **Removed:** `CredibilityStrip.tsx`, `HeroProductMock.tsx`; `ServicesGrid` duplicate `#service-*` anchor divs (ids live on `ServiceLanePanels` articles).
+
+**Files (high level):** `scripts/generate-favicons.mjs`, `src/app/page.tsx`, `src/app/services/page.tsx`, `src/components/home/{Hero,ServicesHomeTeaser,ServiceLanePanels,ServicesGrid}.tsx`, `src/components/chat/{VryntLabChatbot,chat-widget.css}`, `src/app/globals.css`, `src/lib/{site,brand-knowledge}.ts`, `src/components/ui/ContactForm.tsx`, `src/components/layout/SiteHeader.tsx`, `docs/BUILD_LOG.md`, `docs/CLIENT_SITE_BLUEPRINT.md`
+
+---
+
 ## 2026-04-21 — Favicon (VL mark), larger header logo, production redeploy
 
 **What changed:**

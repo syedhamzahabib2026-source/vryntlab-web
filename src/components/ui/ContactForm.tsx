@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { focusRing } from "@/components/layout/layoutTokens";
 import { brandContactForm } from "@/lib/brand-knowledge";
-import { getIntentById, readStoredIntentId } from "@/lib/intent";
 import { siteBrandName } from "@/lib/site";
 
 const inputClass =
@@ -31,19 +30,6 @@ export function ContactForm({ className = "" }: ContactFormProps) {
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const intentPrefillDone = useRef(false);
-
-  useEffect(() => {
-    if (intentPrefillDone.current) return;
-    const id = readStoredIntentId();
-    const opt = getIntentById(id);
-    if (!opt) return;
-    intentPrefillDone.current = true;
-    setDescription((prev) => {
-      if (prev.trim().length > 0) return prev;
-      return `${opt.summary}\n\n`;
-    });
-  }, []);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -119,9 +105,8 @@ export function ContactForm({ className = "" }: ContactFormProps) {
         className="pointer-events-none absolute -left-[9999px] h-px w-px overflow-hidden"
         aria-hidden="true"
       >
-        <label htmlFor="contact-website">Website</label>
         <input
-          id="contact-website"
+          id="contact-honeypot"
           name="website"
           type="text"
           tabIndex={-1}
@@ -171,7 +156,7 @@ export function ContactForm({ className = "" }: ContactFormProps) {
       </div>
       <div>
         <label htmlFor="contact-message" className={labelClass}>
-          What you need
+          Message
         </label>
         <textarea
           id="contact-message"

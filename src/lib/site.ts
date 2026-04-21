@@ -10,7 +10,6 @@ export const siteBrandName = "VryntLab";
 
 /** Public paths under `/public` */
 export const siteLogoSrc = "/brand/whitefont.png";
-export const siteHeroShowcaseSrc = "/brand/figma-example.png";
 
 export const siteEmail = "hello@vryntlab.com";
 
@@ -26,9 +25,9 @@ export const ctaStartProject = "Start a Project";
 export const ctaViewWork = "View Work";
 
 export const navLinks = [
-  { href: "/#path", label: "Start" },
+  { href: "/services#path", label: "Start" },
   { href: "/#work", label: "Work" },
-  { href: "/#services", label: "Services" },
+  { href: "/services", label: "Services" },
   { href: "/#process", label: "Process" },
   { href: "/#about", label: "About" },
   { href: "/#contact", label: "Contact" },

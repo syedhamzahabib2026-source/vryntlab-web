@@ -17,13 +17,23 @@ export const brandFooterTagline =
 
 export const brandHero = {
   headline:
-    "Websites, AI chatbots & automation — built fast, launched live.",
+    "Websites, chatbots, and automation — built for businesses that can't afford to underperform online.",
   subheadline:
-    "We fix slow sites, add chatbots that actually convert, and automate the work your team shouldn't be doing by hand.",
+    "We fix what's broken, build what's missing, and ship it — with a clear scope and price before work starts.",
   proofLabel: "Selected work",
   ctaSub:
     "Tell us what's broken or what you want built — we'll reply with a clear scope and price. No decks, no back-and-forth.",
-  pathLink: "Not sure where to start? Pick a focus",
+  pathLink: "Not sure where to start? See services →",
+} as const;
+
+/** Homepage strip — full detail lives on `/services`. */
+export const brandHomeServicesTeaser = {
+  lines: [
+    "We build and improve marketing sites and storefronts — fast loads, a clear story, and paths that convert.",
+    "We wire automation, integrations, and on-site AI chatbots when they save real time and leads.",
+    "We scope honestly: you get a written estimate before heavy work — not a six-week deck process.",
+  ],
+  ctaLabel: "See all services →",
 } as const;
 
 export const brandWorkSection = {

@@ -23,6 +23,7 @@
 | `src/lib/brand-knowledge.ts` | **All** marketing copy: hero, sections, footers, form microcopy. Components import constants — avoid hardcoded strings in TSX. |
 | `src/lib/case-studies.ts` | Portfolio / work detail data (`id`, copy, `media.images`, etc.). |
 | `src/lib/site.ts` | Site name, logo path, nav links, shared CTAs — imports meta strings from brand where appropriate. |
+| `src/app/services/page.tsx` | **Services hub** — path picker (`NeedPathSelector`), 8-card `ServicesGrid`, three `brandServiceLanes` panels (`ServiceLanePanels`), contact CTA. Detailed services content lives here, **not** on the homepage. |
 | `public/projects/[slug]/` | Case study images: `[slug]_1.webp` (hero crop), `[slug]_2.webp` (tall scroll still). |
 | `docs/BUILD_LOG.md` | Append-only changelog; **newest entry at top** after each meaningful ship. |
 | `docs/CLIENT_SITE_BLUEPRINT.md` | This document — patterns and checklists. |
@@ -33,10 +34,10 @@
 |---------|----------------|
 | **Scrolling screenshot hero** | `CaseStudyHeroScroll.tsx` — CSS `translateY` loop (`work-scroll-preview` keyframes in `globals.css`), **15s** on detail pages; `prefers-reduced-motion` → static cover. |
 | **Scrolling card previews** | `ScrollingWorkPreview.tsx` — shorter loop, `animation-play-state` tied to hover or in-view. |
-| **Chatbot showcase** | `ChatbotShowcase.tsx` — **inline** transcript (not the floating widget); optional one-shot **launcher pulse** via `.chat-launcher-attn-pulse` in `globals.css`, triggered after the section leaves view. |
+| **Chatbot showcase** | `ChatbotShowcase.tsx` — **inline** transcript (not the floating widget); optional one-shot **launcher pulse** via `.chat-launcher-attn-pulse` in `globals.css`, triggered after the section leaves view. **Floating launcher** (`VryntLabChatbot`): persistent `.chat-widget-launcher--alive` ring (`chat-launcher-alive-ring` in `globals.css`), first-visit tooltip (`Ask VryntLab →`, `sessionStorage`), tooltip wrapper in `chat-widget.css`. |
 | **Frosted “more work” hints** | `FeaturedWork.tsx` (`WorkPortfolioHintCards`) — `backdrop-blur`, lowered opacity, **`aria-hidden`** on decorative placeholders; visible disclaimer for humans + SR. |
 | **Mobile nav** | `SiteHeader.tsx` — below `lg`, **Menu only** in the bar; primary estimate CTA lives **inside** the drawer. Bottom-of-screen actions stay in `StickyMobileCta`. |
-| **Services grid** | `ServicesGrid.tsx` — outcome-first cards (no tab taxonomy). Hidden `#service-*` anchors preserved for path-selector scroll/pulse. |
+| **Services grid** | `ServicesGrid.tsx` — outcome-first cards (no tab taxonomy). Used on **`/services`** with `NeedPathSelector` and `ServiceLanePanels` (`#service-*` ids on lane articles for path-selector scroll/pulse). |
 | **Social** | `SocialLinks.tsx` — only render links with real `href`s; return **`null`** when empty so the footer hides the block entirely. |
 
 ## 4. Performance rules

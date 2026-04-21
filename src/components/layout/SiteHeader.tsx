@@ -75,8 +75,8 @@ export function SiteHeader() {
                 alt={`${siteBrandName} logo`}
                 width={1000}
                 height={300}
-                sizes="(max-width: 640px) 560px, (max-width: 1024px) 720px, 900px"
-                className="h-[4.5rem] w-auto max-w-[min(82vw,17.5rem)] object-contain object-left brightness-0 dark:filter-none sm:h-[5.25rem] sm:max-w-[min(58vw,18.5rem)] md:h-[5.75rem] md:max-w-[min(48vw,20rem)] lg:h-[6.5rem] lg:max-w-[min(40vw,22rem)] xl:h-[7.5rem] xl:max-w-[min(36vw,24rem)]"
+                sizes="(max-width: 640px) 640px, (max-width: 1024px) 800px, 960px"
+                className="h-[5.5rem] w-auto max-w-[min(88vw,20rem)] object-contain object-left brightness-0 dark:filter-none sm:h-[6.25rem] sm:max-w-[min(70vw,22rem)] md:h-[7rem] md:max-w-none lg:h-[8rem] xl:h-[9rem]"
                 priority
               />
             </Link>
