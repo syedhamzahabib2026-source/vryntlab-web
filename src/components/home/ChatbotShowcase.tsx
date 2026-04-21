@@ -219,7 +219,7 @@ function AnimatedExampleChat({ active }: { active: boolean }) {
   return (
     <div
       aria-label="Example chatbot conversation"
-      className="flex max-h-[min(560px,68vh)] flex-col overflow-hidden rounded-2xl border border-zinc-700/90 bg-zinc-950/85 shadow-[0_24px_80px_-40px_rgba(0,0,0,0.65)] ring-1 ring-white/[0.06] backdrop-blur-md sm:rounded-[1.35rem]"
+      className="flex flex-col overflow-hidden rounded-2xl border border-zinc-700/90 bg-zinc-950/85 shadow-[0_24px_80px_-40px_rgba(0,0,0,0.65)] ring-1 ring-white/[0.06] backdrop-blur-md sm:rounded-[1.35rem]"
     >
       <header className="flex shrink-0 items-center justify-between gap-3 border-b border-zinc-800/90 px-4 py-3 sm:px-5">
         <h3 className="font-display text-[0.95rem] font-normal tracking-[-0.02em] text-zinc-50">
@@ -232,7 +232,7 @@ function AnimatedExampleChat({ active }: { active: boolean }) {
 
       <div
         ref={messagesContainerRef}
-        className={`min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain px-4 py-4 transition-opacity duration-500 ease-out motion-reduce:transition-none sm:px-5 sm:py-5 ${
+        className={`h-[380px] shrink-0 space-y-4 overflow-x-hidden overflow-y-auto overscroll-contain px-4 py-4 transition-opacity duration-500 ease-out motion-reduce:transition-none sm:h-96 sm:px-5 sm:py-5 ${
           transcriptFade ? "opacity-0" : "opacity-100"
         }`}
       >
