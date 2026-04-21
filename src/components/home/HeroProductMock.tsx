@@ -6,6 +6,35 @@ import { siteBrandName, siteHeroShowcaseSrc } from "@/lib/site";
 
 const spring = { type: "spring" as const, stiffness: 380, damping: 28 };
 
+function HeroMobileProcessCard() {
+  return (
+    <div className="w-full rounded-2xl border border-[var(--border-strong)] bg-[var(--surface)] p-5 shadow-[0_8px_32px_-12px_rgba(13,111,100,0.12),0_24px_60px_-28px_rgba(0,0,0,0.12)] ring-1 ring-white/40 dark:border-white/14 dark:bg-zinc-900/55 dark:shadow-[0_0_0_1px_rgba(255,255,255,0.07),0_32px_80px_-36px_rgba(0,0,0,0.65)] dark:ring-white/10">
+      <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-500">
+        Live layout exploration
+      </p>
+      <p className="font-display mt-2 text-lg font-normal tracking-[-0.02em] text-zinc-950 dark:text-zinc-50">
+        Staging-first, milestone-driven
+      </p>
+      <p className="mt-2 text-[13px] leading-relaxed text-zinc-600 dark:text-zinc-400">
+        Staged previews and milestone checkpoints before anything goes live — so you
+        always see structure first, then polish, with no surprises at launch.
+      </p>
+      <div className="mt-4 flex flex-wrap items-center gap-2">
+        <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-400/10 px-2.5 py-1 text-[10px] font-semibold text-emerald-900 dark:text-emerald-100">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/45 opacity-50 motion-reduce:animate-none" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.5)]" />
+          </span>
+          Build in review
+        </span>
+        <span className="rounded-full border border-[var(--border)] bg-[var(--surface-soft)] px-2.5 py-1 text-[10px] font-semibold text-zinc-600 shadow-[var(--shadow-xs)] dark:border-zinc-600 dark:bg-zinc-800/80 dark:text-zinc-300">
+          Milestone 1 · Structure
+        </span>
+      </div>
+    </div>
+  );
+}
+
 /**
  * Layered product frame: depth plates, rim light, slow halo — reads as live tooling.
  */
@@ -13,7 +42,12 @@ export function HeroProductMock() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <div className="relative mx-auto w-full max-w-[min(100%,36rem)] pr-2 sm:pr-3 md:pr-4 lg:mx-0 lg:max-w-none lg:pr-5 xl:pr-6">
+    <>
+      <div className="md:hidden">
+        <HeroMobileProcessCard />
+      </div>
+
+      <div className="relative mx-auto hidden w-full max-w-[min(100%,40rem)] md:block md:max-w-[min(100%,44rem)] md:px-0 lg:mx-0 lg:max-w-none lg:pr-5 xl:pr-6">
       {/* Ambient depth — stacked glows */}
       <div
         aria-hidden
@@ -32,13 +66,13 @@ export function HeroProductMock() {
       {/* Rear plate — suggests a second surface behind the main window */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -bottom-1 left-4 right-2 hidden h-[72%] rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)]/80 shadow-[0_20px_50px_-28px_rgba(0,0,0,0.2)] ring-1 ring-black/[0.04] dark:border-white/[0.07] dark:bg-zinc-900/50 dark:shadow-[0_24px_60px_-28px_rgba(0,0,0,0.55)] dark:ring-white/[0.05] sm:block sm:translate-y-3 sm:rotate-[0.6deg]"
+        className="pointer-events-none absolute -bottom-1 left-4 right-2 hidden h-[72%] rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)]/80 shadow-[0_20px_50px_-28px_rgba(0,0,0,0.2)] ring-1 ring-black/[0.04] dark:border-white/[0.07] dark:bg-zinc-900/50 dark:shadow-[0_24px_60px_-28px_rgba(0,0,0,0.55)] dark:ring-white/[0.05] lg:block lg:translate-y-3 lg:rotate-[0.6deg]"
       />
 
       {!reduceMotion ? (
         <motion.div
           aria-hidden
-          className="pointer-events-none absolute right-0 top-0 z-[4] hidden h-24 w-[min(42%,11rem)] max-w-[11rem] rounded-2xl border border-[var(--border)] bg-[var(--surface)]/95 shadow-[var(--shadow-md)] ring-1 ring-black/[0.05] backdrop-blur-md dark:border-white/12 dark:bg-zinc-900/92 dark:ring-white/[0.08] sm:block md:top-1 md:h-28 md:w-[min(38%,12rem)] md:max-w-[12rem]"
+          className="pointer-events-none absolute right-0 top-0 z-[4] hidden h-24 w-[min(42%,11rem)] max-w-[11rem] rounded-2xl border border-[var(--border)] bg-[var(--surface)]/95 shadow-[var(--shadow-md)] ring-1 ring-black/[0.05] backdrop-blur-md dark:border-white/12 dark:bg-zinc-900/92 dark:ring-white/[0.08] lg:block lg:top-1 lg:h-28 lg:w-[min(38%,12rem)] lg:max-w-[12rem]"
           initial={{ opacity: 0, y: 10, rotate: -2 }}
           animate={{
             opacity: 1,
@@ -103,14 +137,14 @@ export function HeroProductMock() {
               <span className="mt-3 h-6 w-full rounded-md bg-[var(--accent-muted)] shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] dark:bg-teal-900/35 dark:shadow-none" />
             </div>
           </div>
-          <div className="relative aspect-[16/12] min-h-[200px] w-full sm:aspect-[16/11] sm:min-h-[220px] md:min-h-[260px] lg:min-h-[300px]">
+          <div className="relative aspect-[16/11] w-full min-h-0 sm:aspect-[16/10] sm:min-h-[220px] md:aspect-[16/10] md:min-h-[240px] lg:aspect-[16/11] lg:min-h-[300px]">
             <div className="absolute inset-0 bg-[linear-gradient(145deg,color-mix(in_oklab,var(--surface-soft)_82%,var(--background-2)),var(--surface-soft))] dark:bg-zinc-950/85">
               <Image
                 src={siteHeroShowcaseSrc}
                 alt={`${siteBrandName} — interface layout exploration`}
                 fill
-                className="object-contain object-center p-3 px-3.5 pb-3.5 pt-3 sm:p-4 sm:px-5"
-                sizes="(max-width: 1024px) 100vw, min(52vw, 640px)"
+                className="object-contain object-center p-3 px-3.5 pb-3.5 pt-3 md:p-3.5 md:px-4 lg:p-4 lg:px-5"
+                sizes="(max-width: 1023px) min(90vw, 640px), min(52vw, 640px)"
                 priority
               />
             </div>
@@ -134,7 +168,7 @@ export function HeroProductMock() {
       {!reduceMotion ? (
         <motion.div
           aria-hidden
-          className="pointer-events-none absolute -bottom-2 -left-2 z-[3] flex items-center gap-2 rounded-xl border border-[var(--accent)]/30 bg-[color-mix(in_oklab,var(--surface)_88%,var(--accent-muted))] px-2.5 py-2 shadow-[0_12px_40px_-16px_var(--accent-glow)] backdrop-blur-[2px] dark:border-teal-400/25 dark:bg-zinc-900/95"
+          className="pointer-events-none absolute -bottom-2 -left-2 z-[3] hidden items-center gap-2 rounded-xl border border-[var(--accent)]/30 bg-[color-mix(in_oklab,var(--surface)_88%,var(--accent-muted))] px-2.5 py-2 shadow-[0_12px_40px_-16px_var(--accent-glow)] backdrop-blur-[2px] dark:border-teal-400/25 dark:bg-zinc-900/95 md:flex"
           initial={{ opacity: 0, x: -8 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ ...spring, delay: 0.2 }}
@@ -149,5 +183,6 @@ export function HeroProductMock() {
         </motion.div>
       ) : null}
     </div>
+    </>
   );
 }

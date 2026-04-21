@@ -160,7 +160,7 @@ export function Hero() {
 
         <StaggerGroup
           mode="immediate"
-          className="w-full min-w-0 overflow-x-clip lg:col-span-7 lg:col-start-6 lg:row-start-1 lg:overflow-x-clip lg:pl-1 xl:pl-2"
+          className="w-full min-w-0 max-lg:overflow-x-visible lg:col-span-7 lg:col-start-6 lg:row-start-1 lg:overflow-x-clip lg:pl-1 xl:pl-2"
         >
           <StaggerItem>
             {reduceMotion ? (

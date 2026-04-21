@@ -280,8 +280,11 @@ export const brandChatbotShowcase = {
   ] as const,
   demoHint:
     "Example conversation below — scripted for the page, not connected to the live model.",
-  demoLiveCallout:
-    "This is a live demo — try asking it something",
+  demoExampleCaption: "↑ Example conversation — this is what it looks like",
+  realChatHeadline: "Want to try the real thing?",
+  realChatSub:
+    "Our AI is live on this page right now — ask it anything about VryntLab.",
+  realChatButton: "Chat with our AI →",
 } as const;
 
 export const brandProcess = {
