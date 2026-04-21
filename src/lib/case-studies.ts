@@ -1,12 +1,3 @@
-// CLEANUP NOTE: The following files are no longer referenced and can be safely
-// deleted from /public/projects/ after confirming WebP assets display correctly:
-// - living-silica/preview.mov
-// - living-silica/living-silica_1.png
-// - living-silica/living-silica_2.png
-// - globalservices/ (entire folder)
-// - crypto/ (entire folder)
-// Delete manually once verified in production.
-
 /**
  * Still paths for `public/projects/<slug>/<slug>_1.webp` and `_2.webp`.
  * `_1` = card hero / primary; `_2` = tall scroll preview + gallery.

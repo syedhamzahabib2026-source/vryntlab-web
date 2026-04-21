@@ -124,10 +124,12 @@ function AnimatedExampleChat({ active }: { active: boolean }) {
     if (!active) {
       genRef.current += 1;
       clearTimers();
-      setLines([]);
-      setTypingBeforeBot(false);
-      setTranscriptFade(false);
-      return;
+      const resetId = window.setTimeout(() => {
+        setLines([]);
+        setTypingBeforeBot(false);
+        setTranscriptFade(false);
+      }, 0);
+      return () => window.clearTimeout(resetId);
     }
 
     const myGen = ++genRef.current;

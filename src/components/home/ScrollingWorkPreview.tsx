@@ -33,7 +33,11 @@ export function ScrollingWorkPreview({
   }, []);
 
   useEffect(() => {
-    if (!active) setLayerKey((k) => k + 1);
+    if (!active) {
+      const id = window.setTimeout(() => setLayerKey((k) => k + 1), 0);
+      return () => window.clearTimeout(id);
+    }
+    return undefined;
   }, [active]);
 
   const scrollOn = active && !reduceMotion;
