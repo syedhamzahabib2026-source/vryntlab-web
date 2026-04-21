@@ -63,11 +63,11 @@ export function SiteHeader() {
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-8 md:px-10 lg:px-16">
         <div className={`${contentWell}`}>
         {/* Grid: logo width doesn’t pull nav off-center; nav sits in its own column */}
-        <div className="grid w-full min-w-0 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-2 sm:gap-x-3 md:gap-x-4 lg:gap-x-5">
-          <div className="flex min-w-0 shrink-0 items-center justify-start">
+        <div className="grid w-full min-h-0 min-w-0 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-2 sm:gap-x-3 md:gap-x-4 lg:gap-x-5">
+          <div className="flex min-h-0 min-w-0 shrink-0 self-stretch items-center justify-start">
             <Link
               href="/"
-              className={`group/logo relative flex shrink-0 items-center ${focusRing} rounded-md transition-opacity duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 [@media(hover:hover)]:hover:opacity-88`}
+              className={`group/logo relative flex min-h-0 min-w-0 shrink-0 items-center ${focusRing} rounded-md transition-opacity duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 [@media(hover:hover)]:hover:opacity-88`}
               aria-label={`${siteBrandName} — home`}
             >
               <Image
@@ -76,7 +76,7 @@ export function SiteHeader() {
                 width={1000}
                 height={300}
                 sizes="(max-width: 640px) 640px, (max-width: 1024px) 800px, 960px"
-                className="h-[5.5rem] w-auto max-w-[min(88vw,20rem)] object-contain object-left brightness-0 dark:filter-none sm:h-[6.25rem] sm:max-w-[min(70vw,22rem)] md:h-[7rem] md:max-w-none lg:h-[8rem] xl:h-[9rem]"
+                className="h-[5.5rem] w-auto max-h-[calc(100%-0.25rem)] max-w-[min(88vw,20rem)] object-contain object-left brightness-0 dark:filter-none sm:h-[6.25rem] sm:max-h-none sm:max-w-[min(70vw,22rem)] md:h-[7rem] md:max-w-none lg:h-[8rem] xl:h-[9rem]"
                 priority
               />
             </Link>

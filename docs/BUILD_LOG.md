@@ -1,5 +1,22 @@
 # Build log
 
+## 2026-04-21 — Serif VL monogram favicons (cropped brand asset) + header logo column centering
+
+**What changed:**
+
+1. **Favicons:** `scripts/generate-favicons.mjs` reads `public/brand/vl-logo.webp` with **sharp**, **extracts the top ~42%** of height (full width) to isolate the black serif **VL** monogram above the wordmark, then **resize**s to square PNGs (white letterboxing via `fit: 'contain'`) and writes `src/app/icon.png` (512×512), `apple-icon.png` (180×180), `favicon.ico` (32 + 16 via **png-to-ico**). No teal or generated sans text. Run `npm run generate-favicons` after changing the source WebP.
+2. **Header logo:** Logo column uses **`self-stretch`** with **`flex items-center justify-start`** so the mark is vertically centered in the header bar; **`Link`** keeps flex centering without `self-start` / `mt-*`; grid row adds **`min-h-0 min-w-0`**; **`Image`** uses **`max-h-[calc(100%-0.25rem)]`** on small screens to reduce clipping inside the bar, with **`sm:max-h-none`** from `sm` up. Heights unchanged: `h-[5.5rem] sm:h-[6.25rem] md:h-[7rem] lg:h-[8rem] xl:h-[9rem]`.
+
+**Before → after (className snippets):**
+
+- Logo column `div`: `flex min-w-0 shrink-0 items-center justify-start` → `flex min-h-0 min-w-0 shrink-0 self-stretch items-center justify-start`
+- Logo `Link`: `group/logo relative flex shrink-0 items-center …` → `group/logo relative flex min-h-0 min-w-0 shrink-0 items-center …`
+- Grid wrapper: `grid w-full min-w-0 grid-cols-…` → `grid w-full min-h-0 min-w-0 grid-cols-…`
+
+**Files:** `scripts/generate-favicons.mjs`, `src/app/icon.png`, `src/app/apple-icon.png`, `src/app/favicon.ico`, `src/components/layout/SiteHeader.tsx`, `docs/BUILD_LOG.md`
+
+---
+
 ## 2026-04-21 — Homepage slim-down, `/services` hub, VL favicon text, chat launcher, contact form
 
 **What changed:**
