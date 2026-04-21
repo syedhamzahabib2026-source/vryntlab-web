@@ -64,10 +64,10 @@ export function SiteHeader() {
         <div className={`${contentWell}`}>
         {/* Grid: logo width doesn’t pull nav off-center; nav sits in its own column */}
         <div className="grid w-full min-w-0 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-2 sm:gap-x-3 md:gap-x-4 lg:gap-x-5">
-          <div className="flex min-w-0 shrink-0 justify-start">
+          <div className="flex min-w-0 shrink-0 items-center justify-start">
             <Link
               href="/"
-              className={`group/logo relative flex shrink-0 -translate-x-[5px] items-center sm:-translate-x-[6px] ${focusRing} rounded-md transition-opacity duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 [@media(hover:hover)]:hover:opacity-88`}
+              className={`group/logo relative flex shrink-0 items-center ${focusRing} rounded-md transition-opacity duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 [@media(hover:hover)]:hover:opacity-88`}
               aria-label={`${siteBrandName} — home`}
             >
               <Image
@@ -75,8 +75,8 @@ export function SiteHeader() {
                 alt={`${siteBrandName} logo`}
                 width={1000}
                 height={300}
-                sizes="(max-width: 640px) 480px, (max-width: 1024px) 640px, 800px"
-                className="h-[3.875rem] w-auto max-w-[min(72vw,14rem)] object-contain object-left brightness-0 dark:filter-none sm:h-[4.5rem] sm:max-w-[min(52vw,16rem)] md:h-[5rem] md:max-w-none lg:h-[5.75rem] xl:h-[6.75rem]"
+                sizes="(max-width: 640px) 560px, (max-width: 1024px) 720px, 900px"
+                className="h-[4.5rem] w-auto max-w-[min(82vw,17.5rem)] object-contain object-left brightness-0 dark:filter-none sm:h-[5.25rem] sm:max-w-[min(58vw,18.5rem)] md:h-[5.75rem] md:max-w-[min(48vw,20rem)] lg:h-[6.5rem] lg:max-w-[min(40vw,22rem)] xl:h-[7.5rem] xl:max-w-[min(36vw,24rem)]"
                 priority
               />
             </Link>

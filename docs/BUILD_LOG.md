@@ -1,5 +1,17 @@
 # Build log
 
+## 2026-04-21 — Favicon (VL mark), larger header logo, production redeploy
+
+**What changed:**
+
+- **Favicon / PWA icons:** Added `public/brand/vl-logo.webp` (white-background mark from project asset). `scripts/generate-favicons.mjs` uses **sharp** + **png-to-ico** to regenerate `src/app/icon.png` (512×512), `src/app/apple-icon.png` (180×180), and `src/app/favicon.ico` (16 + 32 px ICO) — replaces the default triangle. Run `npm run generate-favicons` after updating the source WebP. `layout.tsx` sets explicit `metadata.icons` for `/favicon.ico`, `/icon.png`, `/apple-icon.png`. Header continues to use `whitefont.png` only.
+- **Header logo:** Increased display heights and max-width caps at each breakpoint; removed negative horizontal translate on the logo link; logo column uses `items-center` for vertical alignment with the nav row. **Before → after:** `h-[3.875rem] sm:h-[4.5rem] md:h-[5rem] lg:h-[5.75rem] xl:h-[6.75rem]` → `h-[4.5rem] sm:h-[5.25rem] md:h-[5.75rem] lg:h-[6.5rem] xl:h-[7.5rem]`; `sizes` widened slightly; `max-w` uses responsive `min(…vw,…rem)` steps up to `xl:max-w-[min(36vw,24rem)]`.
+- **Cache / deploy:** Pushed to `main` with an additional **empty commit** to encourage Vercel edge refresh for clients still seeing stale HTML.
+
+**Files:** `public/brand/vl-logo.webp`, `scripts/generate-favicons.mjs`, `package.json` (devDeps + script), `src/app/layout.tsx`, `src/app/icon.png`, `src/app/apple-icon.png`, `src/app/favicon.ico`, `src/components/layout/SiteHeader.tsx`, `docs/BUILD_LOG.md`
+
+---
+
 ## 2026-04-21 — Sub-page nav + live site parity (case studies)
 
 **What changed:**

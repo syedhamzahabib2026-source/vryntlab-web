@@ -26,6 +26,14 @@ const instrumentSerif = Instrument_Serif({
 export const metadata: Metadata = {
   title: siteTitle,
   description: siteDescription,
+  /** File-based icons in ./icon.png, ./apple-icon.png, ./favicon.ico — generated from public/brand/vl-logo.webp */
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "32x32" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
+  },
   openGraph: {
     title: siteTitle,
     description: siteDescription,
