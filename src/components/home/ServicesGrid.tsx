@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { contentWell, focusRing } from "@/components/layout/layoutTokens";
 import { Reveal } from "@/components/motion/Reveal";
 import { SectionIntro } from "@/components/layout/SectionIntro";
@@ -81,12 +82,12 @@ export function ServicesGrid() {
 
         <Reveal>
           <div className={`${contentWell} flex justify-center`}>
-            <a
-              href="#contact"
+            <Link
+              href="/#contact"
               className={`inline-flex min-h-11 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] px-6 text-[13px] font-semibold text-[var(--foreground)] transition-[transform,border-color] duration-300 ease-[var(--ease-out-premium)] active:scale-[0.99] dark:border-zinc-700 dark:bg-[var(--surface)] ${focusRing} [@media(hover:hover)]:hover:border-[var(--accent)]/35`}
             >
               Tell us what to fix
-            </a>
+            </Link>
           </div>
         </Reveal>
       </div>

@@ -77,6 +77,7 @@
 ## 6. Pre-launch checklist
 
 - [ ] All raster images converted to **WebP** and sized appropriately  
+- [ ] Nav links must use root-relative paths (`/#section`), not bare anchors (`#section`) — bare anchors break on any sub-page  
 - [ ] No placeholder **`#`** links (nav, social, CTAs, logos)  
 - [ ] Mobile nav tested at **375px** and **390px**  
 - [ ] Contact form tested **end-to-end** (success path + validation errors)  

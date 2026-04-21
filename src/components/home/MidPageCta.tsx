@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useConversion } from "@/components/conversion/ConversionContext";
 import { contentWell, focusRing } from "@/components/layout/layoutTokens";
 import { Reveal } from "@/components/motion/Reveal";
@@ -61,12 +62,12 @@ export function MidPageCta({ variant }: MidPageCtaProps) {
                 ? brandIntentActionLabels[selectedIntent].estimatePrimary
                 : c.primary}
             </button>
-            <a
-              href="#contact"
+            <Link
+              href="/#contact"
               className={`text-center text-[13px] font-semibold text-teal-100/95 underline decoration-teal-200/35 underline-offset-[6px] transition-[color,text-decoration-color] duration-300 ease-[var(--ease-out-premium)] sm:text-left ${focusRing} rounded-sm [@media(hover:hover)]:hover:decoration-teal-100/55`}
             >
               {c.secondary}
-            </a>
+            </Link>
           </div>
         </div>
       </Reveal>

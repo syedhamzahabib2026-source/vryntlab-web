@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { focusRing } from "@/components/layout/layoutTokens";
 import { SocialLinks } from "@/components/layout/SocialLinks";
 import { navLinks, siteBrandName, siteEmail, siteTagline } from "@/lib/site";
@@ -23,9 +24,9 @@ export function SiteFooter() {
             <ul className="flex flex-col gap-0.5 sm:gap-1">
               {navLinks.map((link) => (
                 <li key={link.href}>
-                  <a href={link.href} className={footerLinkClass}>
+                  <Link href={link.href} className={footerLinkClass}>
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

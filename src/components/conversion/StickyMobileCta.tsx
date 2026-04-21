@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { focusRing } from "@/components/layout/layoutTokens";
 import { brandIntentActionLabels } from "@/lib/brand-knowledge";
 import { ctaViewWork } from "@/lib/site";
@@ -31,12 +32,12 @@ export function StickyMobileCta() {
         >
           {estimateLabel}
         </button>
-        <a
-          href="#work"
+        <Link
+          href="/#work"
           className={`flex min-h-[3.25rem] min-w-0 flex-1 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] px-3 text-[13px] font-semibold tracking-tight text-[var(--foreground)] shadow-[var(--shadow-xs)] transition-[transform,box-shadow] duration-300 ease-[var(--ease-out-premium)] active:scale-[0.98] dark:border-zinc-700 dark:bg-[var(--surface)] ${focusRing}`}
         >
           {ctaViewWork}
-        </a>
+        </Link>
       </div>
     </div>
   );

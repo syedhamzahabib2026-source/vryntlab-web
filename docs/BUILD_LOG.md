@@ -1,5 +1,23 @@
 # Build log
 
+## 2026-04-21 — Sub-page nav + live site parity (case studies)
+
+**What changed:**
+
+- **`src/lib/site.ts`:** `navLinks` now use root-relative hashes (`/#path`, `/#work`, …) so header and footer navigation works from `/github`, `/x`, `/work/*`, and any non-home route. Bare `#section` only targets the current URL’s hash and was a no-op off the homepage.
+- **`src/components/layout/SiteHeader.tsx`:** Logo link updated from `#top` to `/` so the brand mark returns to the home page from sub-routes.
+- **`src/components/home/Hero.tsx`:** Primary/secondary/path CTAs updated to `/#contact`, `/#work`, `/#path` for the same routing behavior if links are reused or followed from non-home contexts.
+- **`StickyMobileCta.tsx`**, **`ServicesGrid.tsx`**, **`MidPageCta.tsx`:** Section CTAs updated from bare hashes to `/#work` / `/#contact` so they work from sub-pages.
+- **`SiteFooter.tsx`:** Footer nav uses the same `navLinks` — switched to `next/link` for internal routes (matches header + satisfies `@next/next/no-html-link-for-pages`).
+
+**Case studies (source of truth):** `src/lib/case-studies.ts` already contains **only** Living Silica and DK Express Logistics; `FeaturedWork` and the hero proof line (`caseStudyProofLine()` in `Hero.tsx`) derive from that array. Zebra Crypto and Global Ship Services are not present in the repo. If the production site still shows three old clients or the old proof sentence, trigger a fresh **production deploy** on Vercel so the edge network serves the current bundle.
+
+**Docs:** Pre-launch checklist in `docs/CLIENT_SITE_BLUEPRINT.md` — nav hash rule added.
+
+**Files changed:** `src/lib/site.ts`, `src/components/layout/SiteHeader.tsx`, `src/components/layout/SiteFooter.tsx`, `src/components/home/Hero.tsx`, `src/components/conversion/StickyMobileCta.tsx`, `src/components/home/ServicesGrid.tsx`, `src/components/home/MidPageCta.tsx`, `docs/BUILD_LOG.md`, `docs/CLIENT_SITE_BLUEPRINT.md`
+
+---
+
 ## 2026-04-21 — Homepage UX pass: nav, hero, chatbot, services, about, social
 
 **What changed:**

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import Link from "next/link";
 import { useRef } from "react";
 import { contentWell, focusRing } from "@/components/layout/layoutTokens";
 import { StaggerGroup, StaggerItem } from "@/components/motion/StaggerGroup";
@@ -132,7 +133,7 @@ export function Hero() {
                 aria-label="Primary actions"
                 className="flex w-full max-w-md flex-col gap-3 sm:max-w-lg sm:flex-row sm:flex-wrap sm:items-center sm:gap-3"
               >
-                <a href="#contact" className={primaryCtaClass}>
+                <Link href="/#contact" className={primaryCtaClass}>
                   <span className="flex items-center justify-center gap-2">
                     {contactLabel}
                     <span
@@ -142,18 +143,18 @@ export function Hero() {
                       →
                     </span>
                   </span>
-                </a>
-                <a href="#work" className={secondaryCtaClass}>
+                </Link>
+                <Link href="/#work" className={secondaryCtaClass}>
                   {ctaViewWork}
-                </a>
+                </Link>
               </nav>
               <p className="mt-3 max-w-md text-pretty text-[12px] leading-relaxed text-zinc-500 sm:max-w-lg dark:text-zinc-500">
                 {brandHero.ctaSub}
               </p>
-              <a href="#path" className={pathLinkClass}>
+              <Link href="/#path" className={pathLinkClass}>
                 {brandHero.pathLink}
                 <span aria-hidden>→</span>
-              </a>
+              </Link>
             </div>
           </StaggerItem>
         </StaggerGroup>

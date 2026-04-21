@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { contentWell, focusRing } from "@/components/layout/layoutTokens";
@@ -64,8 +65,8 @@ export function SiteHeader() {
         {/* Grid: logo width doesn’t pull nav off-center; nav sits in its own column */}
         <div className="grid w-full min-w-0 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-2 sm:gap-x-3 md:gap-x-4 lg:gap-x-5">
           <div className="flex min-w-0 shrink-0 justify-start">
-            <a
-              href="#top"
+            <Link
+              href="/"
               className={`group/logo relative flex shrink-0 -translate-x-[5px] items-center sm:-translate-x-[6px] ${focusRing} rounded-md transition-opacity duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 [@media(hover:hover)]:hover:opacity-88`}
               aria-label={`${siteBrandName} — home`}
             >
@@ -78,7 +79,7 @@ export function SiteHeader() {
                 className="h-[3.875rem] w-auto max-w-[min(72vw,14rem)] object-contain object-left brightness-0 dark:filter-none sm:h-[4.5rem] sm:max-w-[min(52vw,16rem)] md:h-[5rem] md:max-w-none lg:h-[5.75rem] xl:h-[6.75rem]"
                 priority
               />
-            </a>
+            </Link>
           </div>
 
           <nav
@@ -86,9 +87,9 @@ export function SiteHeader() {
             aria-label="Primary"
           >
             {navLinks.map((link) => (
-              <a key={link.href} href={link.href} className={navLinkClass}>
+              <Link key={link.href} href={link.href} className={navLinkClass}>
                 {link.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -120,14 +121,14 @@ export function SiteHeader() {
             aria-label="Mobile primary"
           >
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
                 className={`flex min-h-11 items-center rounded-lg px-3 py-2 text-[15px] font-medium text-zinc-800 transition-[background-color,color] duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 active:bg-zinc-950/[0.06] ${focusRing} [@media(hover:hover)]:hover:bg-zinc-950/[0.05] dark:text-zinc-200 dark:active:bg-white/[0.06] dark:[@media(hover:hover)]:hover:bg-white/[0.06]`}
                 onClick={() => setOpen(false)}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
             <button
               type="button"

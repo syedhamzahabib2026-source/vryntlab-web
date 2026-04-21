@@ -26,10 +26,10 @@ export const ctaStartProject = "Start a Project";
 export const ctaViewWork = "View Work";
 
 export const navLinks = [
-  { href: "#path", label: "Start" },
-  { href: "#work", label: "Work" },
-  { href: "#services", label: "Services" },
-  { href: "#process", label: "Process" },
-  { href: "#about", label: "About" },
-  { href: "#contact", label: "Contact" },
+  { href: "/#path", label: "Start" },
+  { href: "/#work", label: "Work" },
+  { href: "/#services", label: "Services" },
+  { href: "/#process", label: "Process" },
+  { href: "/#about", label: "About" },
+  { href: "/#contact", label: "Contact" },
 ] as const;
