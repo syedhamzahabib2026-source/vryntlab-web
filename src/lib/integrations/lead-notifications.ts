@@ -223,6 +223,9 @@ async function sendSlackNotifications(p: LeadNotifyPayload): Promise<void> {
   }
 
   if (tasks.length === 0) {
+    notifyLog(
+      "notification_slack_skipped: set SLACK_LEAD_WEBHOOK_URL and/or SLACK_BOT_TOKEN with SLACK_LEAD_CHANNEL or SLACK_LEAD_DM_USER",
+    );
     return;
   }
 

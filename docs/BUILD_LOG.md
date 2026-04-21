@@ -1,5 +1,65 @@
 # Build log
 
+## 2026-04-21 — Homepage UX pass: nav, hero, chatbot, services, about, social
+
+**What changed:**
+
+- Mobile header: duplicate CTAs removed; single **Menu** on small screens; **Quick estimate** in drawer (`SiteHeader.tsx`).
+- Hero + meta: lead with websites, AI chatbots, and automation (`brand-knowledge.ts`, `Hero.tsx`).
+- **ChatbotShowcase**: inline **example** transcript (bubbles, bot avatar, timestamps, looping typing on last bot line), hint toward floating widget, **one-shot pulse** on launcher after scrolling past the section (`globals.css` — new pulse keyframes only).
+- **Services**: tab UI removed; **2×4 outcome grid** (`ServicesGrid.tsx`); hidden `#service-*` anchors kept for path selector; `ServicesExplorer.tsx` removed.
+- **About**: founder voice + **$500** starting signal (`brandAbout.paragraphs`).
+- **Social**: real Facebook/Instagram URLs; **X** → `/x`, **GitHub** → `/github`; LinkedIn removed; no `#` placeholders; footer hides social block when empty.
+- **New routes**: `/x` (coming soon), `/github` (email gate → existing `/api/contact`).
+
+**Why:** Surface the chatbot as a product, speak in client problems not dev lanes, add trust (pricing + real links), and remove broken social placeholders.
+
+**Files changed:**
+
+- `src/components/layout/SiteHeader.tsx`
+- `src/components/home/ChatbotShowcase.tsx`
+- `src/components/home/ServicesGrid.tsx` (new)
+- `src/components/home/Services.tsx`
+- `src/components/home/Hero.tsx` (via brand keys)
+- `src/components/layout/SocialLinks.tsx`
+- `src/components/layout/SiteFooter.tsx`
+- `src/lib/brand-knowledge.ts`
+- `src/app/page.tsx`
+- `src/app/globals.css` (chat launcher pulse only)
+- `src/app/x/page.tsx` (new)
+- `src/app/github/page.tsx`, `src/app/github/GithubAccessForm.tsx` (new)
+- `docs/BUILD_LOG.md`
+- `docs/CLIENT_SITE_BLUEPRINT.md`
+
+---
+
+## 2026-04-21 — Work section redesign: new projects, scrolling previews, "more work" hint
+
+**What changed:**
+
+- Replaced 3 case studies with 2 curated project examples
+- Removed Zebra Crypto and Global Ship Services entries
+- Added DK Express Logistics as new project
+- Replaced .mov video autoplay with CSS scrolling screenshot animation
+- Replaced all .png project images with .webp versions
+- Added "more work on request" frosted card hint below portfolio
+- Changed all "Case study" labels to "Project"
+- Updated section copy to feel selective, not sparse
+
+**Files changed:**
+
+- `src/lib/case-studies.ts`
+- `src/components/home/FeaturedWork.tsx`
+- `src/components/home/ScrollingWorkPreview.tsx` (replaces removed `CaseStudyPreviewMedia.tsx`)
+- `src/lib/brand-knowledge.ts`
+- `src/app/work/[slug]/page.tsx`
+- `src/app/work/page.tsx`
+- `src/components/work/CaseStudyHeroScroll.tsx`
+- `src/app/globals.css`
+- `docs/BUILD_LOG.md`
+
+---
+
 ## 2026-04-15 — Vercel: lead pipeline env (Supabase + Slack + lead email)
 
 **Project:** `vryntlab-1`. **Production** env now includes `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `SLACK_LEAD_WEBHOOK_URL`, `LEAD_NOTIFY_EMAIL`, `RESEND_FROM_EMAIL` (values sourced from local `vryntlab-ai/.env.local` / team keys). **`vercel deploy --prod`** run so `https://vryntlab.com` picks up the new variables.

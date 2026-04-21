@@ -48,9 +48,13 @@ export const serverEnv = {
     return {
       source: envTrim("LEAD_SOURCE"),
       dedupeHoursRaw: envTrim("LEAD_EMAIL_DEDUPE_HOURS"),
-      notifyEmail: envTrim("LEAD_NOTIFY_EMAIL"),
+      /** Lead alerts; falls back to contact inbox so production isn’t silent if only `CONTACT_*` is set. */
+      notifyEmail: envTrim("LEAD_NOTIFY_EMAIL") || envTrim("CONTACT_TO_EMAIL"),
       resendApiKey: envTrim("RESEND_API_KEY"),
-      resendFrom: envTrim("RESEND_FROM_EMAIL") || envTrim("LEAD_EMAIL_FROM"),
+      resendFrom:
+        envTrim("RESEND_FROM_EMAIL") ||
+        envTrim("LEAD_EMAIL_FROM") ||
+        envTrim("CONTACT_FROM_EMAIL"),
     };
   },
 

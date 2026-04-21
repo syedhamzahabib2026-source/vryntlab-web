@@ -4,11 +4,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
-  caseStudyPosterUrl,
   getAllCaseStudySlugs,
   getCaseStudyBySlug,
 } from "@/lib/case-studies";
-import { CaseStudyHeroVideo } from "@/components/work/CaseStudyHeroVideo";
+import { CaseStudyHeroScroll } from "@/components/work/CaseStudyHeroScroll";
 import { siteBrandName } from "@/lib/site";
 import { contentWell, focusRing } from "@/components/layout/layoutTokens";
 
@@ -72,9 +71,9 @@ export default async function CaseStudyPage({ params }: PageProps) {
   const study = getCaseStudyBySlug(slug);
   if (!study) notFound();
 
-  const poster = caseStudyPosterUrl(study.media);
-  const galleryImages =
-    study.media.images.length > 1 ? study.media.images.slice(1) : [];
+  const [heroCropSrc, tallScrollSrc] = study.media.images;
+  const heroCropAlt = study.imageAlts[0] ?? study.coverAlt;
+  const tallAlt = study.imageAlts[1] ?? study.coverAlt;
 
   return (
     <article className="flex flex-1 flex-col overflow-x-clip pb-14 pt-3 sm:pb-20 sm:pt-4 md:pt-5">
@@ -84,7 +83,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
             href="/#work"
             className={`font-medium text-[var(--accent)] underline decoration-[color-mix(in_oklab,var(--accent)_35%,transparent)] underline-offset-4 transition-colors ${focusRing} rounded-sm [@media(hover:hover)]:hover:decoration-[var(--accent)] dark:text-teal-300/90`}
           >
-            ← Selected work
+            ← Selected Work
           </Link>
         </nav>
 
@@ -101,38 +100,47 @@ export default async function CaseStudyPage({ params }: PageProps) {
         </header>
       </div>
 
-      {/* Immersive media — breaks slightly wider than text for product-page feel */}
       <div className="mt-2 w-full px-4 sm:mt-3 sm:px-8 md:px-10 lg:px-16">
         <div className="mx-auto w-full max-w-6xl">
-          <section aria-labelledby="case-media-heading" className="space-y-5">
-            <h2 id="case-media-heading" className="sr-only">
+          <section aria-labelledby="project-media-heading" className="space-y-5">
+            <h2 id="project-media-heading" className="sr-only">
               Project media
             </h2>
             <div className="overflow-hidden rounded-2xl border border-[var(--border-strong)] bg-zinc-100 shadow-[0_24px_80px_-40px_rgba(0,0,0,0.2),var(--shadow-md)] ring-1 ring-black/[0.04] dark:border-zinc-800/90 dark:bg-zinc-950 dark:ring-white/[0.06] sm:rounded-[1.5rem] md:rounded-[1.75rem]">
-              <div className="flex min-h-[min(52vh,22rem)] w-full items-center justify-center bg-gradient-to-b from-zinc-100 to-zinc-200/80 sm:min-h-[min(56vh,28rem)] md:min-h-[min(62vh,34rem)] lg:min-h-[min(64vh,38rem)] dark:from-zinc-950 dark:to-zinc-950/95">
-                {study.media.previewVideoSrc ? (
-                  <CaseStudyHeroVideo
-                    src={study.media.previewVideoSrc}
-                    poster={poster}
-                    className="max-h-[min(72vh,640px)] w-full object-contain object-center"
-                  />
-                ) : (
-                  <Image
-                    src={poster}
-                    alt={study.imageAlts[0] ?? study.coverAlt}
-                    width={1920}
-                    height={1080}
-                    className="h-auto max-h-[min(72vh,640px)] w-full object-contain object-center px-2 py-3 sm:px-4 sm:py-5"
-                    sizes="(max-width: 768px) 100vw, 72rem"
-                    quality={92}
-                    priority
-                  />
-                )}
-              </div>
+              <CaseStudyHeroScroll
+                src={tallScrollSrc}
+                alt={tallAlt}
+                sizes="(max-width: 768px) 100vw, 72rem"
+              />
             </div>
             <p className="mx-auto max-w-3xl text-[13px] leading-relaxed text-zinc-500 dark:text-zinc-500">
               {study.caption}
             </p>
+          </section>
+
+          <section
+            aria-labelledby="project-overview-heading"
+            className="mx-auto mt-10 max-w-6xl space-y-4 sm:mt-12"
+          >
+            <h2
+              id="project-overview-heading"
+              className="text-[11px] font-semibold uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-500"
+            >
+              Primary view
+            </h2>
+            <div className="overflow-hidden rounded-2xl border border-[var(--border-strong)] bg-zinc-100 shadow-[var(--shadow-xs)] ring-1 ring-black/[0.04] dark:border-zinc-800/90 dark:bg-zinc-950 dark:ring-white/[0.06] sm:rounded-[1.35rem]">
+              <div className="flex w-full items-center justify-center bg-gradient-to-b from-zinc-100 to-zinc-200/80 px-2 py-4 sm:px-4 sm:py-6 dark:from-zinc-950 dark:to-zinc-950/95">
+                <Image
+                  src={heroCropSrc}
+                  alt={heroCropAlt}
+                  width={1920}
+                  height={1080}
+                  className="h-auto max-h-[min(56vh,520px)] w-full object-contain object-center"
+                  sizes="(max-width: 768px) 100vw, 72rem"
+                  quality={92}
+                />
+              </div>
+            </div>
           </section>
         </div>
       </div>
@@ -140,16 +148,32 @@ export default async function CaseStudyPage({ params }: PageProps) {
       <div
         className={`${contentWell} mt-12 flex max-w-3xl flex-col gap-10 sm:mt-14 sm:gap-12 md:mt-16 md:gap-14`}
       >
-        <StoryBlock id="case-problem" kicker="01" title="Problem">
-          <p className="text-pretty">{study.problem}</p>
-        </StoryBlock>
-        <StoryBlock id="case-solution" kicker="02" title="What we did">
-          <p className="text-pretty">{study.solution}</p>
-        </StoryBlock>
-        <StoryBlock id="case-result" kicker="03" title="Result">
-          <p className="text-pretty text-zinc-700 dark:text-zinc-300">
+        <section
+          aria-labelledby="project-results-heading"
+          className="rounded-2xl border border-[var(--border-strong)] bg-[color-mix(in_srgb,var(--surface)_92%,var(--surface-soft))] px-6 py-9 shadow-[var(--shadow-sm)] dark:border-zinc-800/90 dark:bg-[color-mix(in_srgb,var(--surface)_78%,var(--surface-soft))] sm:rounded-[1.35rem] sm:px-8 sm:py-11 md:px-10 md:py-12"
+        >
+          <p
+            id="project-results-heading"
+            className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--accent)] dark:text-teal-300/90"
+          >
+            Results
+          </p>
+          <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500 dark:text-zinc-400">
+            {study.cardStat}
+          </p>
+          <p className="font-display mt-4 max-w-[min(100%,36rem)] text-balance text-[1.5rem] font-normal leading-[1.15] tracking-[-0.03em] text-zinc-950 sm:text-[1.75rem] md:text-[2rem] dark:text-zinc-50">
+            {study.cardOutcome}
+          </p>
+          <p className="mt-6 text-[16px] leading-relaxed text-zinc-600 dark:text-zinc-400 sm:text-[17px] sm:leading-relaxed">
             {study.result}
           </p>
+        </section>
+
+        <StoryBlock id="project-problem" kicker="01" title="Problem">
+          <p className="text-pretty">{study.problem}</p>
+        </StoryBlock>
+        <StoryBlock id="project-solution" kicker="02" title="What we did">
+          <p className="text-pretty">{study.solution}</p>
         </StoryBlock>
 
         {study.role || study.tech?.length ? (
@@ -173,41 +197,30 @@ export default async function CaseStudyPage({ params }: PageProps) {
           </dl>
         ) : null}
 
-        {galleryImages.length > 0 ? (
-          <section
-            aria-labelledby="case-gallery-heading"
-            className="space-y-6 border-t border-[var(--border)] pt-12 dark:border-zinc-800/80"
+        <section
+          aria-labelledby="project-gallery-heading"
+          className="space-y-6 border-t border-[var(--border)] pt-12 dark:border-zinc-800/80"
+        >
+          <h2
+            id="project-gallery-heading"
+            className="text-[11px] font-semibold uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-500"
           >
-            <h2
-              id="case-gallery-heading"
-              className="text-[11px] font-semibold uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-500"
-            >
-              More from the project
-            </h2>
-            <div className="grid gap-6 sm:gap-8">
-              {galleryImages.map((src, i) => {
-                const idx = i + 1;
-                const alt = study.imageAlts[idx] ?? study.coverAlt;
-                return (
-                  <div
-                    key={src}
-                    className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] p-3 shadow-[var(--shadow-xs)] dark:border-zinc-800/80 dark:bg-zinc-900/50 sm:rounded-2xl sm:p-5"
-                  >
-                    <Image
-                      src={src}
-                      alt={alt}
-                      width={1920}
-                      height={1080}
-                      className="h-auto w-full object-contain object-center"
-                      sizes="(max-width: 768px) 100vw, 42rem"
-                      quality={92}
-                    />
-                  </div>
-                );
-              })}
+            More from the project
+          </h2>
+          <div className="grid gap-6 sm:gap-8">
+            <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] p-3 shadow-[var(--shadow-xs)] dark:border-zinc-800/80 dark:bg-zinc-900/50 sm:rounded-2xl sm:p-5">
+              <Image
+                src={tallScrollSrc}
+                alt={tallAlt}
+                width={1920}
+                height={1080}
+                className="h-auto w-full object-contain object-center"
+                sizes="(max-width: 768px) 100vw, 42rem"
+                quality={92}
+              />
             </div>
-          </section>
-        ) : null}
+          </div>
+        </section>
 
         <div className="flex flex-col gap-3 border-t border-[var(--border)] pt-12 sm:flex-row sm:items-center sm:gap-4 dark:border-zinc-800/80">
           <a

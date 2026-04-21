@@ -250,3 +250,64 @@ dialog::backdrop {
     opacity: 0;
   }
 }
+
+/** Work section — tall screenshot scroll inside fixed viewport (container query height). */
+@keyframes work-scroll-preview {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(calc(100cqh - 100%));
+  }
+}
+
+.work-scroll-preview-track {
+  animation: work-scroll-preview 10s linear infinite;
+  animation-play-state: paused;
+}
+
+.work-scroll-preview-track[data-active="true"] {
+  animation-play-state: running;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-scroll-preview-track {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/** Project detail hero — same scroll as cards, slower and always running. */
+.work-hero-scroll-track {
+  animation: work-scroll-preview 15s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-hero-scroll-track {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/** One-shot attention ring on the floating chat launcher (triggered from ChatbotShowcase). */
+@keyframes chat-launcher-pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(94, 234, 212, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 14px rgba(94, 234, 212, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(94, 234, 212, 0);
+  }
+}
+
+.chat-widget-launcher.chat-launcher-attn-pulse {
+  animation: chat-launcher-pulse-ring 1.05s ease-out 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chat-widget-launcher.chat-launcher-attn-pulse {
+    animation: none !important;
+  }
+}

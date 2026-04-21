@@ -69,6 +69,22 @@ Contact form (`/api/contact`) uses **separate** Resend vars (`CONTACT_*`, `RESEN
 
 Optional dev-only override for the **contact** “from” address: `CONTACT_FROM_EMAIL_DEV` (see `send-contact-email.ts`).
 
+### Lead save + human-handoff notifications (Slack / email)
+
+Notifications **only run after a successful `leads` row insert** in Supabase (`src/app/api/chat/route.ts`). If persistence is skipped, **no** Slack or lead email is sent.
+
+1. **Production Supabase writes:** `createSupabaseLeadWriteClient()` returns a client only when `SUPABASE_URL` + **`SUPABASE_SERVICE_ROLE_KEY`** are set (`src/lib/integrations/supabase.ts`). In production, **anon-only** config yields **`null`** → log `[lead] lead_gate_blocked: supabase_unconfigured` → entire lead path skipped.
+
+2. **Gate + extraction:** `shouldExtractAndSaveLead` requires a **valid email in user messages**, minimum conversation shape, and context (e.g. human phrase like “representative”, or business/website/need heuristics). `toSaveableLead` requires **name + email + need** (≥12 chars) from extraction.
+
+3. **Notify decision:** After insert, `shouldNotifyLead` sends email/Slack if the user asked for a human (`threadRequestedHuman` / extract) **or** buying-intent score ≥ 0.8 (`src/lib/lead/human-request.ts`).
+
+4. **Email:** Uses `LEAD_NOTIFY_EMAIL` and `RESEND_FROM_EMAIL` with `RESEND_API_KEY`. If `LEAD_*` are unset, the server falls back to **`CONTACT_TO_EMAIL`** / **`CONTACT_FROM_EMAIL`** (`serverEnv.lead`).
+
+5. **Slack:** Requires at least one of **`SLACK_LEAD_WEBHOOK_URL`**, or **`SLACK_BOT_TOKEN`** + **`SLACK_LEAD_CHANNEL`**, or **`SLACK_BOT_TOKEN`** + **`SLACK_LEAD_DM_USER`**. If none are set, the API logs `[notify] notification_slack_skipped: …` and sends nothing to Slack.
+
+**Ops:** Enable **`CHAT_VERBOSE_LOGS=1`** (or non-production) for `[notify] gate_eval` JSON on notify decisions.
+
 ## Hydration note
 
 `VryntLabChatbot` keeps `conversationId` as **`""` on the first paint**, then **syncs from `sessionStorage` in `useEffect`**. That avoids a server/client mismatch (the old pattern called `sessionStorage` inside `useState`’s initializer, which diverges between SSR and the browser).

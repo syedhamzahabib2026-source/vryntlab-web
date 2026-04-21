@@ -115,7 +115,7 @@ export function Hero() {
           </StaggerItem>
           <StaggerItem>
             <p className="mt-4 max-w-[36rem] text-pretty text-[0.9375rem] leading-[1.62] text-zinc-600 sm:mt-5 sm:text-[1.0625rem] sm:leading-[1.64] md:mt-6 md:max-w-[44ch] md:text-[1.0625rem] md:leading-[1.66] dark:text-zinc-400">
-              {brandHero.supportingServices}
+              {brandHero.subheadline}
             </p>
           </StaggerItem>
           <StaggerItem>

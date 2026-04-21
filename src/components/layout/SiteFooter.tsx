@@ -37,12 +37,7 @@ export function SiteFooter() {
             >
               {siteEmail}
             </a>
-            <div className="w-full border-t border-[var(--border)] pt-4 sm:w-auto sm:max-w-none dark:border-zinc-800/80">
-              <p className="mb-2 text-left text-[10px] font-semibold uppercase tracking-[0.16em] text-zinc-400 sm:text-right dark:text-zinc-500">
-                Social
-              </p>
-              <SocialLinks className="justify-start sm:justify-end" />
-            </div>
+            <SocialLinks className="justify-start sm:justify-end" />
           </div>
         </div>
       </div>

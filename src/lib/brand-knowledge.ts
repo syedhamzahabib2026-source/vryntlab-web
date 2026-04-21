@@ -9,29 +9,31 @@ export const brandSiteTitle =
 
 /** Meta / footer one-liner */
 export const brandMetaDescription =
-  "We help businesses get found, booked, and selling online: sites that load fast, SEO and Google Business Profile, bookings, chatbots, automations, and performance work. Plain language. Clear scopes when you ask.";
+  "VryntLab builds websites, AI chatbots, and automations for businesses that need results fast. Clear pricing, direct communication, work that actually ships.";
 
 /** Footer blurb (footer only; meta uses `brandMetaDescription`) */
 export const brandFooterTagline =
   "We help businesses get found, booked, and selling—through better sites, smarter automation, and faster performance.";
 
 export const brandHero = {
-  headline: "Clearer sites. Faster pages. Work that actually ships.",
-  supportingServices:
-    "Websites, SEO, bookings, and automation—built to actually convert.",
+  headline:
+    "Websites, AI chatbots & automation — built fast, launched live.",
+  subheadline:
+    "We fix slow sites, add chatbots that actually convert, and automate the work your team shouldn't be doing by hand.",
   proofLabel: "Selected work",
   ctaSub:
-    "Tell us what’s broken or what you want to launch—we’ll reply with a clear next step.",
+    "Tell us what's broken or what you want built — we'll reply with a clear scope and price. No decks, no back-and-forth.",
   pathLink: "Not sure where to start? Pick a focus",
 } as const;
 
 export const brandWorkSection = {
-  eyebrow: "Selected work",
-  title: "Work we’re willing to put our name on",
-  description: "Problem, approach, outcome—with live links where it matters.",
+  eyebrow: "Selected Work",
+  title: "A sample of what we build",
+  description:
+    "Real problems, real results — a small selection from recent projects.",
 } as const;
 
-/** Shown under the work intro when a path is selected — ties case studies to intent */
+/** Shown under the work intro when a path is selected — ties selected projects to intent */
 export const brandWorkIntentNudge = {
   website:
     "You picked websites & storefronts—these examples lean on clearer pages, bookings, and selling online.",
@@ -178,12 +180,60 @@ export const brandIntentCopy = {
 export const brandServicesSection = {
   eyebrow: "Services",
   title: "Where we usually step in",
-  description: "Based on your focus—switch to see how it plays out.",
+  description:
+    "Most teams don’t care what stack we use—they care what gets fixed. Here’s how we usually help.",
   panelHeading: "This lane",
   deliverablesLabel: "What often ships",
   footerNote:
     "We’ll pass if we’re not the right fit—better for everyone.",
 } as const;
+
+/** Problem-first service grid (replaces tab UI). */
+export const brandServiceGrid = [
+  {
+    title: "Site feels slow or broken on phones",
+    outcome:
+      "Faster loads and fewer layout surprises so people actually read your offer before they leave.",
+  },
+  {
+    title: "Website doesn’t explain what you sell",
+    outcome:
+      "Clear story, stronger structure, and a straight path to contact or checkout.",
+  },
+  {
+    title: "Shopify or storefront isn’t converting",
+    outcome:
+      "Product pages, collections, and checkout tuned so trust shows up before the cart.",
+  },
+  {
+    title: "Booking is a back-and-forth mess",
+    outcome:
+      "Calendars and forms that sync where you work—fewer no-shows and less inbox ping-pong.",
+  },
+  {
+    title: "Same customer questions all day",
+    outcome:
+      "An on-site assistant that answers the repeat stuff and hands off real leads cleanly.",
+  },
+  {
+    title: "Data stuck in three different tools",
+    outcome:
+      "Light automations so bookings, CRM, and email stay in sync without retyping.",
+  },
+  {
+    title: "Hard to find on Google or Maps",
+    outcome:
+      "SEO and local presence work so the right searches surface your business.",
+  },
+  {
+    title: "Nothing off-the-shelf fits how you work",
+    outcome:
+      "Small custom screens, APIs, or internal tools—shipped in slices you can try early.",
+  },
+] as const;
+
+export const brandServiceGridFooter =
+  "Every project is scoped to your actual problem — these are the most common starting points.";
 
 export const brandServiceLanes = [
   {
@@ -218,6 +268,22 @@ export const brandServiceLanes = [
   },
 ] as const;
 
+export const brandChatbotShowcase = {
+  eyebrow: "On-site assistant",
+  title: "The same AI chat we ship for clients — on your domain",
+  description:
+    "Visitors get answers about services and pricing, and serious leads can route to your inbox or calendar without another form maze.",
+  bullets: [
+    "Trained on your pages and offer — not a generic FAQ toy.",
+    "Captures intent in natural language; optional email handoff for humans.",
+    "Runs beside your site: one codebase, no third-party widget lock-in.",
+  ] as const,
+  demoHint:
+    "Example conversation below — scripted for the page, not connected to the live model.",
+  demoLiveCallout:
+    "This is a live demo — try asking it something",
+} as const;
+
 export const brandProcess = {
   eyebrow: "Process",
   title: "How we usually work",
@@ -248,9 +314,11 @@ export const brandAbout = {
   eyebrow: "About",
   title: "Who we are",
   paragraphs: [
-    "VryntLab fixes what’s not working online—and builds what’s missing.",
-    "You work with the people shipping the work—not a rotating account layer.",
-    "We’re upfront about fit, budget, and timing. If it’s not right, we’ll say so early.",
+    "VryntLab is a small, fast-moving studio that builds websites, AI chatbots, and automations for businesses that need results — not a 6-week agency process.",
+
+    "You work directly with the people shipping the work. No account managers, no handoffs, no disappearing after launch.",
+
+    "We're upfront about fit, scope, and price from day one. Projects typically start at $500 — if it's not a fit, we'll say so before you spend anything.",
   ] as const,
 } as const;
 

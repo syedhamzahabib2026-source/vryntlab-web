@@ -7,6 +7,7 @@ import { Hero } from "@/components/home/Hero";
 import { MidPageCta } from "@/components/home/MidPageCta";
 import { NeedPathSelector } from "@/components/home/NeedPathSelector";
 import { Process } from "@/components/home/Process";
+import { ChatbotShowcase } from "@/components/home/ChatbotShowcase";
 import { Services } from "@/components/home/Services";
 
 export default function Home() {
@@ -19,6 +20,7 @@ export default function Home() {
       <NeedPathSelector />
       <DeliveryPreview />
       <Services />
+      <ChatbotShowcase />
       <Process />
       <About />
       <ContactCta />

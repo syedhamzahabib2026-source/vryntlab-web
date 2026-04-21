@@ -6,14 +6,12 @@ import { useEffect, useState } from "react";
 import { contentWell, focusRing } from "@/components/layout/layoutTokens";
 import { useConversion } from "@/components/conversion/ConversionContext";
 import { brandIntentActionLabels } from "@/lib/brand-knowledge";
-import {
-  ctaStartProject,
-  navLinks,
-  siteBrandName,
-  siteLogoSrc,
-} from "@/lib/site";
+import { navLinks, siteBrandName, siteLogoSrc } from "@/lib/site";
 
-const ctaClass = `inline-flex h-12 min-h-12 shrink-0 items-center justify-center rounded-full bg-[var(--surface-ink)] px-6 text-[13px] font-semibold tracking-tight text-white shadow-[var(--shadow-sm)] transition-[background-color,box-shadow,transform] duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 active:scale-[0.98] ${focusRing} [@media(hover:hover)]:hover:shadow-[var(--shadow-glow)] dark:bg-white dark:text-zinc-950 dark:[@media(hover:hover)]:hover:bg-zinc-200`;
+const ctaButtonCore = `inline-flex h-12 min-h-12 items-center justify-center rounded-full bg-[var(--surface-ink)] px-6 text-[13px] font-semibold tracking-tight text-white shadow-[var(--shadow-sm)] transition-[background-color,box-shadow,transform] duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 active:scale-[0.98] ${focusRing} [@media(hover:hover)]:hover:shadow-[var(--shadow-glow)] dark:bg-white dark:text-zinc-950 dark:[@media(hover:hover)]:hover:bg-zinc-200`;
+
+/** Desktop header only — mobile uses hamburger + estimate inside the drawer. */
+const ctaDesktopClass = `${ctaButtonCore} hidden shrink-0 lg:inline-flex`;
 
 /** At top of homepage: reads on warm/mesh background. Otherwise / scrolled: standard nav ink. */
 const navLinkClassHero =
@@ -26,10 +24,6 @@ export function SiteHeader() {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const { openEstimate, selectedIntent } = useConversion();
-  const contactLabel =
-    selectedIntent != null
-      ? brandIntentActionLabels[selectedIntent].contactPrimary
-      : ctaStartProject;
   const estimateNavLabel =
     selectedIntent != null
       ? brandIntentActionLabels[selectedIntent].estimatePrimary
@@ -102,16 +96,10 @@ export function SiteHeader() {
             <button
               type="button"
               onClick={() => openEstimate()}
-              className={`${ctaClass} hidden lg:inline-flex`}
+              className={ctaDesktopClass}
             >
               {estimateNavLabel}
             </button>
-            <a
-              href="#contact"
-              className={`${ctaClass} hidden sm:inline-flex lg:hidden`}
-            >
-              {contactLabel}
-            </a>
             <button
               type="button"
               className={menuBtnClass}
@@ -141,6 +129,16 @@ export function SiteHeader() {
                 {link.label}
               </a>
             ))}
+            <button
+              type="button"
+              className={`${ctaButtonCore} mt-2 w-full shrink-0`}
+              onClick={() => {
+                openEstimate();
+                setOpen(false);
+              }}
+            >
+              {estimateNavLabel}
+            </button>
           </nav>
         ) : null}
         </div>

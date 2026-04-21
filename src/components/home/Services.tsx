@@ -1,1 +1,1 @@
-export { ServicesExplorer as Services } from "./ServicesExplorer";
+export { ServicesGrid as Services } from "./ServicesGrid";
