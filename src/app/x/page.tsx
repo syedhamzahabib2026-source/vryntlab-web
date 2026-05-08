@@ -7,6 +7,7 @@ import { siteBrandName, siteLogoSrc } from "@/lib/site";
 export const metadata: Metadata = {
   title: `X — ${siteBrandName}`,
   description: "VryntLab on X — coming soon.",
+  robots: { index: false, follow: false },
 };
 
 export default function XComingSoonPage() {

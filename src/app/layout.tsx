@@ -25,6 +25,7 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://vryntlab.com"),
   title: siteTitle,
   description: siteDescription,
   /** File-based icons in ./icon.png, ./apple-icon.png, ./favicon.ico — generated from public/brand/vl-logo.webp */
@@ -40,6 +41,11 @@ export const metadata: Metadata = {
     description: siteDescription,
     siteName: siteBrandName,
     type: "website",
+    images: [{ url: "/brand/og-image.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/brand/og-image.png"],
   },
 };
 

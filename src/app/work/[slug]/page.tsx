@@ -10,6 +10,7 @@ import {
 import { CaseStudyHeroScroll } from "@/components/work/CaseStudyHeroScroll";
 import { siteBrandName } from "@/lib/site";
 import { contentWell, focusRing } from "@/components/layout/layoutTokens";
+import { JsonLd } from "@/components/seo/JsonLd";
 
 type PageProps = { params: Promise<{ slug: string }> };
 
@@ -24,10 +25,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${study.client} — ${study.shortTitle} | ${siteBrandName}`,
     description: study.problem.slice(0, 155),
+    alternates: {
+      canonical: `https://vryntlab.com/work/${slug}`,
+    },
     openGraph: {
       title: `${study.client} — ${study.shortTitle}`,
-      description: study.shortTitle,
+      description: study.problem.slice(0, 155),
+      url: `https://vryntlab.com/work/${slug}`,
       type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${study.client} — ${study.shortTitle} | ${siteBrandName}`,
+      description: study.problem.slice(0, 155),
     },
   };
 }
@@ -75,8 +85,19 @@ export default async function CaseStudyPage({ params }: PageProps) {
   const heroCropAlt = study.imageAlts[0] ?? study.coverAlt;
   const tallAlt = study.imageAlts[1] ?? study.coverAlt;
 
+  const breadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://vryntlab.com" },
+      { "@type": "ListItem", position: 2, name: "Work", item: "https://vryntlab.com/work" },
+      { "@type": "ListItem", position: 3, name: study.client, item: `https://vryntlab.com/work/${slug}` },
+    ],
+  };
+
   return (
     <article className="flex flex-1 flex-col overflow-x-clip pb-14 pt-3 sm:pb-20 sm:pt-4 md:pt-5">
+      <JsonLd schema={breadcrumb} />
       <div className={`${contentWell} flex flex-col gap-8 sm:gap-10`}>
         <nav aria-label="Breadcrumb" className="text-[13px] text-zinc-500">
           <Link

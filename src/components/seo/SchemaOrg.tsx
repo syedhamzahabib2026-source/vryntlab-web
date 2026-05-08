@@ -9,6 +9,10 @@ const schemas = [
     description:
       "Lean digital studio building websites, AI chatbots, automations, SEO, and custom digital solutions for small and mid-sized businesses.",
     slogan: "Built lean. Priced fair. Delivered right.",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://vryntlab.com/brand/vl-logo.webp",
+    },
   },
   {
     "@context": "https://schema.org",
@@ -18,6 +22,13 @@ const schemas = [
     email: "hello@vryntlab.com",
     telephone: "+18729856682",
     priceRange: "$$",
+    areaServed: "Worldwide",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Chicago",
+      addressRegion: "IL",
+      addressCountry: "US",
+    },
     serviceType: [
       "Web Design",
       "Website Redesign",
@@ -38,6 +49,14 @@ const schemas = [
     "@type": "WebSite",
     name: "VryntLab",
     url: "https://vryntlab.com",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: "https://vryntlab.com/?q={search_term_string}",
+      },
+      "query-input": "required name=search_term_string",
+    },
   },
 ];
 

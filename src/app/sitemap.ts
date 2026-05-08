@@ -6,31 +6,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
       url: BASE_URL,
-      lastModified: new Date(),
+      lastModified: new Date("2026-05-08"),
       changeFrequency: "weekly",
       priority: 1.0,
     },
     {
       url: `${BASE_URL}/services`,
-      lastModified: new Date(),
+      lastModified: new Date("2026-05-08"),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${BASE_URL}/work`,
-      lastModified: new Date(),
+      lastModified: new Date("2026-05-08"),
       changeFrequency: "monthly",
       priority: 0.7,
     },
     {
       url: `${BASE_URL}/work/living-silica`,
-      lastModified: new Date(),
+      lastModified: new Date("2026-04-21"),
       changeFrequency: "yearly",
       priority: 0.6,
     },
     {
-      url: `${BASE_URL}/work/dk-express-logistics`,
-      lastModified: new Date(),
+      url: `${BASE_URL}/work/dkexpress`,
+      lastModified: new Date("2026-04-21"),
       changeFrequency: "yearly",
       priority: 0.6,
     },

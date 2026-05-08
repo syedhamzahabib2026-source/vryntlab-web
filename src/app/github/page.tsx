@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: `GitHub access | ${siteBrandName}`,
   description:
     "Request access to your VryntLab project repository. Verified clients only.",
+  robots: { index: false, follow: false },
 };
 
 export default function GithubAccessPage() {

@@ -5,6 +5,7 @@ import { ServiceLanePanels } from "@/components/home/ServiceLanePanels";
 import { ServicesGrid } from "@/components/home/ServicesGrid";
 import { contentWell, focusRing } from "@/components/layout/layoutTokens";
 import { siteBrandName } from "@/lib/site";
+import { JsonLd } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
   title: "Web Design, SEO, Chatbots & Automation Services | VryntLab",
@@ -22,15 +23,25 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `What we do — ${siteBrandName}`,
+    title: "Web Design, SEO, Chatbots & Automation Services | VryntLab",
     description:
-      "Pick a focus, browse common problems we solve, and see how we work across web, automation, and custom builds.",
+      "Website design, AI chatbots, booking systems, SEO, speed optimization and business automation — all from one lean digital studio. See what we do.",
   },
+};
+
+const servicesBreadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://vryntlab.com" },
+    { "@type": "ListItem", position: 2, name: "Services", item: "https://vryntlab.com/services" },
+  ],
 };
 
 export default function ServicesPage() {
   return (
     <div className="flex flex-1 flex-col">
+      <JsonLd schema={servicesBreadcrumb} />
       <header
         className={`${contentWell} border-b border-[var(--border)] pb-8 pt-6 sm:pb-10 sm:pt-8 md:pb-11 md:pt-10`}
       >
