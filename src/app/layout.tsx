@@ -8,6 +8,7 @@ import { ScrollProgress } from "@/components/layout/ScrollProgress";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { siteBrandName, siteDescription, siteTitle } from "@/lib/site";
+import { SchemaOrg } from "@/components/seo/SchemaOrg";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -57,6 +58,7 @@ export default function RootLayout({
         suppressHydrationWarning
         className="min-h-screen font-sans text-[15px] leading-relaxed md:text-base"
       >
+        <SchemaOrg />
         <ConversionProvider>
           <ScrollProgress />
           <SiteHeader />
