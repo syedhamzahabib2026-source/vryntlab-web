@@ -10,6 +10,22 @@ export const metadata: Metadata = {
   title: `What we do — ${siteBrandName}`,
   description:
     "Pick a focus, browse common problems we solve, and see how we work across web, automation, and custom builds.",
+  alternates: {
+    canonical: "https://vryntlab.com/services",
+  },
+  openGraph: {
+    title: `What we do — ${siteBrandName}`,
+    description:
+      "Pick a focus, browse common problems we solve, and see how we work across web, automation, and custom builds.",
+    url: "https://vryntlab.com/services",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `What we do — ${siteBrandName}`,
+    description:
+      "Pick a focus, browse common problems we solve, and see how we work across web, automation, and custom builds.",
+  },
 };
 
 export default function ServicesPage() {

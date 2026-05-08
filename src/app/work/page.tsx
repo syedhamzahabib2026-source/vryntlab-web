@@ -8,6 +8,22 @@ export const metadata: Metadata = {
   title: `Work | ${siteBrandName}`,
   description:
     "Selected launches and partnerships — plus context on engagements we cannot show publicly.",
+  alternates: {
+    canonical: "https://vryntlab.com/work",
+  },
+  openGraph: {
+    title: `Work | ${siteBrandName}`,
+    description:
+      "Selected launches and partnerships — plus context on engagements we cannot show publicly.",
+    url: "https://vryntlab.com/work",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Work | ${siteBrandName}`,
+    description:
+      "Selected launches and partnerships — plus context on engagements we cannot show publicly.",
+  },
 };
 
 export default function WorkIndexPage() {
