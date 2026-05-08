@@ -233,6 +233,19 @@ dialog::backdrop {
   }
 }
 
+/** Hero section — dot grid background pattern */
+.hero-dot-grid {
+  background-image: radial-gradient(rgba(124, 63, 255, 0.08) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse 100% 90% at 50% 0%, black 40%, transparent 90%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-dot-grid {
+    opacity: 0.5;
+  }
+}
+
 /** Hero mock — very slow halo pulse (respect reduced motion in component) */
 @keyframes hero-mock-halo {
   0%,

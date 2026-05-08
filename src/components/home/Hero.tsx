@@ -58,17 +58,37 @@ export function Hero() {
       className="relative overflow-x-visible overflow-y-visible pb-10 pt-1 sm:pb-14 sm:pt-2 md:pb-16 md:pt-3 lg:pb-20 lg:pt-4"
       aria-labelledby="hero-heading"
     >
+      {/* Dot grid */}
+      <div
+        aria-hidden
+        className="hero-dot-grid pointer-events-none absolute inset-0"
+      />
+
+      {/* Violet glow — bottom-left */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-20 -left-16 h-[32rem] w-[32rem] rounded-full blur-[120px]"
+        style={{ background: "rgba(124,63,255,0.12)" }}
+      />
+
+      {/* Cyan glow — top-right */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-16 -top-16 h-[22rem] w-[22rem] rounded-full blur-[100px]"
+        style={{ background: "rgba(0,229,255,0.06)" }}
+      />
+
       {reduceMotion ? (
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-[-10%] flex justify-center opacity-[0.55] max-lg:opacity-40 dark:opacity-40 dark:max-lg:opacity-30"
+          className="pointer-events-none absolute inset-x-0 top-[-10%] flex justify-center opacity-[0.45]"
         >
           <div className="h-[min(16rem,52vw)] w-[min(32rem,90vw)] rounded-full bg-[var(--accent-muted)] blur-3xl sm:h-[min(20rem,58vw)] sm:w-[min(36rem,86vw)]" />
         </div>
       ) : (
         <motion.div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-[-10%] flex justify-center opacity-[0.55] max-lg:opacity-40 dark:opacity-40 dark:max-lg:opacity-30"
+          className="pointer-events-none absolute inset-x-0 top-[-10%] flex justify-center opacity-[0.45]"
           style={{ y: parallaxY }}
         >
           <div className="h-[min(16rem,52vw)] w-[min(32rem,90vw)] rounded-full bg-[var(--accent-muted)] blur-3xl sm:h-[min(20rem,58vw)] sm:w-[min(36rem,86vw)]" />
