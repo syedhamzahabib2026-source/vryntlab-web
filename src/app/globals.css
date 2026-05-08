@@ -2,18 +2,18 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 4.5rem;
+  scroll-padding-top: 5rem;
 }
 
 @media (min-width: 640px) {
   html {
-    scroll-padding-top: 5rem;
+    scroll-padding-top: 5.5rem;
   }
 }
 
 @media (min-width: 1024px) {
   html {
-    scroll-padding-top: 5.5rem;
+    scroll-padding-top: 6rem;
   }
 }
 
@@ -24,74 +24,140 @@ html {
 }
 
 /**
- * Light-first product surface: bright base, ink contrast, teal signal.
- * Dark mode = layered charcoal + mint accent (not flat #000).
+ * VryntLab Design System — Premium Dark Theme
+ * Inspired by Linear.app and Vercel's design language
  */
 :root {
-  color-scheme: light;
-  --background: #f6f5f2;
-  --background-2: #eef6f4;
-  --foreground: #0b0d12;
-  --surface: #ffffff;
-  --surface-soft: #eceae5;
-  --surface-ink: #0f1419;
-  --border: rgba(11, 13, 18, 0.1);
-  --border-strong: rgba(11, 13, 18, 0.16);
-  --accent: #0d6f64;
-  --accent-2: #0f8f81;
-  --accent-muted: rgba(13, 111, 100, 0.14);
-  --accent-glow: rgba(15, 143, 129, 0.22);
-  --ring-focus: rgba(13, 111, 100, 0.42);
+  color-scheme: dark;
+  
+  /* Core backgrounds */
+  --background: #080810;
+  --background-2: #0a0a14;
+  --foreground: #F0F0FF;
+  
+  /* Surfaces */
+  --surface: #0F0F1A;
+  --surface-soft: #141420;
+  --surface-ink: #1a1a2a;
+  
+  /* Borders */
+  --border: #1E1E35;
+  --border-strong: #2a2a45;
+  
+  /* Primary accent — violet-purple */
+  --accent: #7C3FFF;
+  --accent-2: #9d6aff;
+  --accent-muted: rgba(124, 63, 255, 0.15);
+  --accent-glow: rgba(124, 63, 255, 0.25);
+  
+  /* Secondary accent — cyan */
+  --cyan: #00E5FF;
+  --cyan-muted: rgba(0, 229, 255, 0.15);
+  --cyan-glow: rgba(0, 229, 255, 0.25);
+  
+  /* Text colors */
+  --text-body: #C8C8D8;
+  --text-muted: #8888a0;
+  --text-heading: #F0F0FF;
+  
+  /* Focus and interaction */
+  --ring-focus: rgba(124, 63, 255, 0.5);
   --ease-out-premium: cubic-bezier(0.16, 1, 0.3, 1);
-  --shadow-xs: 0 1px 0 rgba(11, 13, 18, 0.05);
-  --shadow-sm: 0 2px 10px -2px rgba(11, 13, 18, 0.07),
-    0 10px 32px -14px rgba(11, 13, 18, 0.12);
-  --shadow-md: 0 6px 22px -6px rgba(11, 13, 18, 0.1),
-    0 22px 56px -28px rgba(11, 13, 18, 0.16);
-  --shadow-glow: 0 0 0 1px rgba(13, 111, 100, 0.08),
-    0 18px 50px -24px var(--accent-glow);
-  --mesh-a: rgba(13, 111, 100, 0.09);
-  --mesh-b: rgba(99, 102, 241, 0.06);
-  --mesh-c: rgba(251, 191, 36, 0.05);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-    --background: #0f1114;
-    --background-2: #12151c;
-    --foreground: #eef1f0;
-    --surface: #181b22;
-    --surface-soft: #1f232d;
-    --surface-ink: #0b0d11;
-    --border: rgba(255, 255, 255, 0.09);
-    --border-strong: rgba(255, 255, 255, 0.14);
-    --accent: #5eead4;
-    --accent-2: #99f6e4;
-    --accent-muted: rgba(94, 234, 212, 0.12);
-    --accent-glow: rgba(94, 234, 212, 0.18);
-    --ring-focus: rgba(94, 234, 212, 0.45);
-    --shadow-xs: 0 1px 0 rgba(255, 255, 255, 0.04);
-    --shadow-sm: 0 2px 14px -2px rgba(0, 0, 0, 0.45),
-      0 14px 40px -18px rgba(0, 0, 0, 0.55);
-    --shadow-md: 0 8px 28px -8px rgba(0, 0, 0, 0.55),
-      0 26px 64px -28px rgba(0, 0, 0, 0.65);
-    --shadow-glow: 0 0 0 1px rgba(94, 234, 212, 0.12),
-      0 22px 60px -28px rgba(0, 0, 0, 0.75);
-    --mesh-a: rgba(94, 234, 212, 0.08);
-    --mesh-b: rgba(129, 140, 248, 0.07);
-    --mesh-c: rgba(251, 191, 36, 0.04);
-  }
+  
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 2px 8px -2px rgba(0, 0, 0, 0.5),
+    0 4px 16px -4px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 16px -4px rgba(0, 0, 0, 0.5),
+    0 12px 32px -8px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 32px -8px rgba(0, 0, 0, 0.6),
+    0 24px 64px -16px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 0 1px rgba(124, 63, 255, 0.2),
+    0 8px 32px -8px rgba(124, 63, 255, 0.15);
+  --shadow-glow-cyan: 0 0 0 1px rgba(0, 229, 255, 0.2),
+    0 8px 32px -8px rgba(0, 229, 255, 0.15);
+  
+  /* Gradient */
+  --gradient-cta: linear-gradient(135deg, #7C3FFF, #00E5FF);
+  --gradient-border: linear-gradient(135deg, rgba(124, 63, 255, 0.5), rgba(0, 229, 255, 0.5));
+  
+  /* Mesh backgrounds */
+  --mesh-a: rgba(124, 63, 255, 0.08);
+  --mesh-b: rgba(0, 229, 255, 0.06);
+  --mesh-c: rgba(124, 63, 255, 0.04);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter', var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-sans), ui-monospace, monospace;
+}
+
+/* Display font for headings */
+.font-display {
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 500;
+}
+
+body {
+  position: relative;
+  background: var(--background);
+  color: var(--text-body);
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Dark grid texture background */
+body::before {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.4;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 50% at 50% 0%, black 0%, transparent 70%);
+}
+
+/* Violet glow rising from bottom */
+body::after {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(
+    ellipse 100% 60% at 50% 100%,
+    rgba(124, 63, 255, 0.12),
+    transparent 60%
+  );
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
+}
+
+::selection {
+  background: rgba(124, 63, 255, 0.35);
+  color: #fff;
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  body::after {
+    opacity: 0.25;
+  }
 }
 
 /**
- * Full-bleed dark slabs (forced contrast bands — not tied to OS dark page theme).
+ * Full-bleed dark slabs (forced contrast bands).
  */
 .slab-bleed {
   position: relative;
@@ -104,21 +170,21 @@ html {
 }
 
 .slab-dark {
-  --slab-fg: #f4f4f5;
-  --slab-muted: #a1a1aa;
-  --slab-faint: #71717a;
+  --slab-fg: #F0F0FF;
+  --slab-muted: #C8C8D8;
+  --slab-faint: #8888a0;
   --slab-line: rgba(255, 255, 255, 0.08);
-  --slab-card: rgba(255, 255, 255, 0.035);
-  --slab-card-border: rgba(255, 255, 255, 0.1);
-  --slab-glow: rgba(94, 234, 212, 0.12);
+  --slab-card: rgba(255, 255, 255, 0.03);
+  --slab-card-border: rgba(255, 255, 255, 0.08);
+  --slab-glow: rgba(124, 63, 255, 0.15);
   color: var(--slab-fg);
   background: linear-gradient(
     165deg,
-    #080a0e 0%,
-    #0c0f14 42%,
-    #0a0c11 100%
+    #080810 0%,
+    #0a0a16 42%,
+    #080810 100%
   );
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
 }
 
 .slab-dark::before {
@@ -126,13 +192,13 @@ html {
   pointer-events: none;
   position: absolute;
   inset: 0;
-  opacity: 0.55;
+  opacity: 0.5;
   background-image: linear-gradient(
-      rgba(255, 255, 255, 0.03) 1px,
+      rgba(255, 255, 255, 0.02) 1px,
       transparent 1px
     ),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 56px 56px;
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 64px 64px;
   mask-image: radial-gradient(
     80% 65% at 50% 0%,
     black 0%,
@@ -147,80 +213,82 @@ html {
   inset: 0;
   background: radial-gradient(
     90% 55% at 15% -10%,
-    rgba(94, 234, 212, 0.09),
+    rgba(124, 63, 255, 0.1),
     transparent 55%
   );
   opacity: 0.85;
 }
 
-.font-display {
-  font-family: var(--font-display), ui-serif, Georgia, "Times New Roman", serif;
-}
-
-body {
-  position: relative;
-  background: var(--background);
-  color: var(--foreground);
-  text-rendering: geometricPrecision;
-}
-
-/** Soft mesh — single pseudo-element, GPU-friendly */
-body::before {
-  content: "";
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  opacity: 1;
-  background: radial-gradient(
-      120% 80% at 10% -10%,
-      var(--mesh-a),
-      transparent 55%
-    ),
-    radial-gradient(90% 70% at 95% 10%, var(--mesh-b), transparent 50%),
-    radial-gradient(80% 60% at 50% 100%, var(--mesh-c), transparent 45%);
-}
-
-body > * {
-  position: relative;
-  z-index: 1;
-}
-
-::selection {
-  background: color-mix(in oklab, var(--accent) 28%, transparent);
-}
-
-/** Reduced motion: hide mesh for calmer contrast */
-@media (prefers-reduced-motion: reduce) {
-  body::before {
-    opacity: 0.55;
-  }
-}
-
 /**
- * Closed <dialog> must stay hidden. Tailwind utilities like `flex` on the element
- * override the UA `display:none` and can paint the panel at the bottom of the page.
+ * Dialog/Modal styles
  */
 dialog:not([open]) {
   display: none !important;
 }
 
-/** Open modal: avoid nested scroll with inner overflow-y-auto (see QuickEstimateSheet). */
 dialog:modal {
   overflow: hidden;
 }
 
 dialog::backdrop {
-  background: color-mix(in oklab, #0b0d12 52%, transparent);
+  background: rgba(8, 8, 16, 0.85);
+  backdrop-filter: blur(4px);
 }
 
-@media (prefers-color-scheme: dark) {
-  dialog::backdrop {
-    background: color-mix(in oklab, black 65%, transparent);
+/**
+ * Animations
+ */
+
+/* Word cycle fade animation */
+@keyframes word-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/** Hero mock — very slow halo pulse (respect reduced motion in component) */
+@keyframes word-fade-out {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+.word-cycle-enter {
+  animation: word-fade-in 0.4s ease-out forwards;
+}
+
+.word-cycle-exit {
+  animation: word-fade-out 0.4s ease-out forwards;
+}
+
+/* Marquee animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 25s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Hero mock — very slow halo pulse (respect reduced motion in component) */
 @keyframes hero-mock-halo {
   0%,
   100% {
@@ -233,25 +301,7 @@ dialog::backdrop {
   }
 }
 
-/** Terminal mock — subtle scanline drift */
-@keyframes terminal-scan {
-  0% {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-  8% {
-    opacity: 0.06;
-  }
-  92% {
-    opacity: 0.06;
-  }
-  100% {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-}
-
-/** Work section — tall screenshot scroll inside fixed viewport (container query height). */
+/* Work section — tall screenshot scroll */
 @keyframes work-scroll-preview {
   0% {
     transform: translateY(0);
@@ -275,9 +325,16 @@ dialog::backdrop {
     animation: none !important;
     transform: none !important;
   }
+  .animate-marquee {
+    animation: none !important;
+  }
+  .word-cycle-enter,
+  .word-cycle-exit {
+    animation: none !important;
+  }
 }
 
-/** Project detail hero — same scroll as cards, slower and always running. */
+/* Project detail hero scroll */
 .work-hero-scroll-track {
   animation: work-scroll-preview 15s linear infinite;
 }
@@ -289,16 +346,16 @@ dialog::backdrop {
   }
 }
 
-/** One-shot attention ring on the floating chat launcher (triggered from ChatbotShowcase). */
+/* Chat launcher pulse */
 @keyframes chat-launcher-pulse-ring {
   0% {
-    box-shadow: 0 0 0 0 rgba(94, 234, 212, 0.55);
+    box-shadow: 0 0 0 0 rgba(124, 63, 255, 0.55);
   }
   70% {
-    box-shadow: 0 0 0 14px rgba(94, 234, 212, 0);
+    box-shadow: 0 0 0 14px rgba(124, 63, 255, 0);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(94, 234, 212, 0);
+    box-shadow: 0 0 0 0 rgba(124, 63, 255, 0);
   }
 }
 
@@ -312,21 +369,21 @@ dialog::backdrop {
   }
 }
 
-/** Persistent teal ring on floating launcher (when chat panel is closed). */
+/* Persistent ring on floating launcher */
 @keyframes chat-launcher-alive-ring {
   0%,
   100% {
     box-shadow:
       var(--shadow-sm),
       var(--shadow-glow),
-      0 0 0 1px color-mix(in oklab, var(--accent) 38%, transparent),
+      0 0 0 1px rgba(124, 63, 255, 0.4),
       0 0 18px -8px var(--accent-glow);
   }
   50% {
     box-shadow:
       var(--shadow-md),
       var(--shadow-glow),
-      0 0 0 2px color-mix(in oklab, var(--accent) 58%, transparent),
+      0 0 0 2px rgba(124, 63, 255, 0.6),
       0 0 26px -6px var(--accent-glow);
   }
 }
@@ -340,6 +397,82 @@ dialog::backdrop {
     animation: none;
     box-shadow:
       var(--shadow-sm),
-      0 0 0 1px color-mix(in oklab, var(--accent) 45%, transparent);
+      0 0 0 1px rgba(124, 63, 255, 0.5);
   }
+}
+
+/* Gradient border hover effect */
+.gradient-border-hover {
+  position: relative;
+}
+
+.gradient-border-hover::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--gradient-border);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.gradient-border-hover:hover::before {
+  opacity: 1;
+}
+
+/* Gradient text utility */
+.text-gradient {
+  background: var(--gradient-cta);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Card hover lift effect */
+.card-lift {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-lift:hover {
+  transform: translateY(-4px);
+}
+
+/* Gradient CTA button */
+.btn-gradient {
+  background: var(--gradient-cta);
+  color: white;
+  font-weight: 600;
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-gradient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn-gradient:hover::before {
+  opacity: 1;
+}
+
+/* Ghost button with violet border */
+.btn-ghost-violet {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  transition: all 0.3s ease;
+}
+
+.btn-ghost-violet:hover {
+  background: var(--accent);
+  color: white;
 }

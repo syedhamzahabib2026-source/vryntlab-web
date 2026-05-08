@@ -6,15 +6,15 @@ import { brandContactForm } from "@/lib/brand-knowledge";
 import { siteBrandName } from "@/lib/site";
 
 const inputClass =
-  "min-h-12 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3.5 text-[16px] leading-relaxed text-zinc-950 placeholder:text-zinc-400 shadow-[var(--shadow-xs)] outline-none transition-[border-color,box-shadow,background-color] duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 sm:text-[15px] [@media(hover:hover)]:hover:border-zinc-300/90 focus-visible:border-zinc-400 focus-visible:shadow-[0_0_0_3px_var(--ring-focus)] dark:border-zinc-700 dark:bg-[var(--surface)] dark:text-zinc-50 dark:placeholder:text-zinc-500 dark:[@media(hover:hover)]:hover:border-zinc-600 dark:focus-visible:border-zinc-500";
+  "min-h-12 w-full rounded-lg border border-[#1E1E35] bg-[#0F0F1A] px-4 py-3.5 text-[16px] leading-relaxed text-[#F0F0FF] placeholder:text-[#8888a0] outline-none transition-all duration-300 sm:text-[15px] hover:border-[#7C3FFF]/30 focus:border-[#7C3FFF] focus:ring-2 focus:ring-[#7C3FFF]/30";
 
 const labelClass =
-  "mb-2 block text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-500";
+  "mb-2 block text-[10px] font-semibold uppercase tracking-[0.18em] text-[#8888a0]";
 
-const primaryBtnClass = `inline-flex min-h-12 w-full items-center justify-center rounded-full bg-[var(--surface-ink)] px-8 text-[13px] font-semibold tracking-tight text-white shadow-[var(--shadow-md)] transition-[background-color,box-shadow,transform] duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 active:scale-[0.98] ${focusRing} enabled:[@media(hover:hover)]:hover:shadow-[var(--shadow-glow)] disabled:cursor-not-allowed disabled:opacity-60 dark:bg-white dark:text-zinc-950 dark:enabled:[@media(hover:hover)]:hover:bg-zinc-200 sm:w-auto sm:px-10`;
+const primaryBtnClass = `inline-flex min-h-12 w-full items-center justify-center rounded-lg bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF] px-8 text-[13px] font-semibold text-white shadow-lg transition-all duration-300 ${focusRing} enabled:hover:shadow-[0_0_30px_-5px_rgba(124,63,255,0.4)] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:px-10`;
 
 const errorTextClass =
-  "rounded-2xl border border-red-200/80 bg-red-50/90 px-4 py-3 text-sm leading-relaxed text-red-900 dark:border-red-900/50 dark:bg-red-950/40 dark:text-red-200";
+  "rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm leading-relaxed text-red-400";
 
 type ContactFormProps = {
   className?: string;
@@ -66,7 +66,7 @@ export function ContactForm({ className = "" }: ContactFormProps) {
       setSent(true);
     } catch {
       setError(
-        "We couldn’t reach the server. Check your connection and try again.",
+        "We couldn't reach the server. Check your connection and try again.",
       );
     } finally {
       setLoading(false);
@@ -80,13 +80,13 @@ export function ContactForm({ className = "" }: ContactFormProps) {
         role="status"
         aria-live="polite"
       >
-        <p className="text-[1.0625rem] font-semibold tracking-tight text-zinc-950 sm:text-lg dark:text-zinc-50">
+        <p className="text-[1.0625rem] font-semibold tracking-tight text-[#F0F0FF] sm:text-lg">
           {brandContactForm.sentTitle}
         </p>
-        <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+        <p className="mt-3 text-sm leading-relaxed text-[#C8C8D8]">
           {brandContactForm.sentBody}
         </p>
-        <p className="mt-3 text-sm leading-relaxed text-zinc-500 dark:text-zinc-500">
+        <p className="mt-3 text-sm leading-relaxed text-[#8888a0]">
           {brandContactForm.sentFooter}
         </p>
       </div>
@@ -172,7 +172,7 @@ export function ContactForm({ className = "" }: ContactFormProps) {
       </div>
       <div>
         <button type="submit" className={primaryBtnClass} disabled={loading}>
-          {loading ? "Sending…" : "Send message"}
+          {loading ? "Sending..." : "Send message"}
         </button>
       </div>
     </form>

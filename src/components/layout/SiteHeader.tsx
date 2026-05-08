@@ -4,22 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Menu, X } from "lucide-react";
 import { contentWell, focusRing } from "@/components/layout/layoutTokens";
 import { useConversion } from "@/components/conversion/ConversionContext";
 import { brandIntentActionLabels } from "@/lib/brand-knowledge";
 import { navLinks, siteBrandName, siteLogoSrc } from "@/lib/site";
-
-const ctaButtonCore = `inline-flex h-12 min-h-12 items-center justify-center rounded-full bg-[var(--surface-ink)] px-6 text-[13px] font-semibold tracking-tight text-white shadow-[var(--shadow-sm)] transition-[background-color,box-shadow,transform] duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 active:scale-[0.98] ${focusRing} [@media(hover:hover)]:hover:shadow-[var(--shadow-glow)] dark:bg-white dark:text-zinc-950 dark:[@media(hover:hover)]:hover:bg-zinc-200`;
-
-/** Desktop header only — mobile uses hamburger + estimate inside the drawer. */
-const ctaDesktopClass = `${ctaButtonCore} hidden shrink-0 lg:inline-flex`;
-
-/** At top of homepage: reads on warm/mesh background. Otherwise / scrolled: standard nav ink. */
-const navLinkClassHero =
-  `rounded-md px-2 py-1.5 text-[13px] font-medium text-zinc-700 underline decoration-transparent underline-offset-[8px] transition-[color,text-decoration-color,transform] duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 ${focusRing} [@media(hover:hover)]:hover:-translate-y-px [@media(hover:hover)]:hover:text-[var(--accent)] [@media(hover:hover)]:hover:decoration-[var(--accent)]/45 dark:text-zinc-300 dark:[@media(hover:hover)]:hover:text-teal-200/95 dark:[@media(hover:hover)]:hover:decoration-teal-400/45`;
-
-const navLinkClassDefault =
-  `rounded-md px-2 py-1.5 text-[13px] font-medium text-zinc-600 underline decoration-transparent underline-offset-[8px] transition-[color,text-decoration-color,transform] duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 ${focusRing} [@media(hover:hover)]:hover:-translate-y-px [@media(hover:hover)]:hover:text-[var(--accent)] [@media(hover:hover)]:hover:decoration-[var(--accent)]/50 dark:text-zinc-400 dark:[@media(hover:hover)]:hover:text-teal-200/95 dark:[@media(hover:hover)]:hover:decoration-teal-400/45`;
 
 export function SiteHeader() {
   const pathname = usePathname();
@@ -28,7 +17,7 @@ export function SiteHeader() {
   const estimateNavLabel =
     selectedIntent != null
       ? brandIntentActionLabels[selectedIntent].estimatePrimary
-      : "Quick estimate";
+      : "Free Estimate";
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -41,33 +30,26 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  /** Same canvas as hero: no frosted panel over the mesh/gradient. */
-  const heroAtTop = isHome && !scrolled;
-  const navLinkClass = heroAtTop ? navLinkClassHero : navLinkClassDefault;
+  // Close mobile menu on route change
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
-  const shellClass = heroAtTop
-    ? "border-b border-transparent bg-transparent py-3 shadow-none backdrop-blur-none backdrop-saturate-100 sm:py-4 md:py-5"
-    : scrolled
-      ? "border-b border-[color-mix(in_srgb,var(--foreground)_8%,transparent)] bg-[color-mix(in_srgb,var(--background)_52%,transparent)] py-3 shadow-[0_8px_40px_-28px_rgba(0,0,0,0.07)] backdrop-blur-2xl backdrop-saturate-150 sm:py-4 md:py-5 dark:border-white/[0.08] dark:bg-[color-mix(in_srgb,var(--background)_42%,transparent)] dark:shadow-[0_12px_44px_-32px_rgba(0,0,0,0.45)]"
-      : "border-b border-[color-mix(in_srgb,var(--border)_40%,transparent)] bg-[color-mix(in_srgb,var(--background)_52%,transparent)] py-3 shadow-none backdrop-blur-md backdrop-saturate-110 sm:py-4 md:py-5 dark:border-white/[0.05] dark:bg-[color-mix(in_srgb,var(--background)_45%,transparent)]";
-
-  const menuBtnClass = heroAtTop
-    ? `flex min-h-12 min-w-12 items-center justify-center rounded-lg px-2 text-[13px] font-medium text-zinc-700 transition-[background-color,color,transform] duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 active:scale-[0.98] active:bg-zinc-950/[0.06] ${focusRing} [@media(hover:hover)]:hover:bg-zinc-950/[0.06] [@media(hover:hover)]:hover:text-zinc-950 lg:hidden dark:text-zinc-300 dark:active:bg-white/[0.08] dark:[@media(hover:hover)]:hover:bg-white/[0.08] dark:[@media(hover:hover)]:hover:text-white`
-    : `flex min-h-12 min-w-12 items-center justify-center rounded-lg px-2 text-[13px] font-medium text-zinc-600 transition-[background-color,color,transform] duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 active:scale-[0.98] active:bg-[var(--surface-soft)] ${focusRing} [@media(hover:hover)]:hover:bg-[var(--surface-soft)] [@media(hover:hover)]:hover:text-zinc-950 lg:hidden dark:text-zinc-400 dark:active:bg-zinc-900/70 dark:[@media(hover:hover)]:hover:bg-zinc-900/70 dark:[@media(hover:hover)]:hover:text-zinc-50`;
+  const shellClass = scrolled
+    ? "border-b border-[#1E1E35]/80 bg-[#080810]/80 backdrop-blur-xl backdrop-saturate-150 shadow-[0_4px_30px_-10px_rgba(0,0,0,0.5)]"
+    : "border-b border-transparent bg-transparent";
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full motion-reduce:transition-none motion-safe:transition-[background-color,box-shadow,border-color,backdrop-filter] motion-safe:duration-300 motion-safe:ease-[var(--ease-out-premium)] ${shellClass}`}
+      className={`sticky top-0 z-50 w-full transition-all duration-300 ease-[var(--ease-out-premium)] ${shellClass}`}
     >
-      {/* Full-bleed bar; inner grid matches page gutters + content well (hero column). */}
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-8 md:px-10 lg:px-16">
-        <div className={`${contentWell}`}>
-        {/* Grid: logo width doesn’t pull nav off-center; nav sits in its own column */}
-        <div className="grid w-full min-h-0 min-w-0 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-2 sm:gap-x-3 md:gap-x-4 lg:gap-x-5">
-          <div className="flex min-h-0 min-w-0 shrink-0 self-stretch items-center justify-start">
+        <div className={contentWell}>
+          <div className="flex min-h-16 items-center justify-between gap-4 py-3 sm:min-h-[4.5rem] sm:py-4">
+            {/* Logo */}
             <Link
               href="/"
-              className={`group/logo relative flex min-h-0 min-w-0 shrink-0 items-center ${focusRing} rounded-md transition-opacity duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 [@media(hover:hover)]:hover:opacity-88`}
+              className={`group/logo relative flex shrink-0 items-center ${focusRing} rounded-md transition-opacity duration-300 hover:opacity-90`}
               aria-label={`${siteBrandName} — home`}
             >
               <Image
@@ -75,73 +57,88 @@ export function SiteHeader() {
                 alt={`${siteBrandName} logo`}
                 width={1000}
                 height={300}
-                sizes="(max-width: 640px) 640px, (max-width: 1024px) 800px, 960px"
-                className="h-[5.5rem] w-auto max-h-[calc(100%-0.25rem)] max-w-[min(88vw,20rem)] object-contain object-left brightness-0 dark:filter-none sm:h-[6.25rem] sm:max-h-none sm:max-w-[min(70vw,22rem)] md:h-[7rem] md:max-w-none lg:h-[8rem] xl:h-[9rem]"
+                sizes="(max-width: 640px) 140px, 180px"
+                className="h-12 w-auto object-contain object-left sm:h-14 md:h-16"
                 priority
               />
             </Link>
-          </div>
 
-          <nav
-            className="hidden min-w-0 justify-self-center lg:flex lg:justify-center lg:gap-0.5 xl:gap-1"
-            aria-label="Primary"
-          >
-            {navLinks.map((link) => (
-              <Link key={link.href} href={link.href} className={navLinkClass}>
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="flex shrink-0 items-center justify-end gap-2 sm:gap-2.5">
-            <button
-              type="button"
-              onClick={() => openEstimate()}
-              className={ctaDesktopClass}
+            {/* Desktop Navigation - Center */}
+            <nav
+              className="hidden items-center gap-1 lg:flex"
+              aria-label="Primary"
             >
-              {estimateNavLabel}
-            </button>
-            <button
-              type="button"
-              className={menuBtnClass}
-              aria-expanded={open}
-              aria-controls="mobile-nav"
-              aria-label={open ? "Close navigation" : "Open navigation"}
-              onClick={() => setOpen((v) => !v)}
-            >
-              <span aria-hidden>{open ? "Close" : "Menu"}</span>
-            </button>
-          </div>
-        </div>
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`rounded-lg px-3 py-2 text-[13px] font-medium text-[#C8C8D8] transition-all duration-300 ${focusRing} hover:bg-[#1E1E35]/50 hover:text-[#F0F0FF]`}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
 
-        {open ? (
-          <nav
-            id="mobile-nav"
-            className="mt-3 flex flex-col gap-0.5 rounded-xl border border-[color-mix(in_srgb,var(--border)_70%,transparent)] bg-[color-mix(in_srgb,var(--surface)_92%,transparent)] p-2 pt-3 shadow-[var(--shadow-sm)] backdrop-blur-xl dark:border-white/[0.08] dark:bg-[color-mix(in_srgb,var(--surface)_88%,transparent)] sm:mt-4 sm:p-3 sm:pt-4 lg:hidden"
-            aria-label="Mobile primary"
-          >
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`flex min-h-11 items-center rounded-lg px-3 py-2 text-[15px] font-medium text-zinc-800 transition-[background-color,color] duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 active:bg-zinc-950/[0.06] ${focusRing} [@media(hover:hover)]:hover:bg-zinc-950/[0.05] dark:text-zinc-200 dark:active:bg-white/[0.06] dark:[@media(hover:hover)]:hover:bg-white/[0.06]`}
-                onClick={() => setOpen(false)}
+            {/* Right Side - CTA + Mobile Menu */}
+            <div className="flex items-center gap-3">
+              {/* Desktop CTA - Ghost button with violet border */}
+              <button
+                type="button"
+                onClick={() => openEstimate()}
+                className={`hidden min-h-10 items-center justify-center rounded-lg border border-[#7C3FFF] px-5 text-[13px] font-semibold text-[#7C3FFF] transition-all duration-300 lg:inline-flex ${focusRing} hover:bg-[#7C3FFF] hover:text-white`}
               >
-                {link.label}
-              </Link>
-            ))}
-            <button
-              type="button"
-              className={`${ctaButtonCore} mt-2 w-full shrink-0`}
-              onClick={() => {
-                openEstimate();
-                setOpen(false);
-              }}
+                {estimateNavLabel}
+              </button>
+
+              {/* Mobile Menu Button */}
+              <button
+                type="button"
+                className={`flex min-h-11 min-w-11 items-center justify-center rounded-lg text-[#C8C8D8] transition-all duration-300 lg:hidden ${focusRing} hover:bg-[#1E1E35]/50 hover:text-[#F0F0FF]`}
+                aria-expanded={open}
+                aria-controls="mobile-nav"
+                aria-label={open ? "Close navigation" : "Open navigation"}
+                onClick={() => setOpen((v) => !v)}
+              >
+                {open ? (
+                  <X className="h-5 w-5" />
+                ) : (
+                  <Menu className="h-5 w-5" />
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile Navigation Drawer */}
+          {open && (
+            <nav
+              id="mobile-nav"
+              className="flex flex-col gap-1 rounded-xl border border-[#1E1E35] bg-[#0F0F1A] p-4 shadow-lg lg:hidden"
+              aria-label="Mobile primary"
             >
-              {estimateNavLabel}
-            </button>
-          </nav>
-        ) : null}
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`flex min-h-12 items-center rounded-lg px-4 py-3 text-[15px] font-medium text-[#C8C8D8] transition-all duration-300 ${focusRing} hover:bg-[#1E1E35]/50 hover:text-[#F0F0FF]`}
+                  onClick={() => setOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              ))}
+              <div className="mt-2 border-t border-[#1E1E35] pt-4">
+                <button
+                  type="button"
+                  className="flex min-h-12 w-full items-center justify-center rounded-lg border border-[#7C3FFF] px-6 text-[14px] font-semibold text-[#7C3FFF] transition-all duration-300 hover:bg-[#7C3FFF] hover:text-white"
+                  onClick={() => {
+                    openEstimate();
+                    setOpen(false);
+                  }}
+                >
+                  {estimateNavLabel}
+                </button>
+              </div>
+            </nav>
+          )}
         </div>
       </div>
     </header>

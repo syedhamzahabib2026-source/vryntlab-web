@@ -43,12 +43,12 @@ export default function ServicesPage() {
     <div className="flex flex-1 flex-col">
       <JsonLd schema={servicesBreadcrumb} />
       <header
-        className={`${contentWell} border-b border-[var(--border)] pb-8 pt-6 sm:pb-10 sm:pt-8 md:pb-11 md:pt-10`}
+        className={`${contentWell} border-b border-[#1E1E35] pb-8 pt-6 sm:pb-10 sm:pt-8 md:pb-11 md:pt-10`}
       >
-        <h1 className="font-display text-balance text-[1.75rem] font-normal leading-[1.08] tracking-[-0.03em] text-[var(--foreground)] sm:text-[2rem] md:text-[2.25rem]">
+        <h1 className="font-display text-balance text-[1.75rem] font-medium leading-[1.08] tracking-[-0.02em] text-[#F0F0FF] sm:text-[2rem] md:text-[2.25rem]">
           What we do — {siteBrandName}
         </h1>
-        <p className="mt-3 max-w-2xl text-pretty text-[0.9375rem] leading-relaxed text-zinc-600 sm:text-[1.0625rem] dark:text-zinc-400">
+        <p className="mt-3 max-w-2xl text-pretty text-[0.9375rem] leading-relaxed text-[#C8C8D8] sm:text-[1.0625rem]">
           Choose a lane, explore the problem grid, then read how we usually
           deliver — same team from estimate to launch.
         </p>
@@ -59,19 +59,19 @@ export default function ServicesPage() {
       <ServiceLanePanels />
 
       <section
-        className={`${contentWell} border-t border-[var(--border)] py-12 sm:py-14 md:py-16`}
+        className={`${contentWell} border-t border-[#1E1E35] py-12 sm:py-14 md:py-16`}
         aria-labelledby="services-cta-heading"
       >
         <h2 id="services-cta-heading" className="sr-only">
           Contact
         </h2>
-        <p className="max-w-xl text-[1.0625rem] leading-relaxed text-zinc-700 dark:text-zinc-300">
+        <p className="max-w-xl text-[1.0625rem] leading-relaxed text-[#C8C8D8]">
           Ready to talk scope? Send a short note — we reply with next steps and a
           clear estimate when it&apos;s a fit.
         </p>
         <Link
           href="/#contact"
-          className={`mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-[var(--surface-ink)] px-8 text-[13px] font-semibold tracking-tight text-white shadow-[var(--shadow-md)] transition-[transform,box-shadow] duration-300 ease-[var(--ease-out-premium)] active:scale-[0.98] dark:bg-white dark:text-zinc-950 ${focusRing} [@media(hover:hover)]:hover:shadow-[var(--shadow-glow)]`}
+          className={`mt-6 inline-flex min-h-12 items-center justify-center rounded-lg bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF] px-8 text-[13px] font-semibold text-white shadow-lg transition-all duration-300 ${focusRing} hover:shadow-[0_0_30px_-5px_rgba(124,63,255,0.4)]`}
         >
           Get in touch
         </Link>

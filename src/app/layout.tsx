@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Instrument_Serif } from "next/font/google";
+import { Geist, Inter } from "next/font/google";
 import { ConversionProvider } from "@/components/conversion/ConversionContext";
 import { QuickEstimateSheet } from "@/components/conversion/QuickEstimateSheet";
 import { StickyMobileCta } from "@/components/conversion/StickyMobileCta";
@@ -16,11 +16,10 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
-/** Display serif for headings — body stays Geist */
-const instrumentSerif = Instrument_Serif({
-  weight: "400",
+/** Inter for body text — clean, professional readability */
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-display",
+  variable: "--font-inter",
   display: "swap",
 });
 
@@ -28,7 +27,6 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://vryntlab.com"),
   title: siteTitle,
   description: siteDescription,
-  /** File-based icons in ./icon.png, ./apple-icon.png, ./favicon.ico — generated from public/brand/vl-logo.webp */
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "32x32" },
@@ -58,11 +56,11 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${instrumentSerif.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${inter.variable} h-full bg-[#080810] antialiased`}
     >
       <body
         suppressHydrationWarning
-        className="min-h-screen font-sans text-[15px] leading-relaxed md:text-base"
+        className="min-h-screen bg-[#080810] font-sans text-[15px] leading-relaxed text-[#C8C8D8] md:text-base"
       >
         <SchemaOrg />
         <ConversionProvider>

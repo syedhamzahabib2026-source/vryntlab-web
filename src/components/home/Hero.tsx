@@ -1,151 +1,167 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRef } from "react";
 import { contentWell, focusRing } from "@/components/layout/layoutTokens";
-import { StaggerGroup, StaggerItem } from "@/components/motion/StaggerGroup";
-import { brandHero, brandIntentActionLabels } from "@/lib/brand-knowledge";
 import { useConversion } from "@/components/conversion/ConversionContext";
-import {
-  ctaStartProject,
-  ctaViewWork,
-  siteBrandName,
-} from "@/lib/site";
-import { caseStudies } from "@/lib/case-studies";
+import { brandIntentActionLabels } from "@/lib/brand-knowledge";
+import { ctaViewWork, siteBrandName } from "@/lib/site";
 
-const tapButton = `min-h-12 w-full justify-center rounded-full px-6 text-[13px] font-semibold tracking-tight transition-[transform,background-color,box-shadow,border-color] duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 active:scale-[0.98] ${focusRing} sm:w-auto sm:min-w-[160px] sm:px-8 md:min-w-[168px] md:px-9`;
+const CYCLING_WORDS = ["websites", "chatbots", "automations", "systems"];
+const CYCLE_INTERVAL = 2500;
 
-const primaryCtaClass = `${tapButton} group/hero-cta inline-flex shrink-0 items-center bg-[var(--surface-ink)] text-white shadow-[var(--shadow-md)] [@media(hover:hover)]:hover:shadow-[var(--shadow-glow)] dark:bg-white dark:text-zinc-950 dark:[@media(hover:hover)]:hover:bg-zinc-200`;
+const MARQUEE_ITEMS = [
+  "Chicago-Based",
+  "Fast Turnaround",
+  "Fair Pricing",
+  "Living Silica",
+  "DK Express",
+  "No Agency Bloat",
+];
 
-const secondaryCtaClass = `${tapButton} inline-flex shrink-0 items-center border border-[var(--border)] bg-[var(--surface)] text-[var(--foreground)] shadow-[var(--shadow-xs)] [@media(hover:hover)]:hover:border-[var(--accent)]/35 [@media(hover:hover)]:hover:shadow-[var(--shadow-sm)] dark:border-zinc-700 dark:bg-[var(--surface)] dark:text-zinc-200 dark:[@media(hover:hover)]:hover:border-[var(--accent)]/30`;
+function WordCycler() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
 
-const pathLinkClass = `mt-3 inline-flex min-h-11 items-center gap-1.5 py-1 text-[13px] font-semibold text-[var(--accent)] underline decoration-[color-mix(in_oklab,var(--accent)_35%,transparent)] underline-offset-[5px] transition-[color,decoration-color,gap] duration-300 ease-[var(--ease-out-premium)] ${focusRing} rounded-md [@media(hover:hover)]:hover:gap-2 [@media(hover:hover)]:hover:decoration-[var(--accent)] sm:min-h-0 sm:py-0`;
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsAnimating(true);
+      setTimeout(() => {
+        setCurrentIndex((prev) => (prev + 1) % CYCLING_WORDS.length);
+        setIsAnimating(false);
+      }, 400);
+    }, CYCLE_INTERVAL);
 
-function caseStudyProofLine(): string {
-  const names = caseStudies.map((s) => s.client);
-  if (names.length === 0) return "";
-  if (names.length === 1) return `${names[0]} — live today.`;
-  if (names.length === 2) return `${names[0]} and ${names[1]} — both live.`;
-  const head = names.slice(0, -1).join(", ");
-  const last = names[names.length - 1];
-  return `${head}, and ${last} — all live today.`;
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <span className="relative inline-block min-w-[180px] sm:min-w-[220px]">
+      <span
+        className={`inline-block bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF] bg-clip-text text-transparent transition-all duration-400 ${
+          isAnimating ? "word-cycle-exit" : "word-cycle-enter"
+        }`}
+      >
+        {CYCLING_WORDS[currentIndex]}
+      </span>
+    </span>
+  );
+}
+
+function MarqueeTicker() {
+  return (
+    <div className="relative mt-10 w-full overflow-hidden border-y border-[#1E1E35]/50 bg-[#0F0F1A]/30 py-4 sm:mt-12 md:mt-14">
+      <div className="animate-marquee flex whitespace-nowrap">
+        {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, index) => (
+          <span
+            key={index}
+            className="mx-6 text-[13px] font-medium tracking-wide text-[#8888a0] sm:mx-8 sm:text-[14px]"
+          >
+            {item}
+            <span className="ml-6 text-[#7C3FFF]/50 sm:ml-8">·</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export function Hero() {
   const { selectedIntent } = useConversion();
-  const sectionRef = useRef<HTMLElement>(null);
-  const reduceMotion = useReducedMotion();
   const contactLabel =
     selectedIntent != null
       ? brandIntentActionLabels[selectedIntent].contactPrimary
-      : ctaStartProject;
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
-
-  const parallaxY = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [0, reduceMotion ? 0 : -14],
-  );
+      : "Start a Project";
 
   return (
     <section
       id="top"
-      ref={sectionRef}
-      className="relative overflow-x-visible overflow-y-visible pb-10 pt-1 sm:pb-14 sm:pt-2 md:pb-16 md:pt-3 lg:pb-20 lg:pt-4"
+      className="relative flex min-h-[calc(100vh-5rem)] flex-col overflow-hidden"
       aria-labelledby="hero-heading"
     >
-      {reduceMotion ? (
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-[-10%] flex justify-center opacity-[0.55] max-lg:opacity-40 dark:opacity-40 dark:max-lg:opacity-30"
-        >
-          <div className="h-[min(16rem,52vw)] w-[min(32rem,90vw)] rounded-full bg-[var(--accent-muted)] blur-3xl sm:h-[min(20rem,58vw)] sm:w-[min(36rem,86vw)]" />
-        </div>
-      ) : (
-        <motion.div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-[-10%] flex justify-center opacity-[0.55] max-lg:opacity-40 dark:opacity-40 dark:max-lg:opacity-30"
-          style={{ y: parallaxY }}
-        >
-          <div className="h-[min(16rem,52vw)] w-[min(32rem,90vw)] rounded-full bg-[var(--accent-muted)] blur-3xl sm:h-[min(20rem,58vw)] sm:w-[min(36rem,86vw)]" />
-        </motion.div>
-      )}
-
+      {/* Background grid and glow */}
       <div
-        className={`relative flex w-full min-w-0 flex-col gap-7 sm:gap-9 md:gap-10 ${contentWell}`}
+        aria-hidden
+        className="pointer-events-none absolute inset-0 overflow-hidden"
       >
-        <StaggerGroup
-          mode="immediate"
-          className="flex min-w-0 max-w-3xl flex-col items-stretch overflow-x-visible text-left lg:max-w-[42rem]"
-        >
-          <StaggerItem>
-            <header className="min-w-0 max-w-none">
-              <div className="flex min-w-0 flex-col gap-2 sm:gap-2.5">
-                <p className="min-w-0 text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--accent)] opacity-90 sm:tracking-[0.26em] dark:opacity-95">
-                  {siteBrandName}
-                </p>
-                <span
-                  className="h-px w-10 bg-[var(--accent)]/45 sm:w-12 dark:bg-[var(--accent)]/50"
-                  aria-hidden
-                />
-              </div>
-              <h1
-                id="hero-heading"
-                className="font-display mt-4 max-w-[min(100%,40rem)] text-balance text-[1.8125rem] font-normal leading-[1.1] tracking-[-0.024em] text-zinc-950 sm:mt-5 sm:text-[2.125rem] sm:leading-[1.08] md:mt-6 md:text-[2.625rem] md:leading-[1.06] lg:text-[2.95rem] lg:tracking-[-0.028em] xl:text-[3.15rem] dark:text-zinc-50"
-              >
-                {brandHero.headline}
-              </h1>
-            </header>
-          </StaggerItem>
-          <StaggerItem>
-            <p className="mt-4 max-w-[40rem] text-pretty text-[0.9375rem] leading-[1.62] text-zinc-600 sm:mt-5 sm:text-[1.0625rem] sm:leading-[1.64] md:mt-6 md:max-w-[44ch] md:text-[1.0625rem] md:leading-[1.66] dark:text-zinc-400">
-              {brandHero.subheadline}
-            </p>
-          </StaggerItem>
-          <StaggerItem>
-            <p className="mt-3 max-w-[40rem] border-l-2 border-[var(--accent)]/40 py-0.5 pl-3.5 text-[12px] font-semibold uppercase tracking-[0.12em] text-zinc-500 sm:mt-4 sm:pl-4 sm:text-[11px] sm:tracking-[0.14em] dark:border-teal-400/35 dark:text-zinc-400">
-              {brandHero.proofLabel}
-            </p>
-            <p className="mt-1.5 max-w-[40rem] pl-3.5 text-[13px] font-medium leading-relaxed text-zinc-700 sm:pl-4 sm:text-[14px] dark:text-zinc-300">
-              {caseStudyProofLine()}
-            </p>
-          </StaggerItem>
-          <StaggerItem>
-            <div className="mt-6 sm:mt-7 lg:mt-8">
-              <nav
-                aria-label="Primary actions"
-                className="flex w-full max-w-md flex-col gap-3 sm:max-w-lg sm:flex-row sm:flex-wrap sm:items-center sm:gap-3"
-              >
-                <Link href="/#contact" className={primaryCtaClass}>
-                  <span className="flex items-center justify-center gap-2">
-                    {contactLabel}
-                    <span
-                      aria-hidden
-                      className="text-[1.05em] opacity-80 transition-transform duration-300 ease-[var(--ease-out-premium)] [@media(hover:hover)]:group-hover/hero-cta:translate-x-0.5"
-                    >
-                      →
-                    </span>
-                  </span>
-                </Link>
-                <Link href="/#work" className={secondaryCtaClass}>
-                  {ctaViewWork}
-                </Link>
-              </nav>
-              <p className="mt-3 max-w-md text-pretty text-[12px] leading-relaxed text-zinc-500 sm:max-w-lg dark:text-zinc-500">
-                {brandHero.ctaSub}
-              </p>
-              <Link href="/services#path" className={pathLinkClass}>
-                {brandHero.pathLink}
-                <span aria-hidden>→</span>
-              </Link>
-            </div>
-          </StaggerItem>
-        </StaggerGroup>
+        {/* Grid pattern */}
+        <div
+          className="absolute inset-0 opacity-30"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(124, 63, 255, 0.03) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(124, 63, 255, 0.03) 1px, transparent 1px)
+            `,
+            backgroundSize: "64px 64px",
+          }}
+        />
+        {/* Violet glow from bottom center */}
+        <div className="absolute bottom-0 left-1/2 h-[60%] w-[80%] -translate-x-1/2 rounded-full bg-[#7C3FFF]/10 blur-[120px]" />
+        <div className="absolute bottom-0 left-1/2 h-[40%] w-[60%] -translate-x-1/2 rounded-full bg-[#00E5FF]/5 blur-[100px]" />
       </div>
+
+      {/* Main content */}
+      <div className={`relative flex flex-1 flex-col justify-center ${contentWell} py-16 sm:py-20 md:py-24 lg:py-28`}>
+        <div className="flex max-w-4xl flex-col items-start">
+          {/* Eyebrow */}
+          <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#7C3FFF]">
+            {siteBrandName}
+          </p>
+          <div className="mt-3 h-px w-12 bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF]" />
+
+          {/* Headline with word cycling */}
+          <h1
+            id="hero-heading"
+            className="mt-6 text-[2rem] font-medium leading-[1.1] tracking-[-0.02em] text-[#F0F0FF] sm:mt-8 sm:text-[2.5rem] md:text-[3rem] lg:text-[3.5rem]"
+          >
+            We build{" "}
+            <WordCycler />
+            <br className="hidden sm:block" />
+            <span className="sm:hidden"> </span>
+            for businesses that can&apos;t afford to underperform online.
+          </h1>
+
+          {/* Subheadline */}
+          <p className="mt-6 max-w-2xl text-[1rem] leading-[1.7] text-[#C8C8D8] sm:mt-8 sm:text-[1.125rem]">
+            We fix what&apos;s broken, build what&apos;s missing, and ship it — with a
+            clear scope and price before work starts.
+          </p>
+
+          {/* CTAs */}
+          <div className="mt-8 flex w-full flex-col gap-4 sm:mt-10 sm:w-auto sm:flex-row sm:gap-4">
+            {/* Primary CTA - Gradient filled */}
+            <Link
+              href="/#contact"
+              className={`group inline-flex min-h-12 items-center justify-center rounded-lg bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF] px-8 text-[14px] font-semibold text-white shadow-lg transition-all duration-300 ${focusRing} hover:shadow-[0_0_30px_-5px_rgba(124,63,255,0.5)] sm:min-w-[180px]`}
+            >
+              {contactLabel}
+              <span
+                aria-hidden
+                className="ml-2 transition-transform duration-300 group-hover:translate-x-1"
+              >
+                &rarr;
+              </span>
+            </Link>
+
+            {/* Secondary CTA - Ghost outline */}
+            <Link
+              href="/#work"
+              className={`inline-flex min-h-12 items-center justify-center rounded-lg border border-[#1E1E35] bg-transparent px-8 text-[14px] font-semibold text-[#C8C8D8] transition-all duration-300 ${focusRing} hover:border-[#7C3FFF]/50 hover:text-[#F0F0FF] sm:min-w-[160px]`}
+            >
+              {ctaViewWork}
+            </Link>
+          </div>
+
+          {/* CTA Sub text */}
+          <p className="mt-4 max-w-md text-[13px] leading-relaxed text-[#8888a0]">
+            Tell us what&apos;s broken or what you want built — we&apos;ll reply with a
+            clear scope and price. No decks, no back-and-forth.
+          </p>
+        </div>
+      </div>
+
+      {/* Marquee ticker */}
+      <MarqueeTicker />
     </section>
   );
 }

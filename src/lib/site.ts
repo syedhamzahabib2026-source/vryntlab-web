@@ -18,7 +18,7 @@ export const siteTitle = brandSiteTitle;
 export const siteDescription = brandMetaDescription;
 
 /** One-line positioning in footer */
-export const siteTagline = brandFooterTagline;
+export const siteTagline = "Built lean. Priced fair. Delivered right.";
 
 /** Primary / secondary CTAs — keep labels consistent site-wide */
 export const ctaStartProject = "Start a Project";

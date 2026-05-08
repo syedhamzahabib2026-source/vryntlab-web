@@ -88,7 +88,7 @@ function IconGitHub({ size = 20, className, ...props }: IconProps) {
   );
 }
 
-const linkBaseClass = `inline-flex h-11 min-h-11 w-11 min-w-11 items-center justify-center rounded-full border border-transparent text-zinc-500 transition-[color,background-color,border-color,transform] duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 active:scale-[0.97] ${focusRing} [@media(hover:hover)]:hover:border-[var(--border)] [@media(hover:hover)]:hover:bg-[var(--surface-soft)] [@media(hover:hover)]:hover:text-zinc-950 active:bg-[var(--surface-soft)] dark:text-zinc-500 dark:[@media(hover:hover)]:hover:text-zinc-50 dark:[@media(hover:hover)]:hover:border-zinc-700/80`;
+const linkBaseClass = `inline-flex h-11 min-h-11 w-11 min-w-11 items-center justify-center rounded-full border border-transparent text-[#8888a0] transition-all duration-300 ease-[var(--ease-out-premium)] active:scale-[0.97] ${focusRing} hover:border-[#1E1E35] hover:bg-[#1E1E35]/30 hover:text-[#F0F0FF]`;
 
 const SOCIAL_ITEMS = [
   {
@@ -120,9 +120,9 @@ export function SocialLinks({ className = "" }: { className?: string }) {
 
   return (
     <div
-      className={`w-full border-t border-[var(--border)] pt-4 sm:w-auto sm:max-w-none dark:border-zinc-800/80 ${className}`.trim()}
+      className={`w-full border-t border-[#1E1E35] pt-4 sm:w-auto sm:max-w-none ${className}`.trim()}
     >
-      <p className="mb-2 text-left text-[10px] font-semibold uppercase tracking-[0.16em] text-zinc-400 sm:text-right dark:text-zinc-500">
+      <p className="mb-2 text-left text-[10px] font-semibold uppercase tracking-[0.16em] text-[#8888a0] sm:text-right">
         Social
       </p>
       <ul

@@ -18,7 +18,6 @@ import {
   slabContent,
 } from "@/components/layout/layoutTokens";
 import { SectionShell } from "@/components/layout/SectionShell";
-import { Reveal } from "@/components/motion/Reveal";
 import { siteLogoSrc } from "@/lib/site";
 import "@/components/chat/chat-widget.css";
 
@@ -79,7 +78,7 @@ function triggerChatLauncherAttentionOnce() {
 function BotAvatar() {
   return (
     <div
-      className="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/12 bg-zinc-900/90 shadow-inner ring-1 ring-white/[0.06] sm:h-9 sm:w-9"
+      className="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full border border-[#1E1E35] bg-[#0F0F1A] sm:h-9 sm:w-9"
       aria-hidden
     >
       <Image
@@ -221,13 +220,13 @@ function AnimatedExampleChat({ active }: { active: boolean }) {
   return (
     <div
       aria-label="Example chatbot conversation"
-      className="flex flex-col overflow-hidden rounded-2xl border border-zinc-700/90 bg-zinc-950/85 shadow-[0_24px_80px_-40px_rgba(0,0,0,0.65)] ring-1 ring-white/[0.06] backdrop-blur-md sm:rounded-[1.35rem]"
+      className="flex flex-col overflow-hidden rounded-xl border border-[#7C3FFF]/30 bg-[#0F0F1A] shadow-[0_0_60px_-20px_rgba(124,63,255,0.2)]"
     >
-      <header className="flex shrink-0 items-center justify-between gap-3 border-b border-zinc-800/90 px-4 py-3 sm:px-5">
-        <h3 className="font-display text-[0.95rem] font-normal tracking-[-0.02em] text-zinc-50">
+      <header className="flex shrink-0 items-center justify-between gap-3 border-b border-[#1E1E35] px-4 py-3 sm:px-5">
+        <h3 className="font-display text-[0.95rem] font-medium tracking-[-0.02em] text-[#F0F0FF]">
           {chatWidgetDefaults.title}
         </h3>
-        <span className="rounded-full border border-white/10 bg-white/[0.04] px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.14em] text-zinc-400">
+        <span className="rounded-full border border-[#1E1E35] bg-[#1E1E35]/30 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.14em] text-[#8888a0]">
           Example
         </span>
       </header>
@@ -248,10 +247,10 @@ function AnimatedExampleChat({ active }: { active: boolean }) {
                 className="flex flex-col items-end gap-1"
               >
                 <div className="flex items-end gap-2">
-                  <span className="pb-1 text-[10px] tabular-nums text-zinc-500">
+                  <span className="pb-1 text-[10px] tabular-nums text-[#8888a0]">
                     {row.time}
                   </span>
-                  <div className="max-w-[92%] rounded-2xl rounded-br-md bg-teal-500/20 px-3.5 py-2.5 text-left text-[13px] leading-relaxed text-zinc-50 ring-1 ring-teal-400/25 sm:max-w-[85%] sm:text-[14px]">
+                  <div className="max-w-[92%] rounded-2xl rounded-br-md bg-[#7C3FFF]/20 px-3.5 py-2.5 text-left text-[13px] leading-relaxed text-[#F0F0FF] ring-1 ring-[#7C3FFF]/30 sm:max-w-[85%] sm:text-[14px]">
                     {row.text}
                   </div>
                 </div>
@@ -267,14 +266,14 @@ function AnimatedExampleChat({ active }: { active: boolean }) {
                   <BotAvatar />
                   <div className="min-w-0 flex-1">
                     <div className="mb-1 flex items-center gap-2">
-                      <span className="text-[10px] font-medium text-zinc-500">
+                      <span className="text-[10px] font-medium text-[#8888a0]">
                         Assistant
                       </span>
-                      <span className="text-[10px] tabular-nums text-zinc-500">
+                      <span className="text-[10px] tabular-nums text-[#8888a0]">
                         {row.time}
                       </span>
                     </div>
-                    <div className="max-w-[min(100%,28rem)] rounded-2xl rounded-bl-md bg-white/[0.06] px-3.5 py-2.5 text-[13px] leading-relaxed text-zinc-200 ring-1 ring-white/[0.08] sm:text-[14px]">
+                    <div className="max-w-[min(100%,28rem)] rounded-2xl rounded-bl-md bg-[#1E1E35]/50 px-3.5 py-2.5 text-[13px] leading-relaxed text-[#C8C8D8] ring-1 ring-[#1E1E35] sm:text-[14px]">
                       {row.text}
                     </div>
                   </div>
@@ -297,7 +296,7 @@ function AnimatedExampleChat({ active }: { active: boolean }) {
               <div className="flex items-end gap-2">
                 <BotAvatar />
                 <div
-                  className="inline-flex max-w-[min(100%,28rem)] items-center rounded-2xl rounded-bl-md bg-white/[0.04] px-3 py-2 ring-1 ring-white/[0.06]"
+                  className="inline-flex max-w-[min(100%,28rem)] items-center rounded-2xl rounded-bl-md bg-[#1E1E35]/30 px-3 py-2 ring-1 ring-[#1E1E35]"
                   aria-hidden="true"
                 >
                   <div className="chat-typing" aria-hidden="true">
@@ -354,65 +353,64 @@ export function ChatbotShowcase() {
         id="chat-showcase"
         labelledBy="chat-showcase-heading"
         pad="default"
-        className={`${slabContent} border-y border-zinc-800/90`}
+        className={`${slabContent} border-y border-[#1E1E35]`}
       >
-        <div className={`${contentWell} flex flex-col gap-10 lg:gap-14`}>
+        <div className={`${contentWell} flex flex-col gap-10 py-16 lg:gap-14 lg:py-20`}>
           <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[11fr_9fr] lg:gap-12 xl:gap-16">
-            <Reveal>
-              <div className="max-w-xl lg:max-w-none">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-teal-300/85">
-                  {brandChatbotShowcase.eyebrow}
+            {/* Left side - Copy */}
+            <div className="max-w-xl lg:max-w-none">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#7C3FFF]">
+                {brandChatbotShowcase.eyebrow}
+              </p>
+              <h2
+                id="chat-showcase-heading"
+                className="font-display mt-3 text-balance text-2xl font-medium tracking-[-0.02em] text-[#F0F0FF] sm:text-[1.75rem] md:text-[2rem]"
+              >
+                {brandChatbotShowcase.title}
+              </h2>
+              <p className="mt-4 max-w-prose text-[15px] leading-relaxed text-[#C8C8D8] sm:text-[16px]">
+                {brandChatbotShowcase.description}
+              </p>
+              <ul className="mt-6 space-y-3 text-[14px] leading-relaxed text-[#C8C8D8] sm:text-[15px]">
+                {brandChatbotShowcase.bullets.map((line) => (
+                  <li key={line} className="flex gap-2.5">
+                    <span
+                      className="mt-2 h-1 w-1 shrink-0 rounded-full bg-[#7C3FFF]"
+                      aria-hidden
+                    />
+                    <span>{line}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-6 text-[12px] leading-relaxed text-[#8888a0] sm:text-[13px]">
+                {brandChatbotShowcase.demoHint}
+              </p>
+            </div>
+
+            {/* Right side - Chat demo */}
+            <div className="flex flex-col gap-5">
+              <AnimatedExampleChat active={demoActive} />
+              <p className="text-center text-[12px] italic leading-snug text-[#8888a0] sm:text-[13px]">
+                {brandChatbotShowcase.demoExampleCaption}
+              </p>
+
+              {/* Real chat CTA card */}
+              <div className="rounded-xl border border-[#00E5FF]/20 bg-gradient-to-br from-[#00E5FF]/10 to-[#7C3FFF]/5 p-5 sm:p-6">
+                <p className="font-display text-lg font-medium tracking-[-0.02em] text-[#F0F0FF] sm:text-xl">
+                  {brandChatbotShowcase.realChatHeadline}
                 </p>
-                <h2
-                  id="chat-showcase-heading"
-                  className="font-display mt-3 text-balance text-2xl font-normal tracking-[-0.025em] text-zinc-50 sm:text-[1.75rem] md:text-[2rem]"
+                <p className="mt-2 text-[14px] leading-relaxed text-[#C8C8D8] sm:text-[15px]">
+                  {brandChatbotShowcase.realChatSub}
+                </p>
+                <button
+                  type="button"
+                  onClick={openLiveChatWidget}
+                  className={`mt-4 inline-flex min-h-11 items-center justify-center rounded-lg bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF] px-5 text-[13px] font-semibold text-white shadow-lg transition-all duration-300 ${focusRing} hover:shadow-[0_0_30px_-5px_rgba(124,63,255,0.4)]`}
                 >
-                  {brandChatbotShowcase.title}
-                </h2>
-                <p className="mt-4 max-w-prose text-[15px] leading-relaxed text-zinc-400 sm:text-[16px]">
-                  {brandChatbotShowcase.description}
-                </p>
-                <ul className="mt-6 space-y-3 text-[14px] leading-relaxed text-zinc-300 sm:text-[15px]">
-                  {brandChatbotShowcase.bullets.map((line) => (
-                    <li key={line} className="flex gap-2.5">
-                      <span
-                        className="mt-2 h-1 w-1 shrink-0 rounded-full bg-teal-400/80"
-                        aria-hidden
-                      />
-                      <span>{line}</span>
-                    </li>
-                  ))}
-                </ul>
-                <p className="mt-6 text-[12px] leading-relaxed text-zinc-500 sm:text-[13px]">
-                  {brandChatbotShowcase.demoHint}
-                </p>
+                  {brandChatbotShowcase.realChatButton}
+                </button>
               </div>
-            </Reveal>
-
-            <Reveal delay={0.06}>
-              <div className="flex flex-col gap-5">
-                <AnimatedExampleChat active={demoActive} />
-                <p className="text-center text-[12px] italic leading-snug text-zinc-500 sm:text-[13px]">
-                  {brandChatbotShowcase.demoExampleCaption}
-                </p>
-
-                <div className="rounded-2xl border border-teal-400/20 bg-teal-950/25 px-5 py-5 sm:px-6 sm:py-6">
-                  <p className="font-display text-lg font-normal tracking-[-0.02em] text-zinc-50 sm:text-xl">
-                    {brandChatbotShowcase.realChatHeadline}
-                  </p>
-                  <p className="mt-2 text-[14px] leading-relaxed text-zinc-400 sm:text-[15px]">
-                    {brandChatbotShowcase.realChatSub}
-                  </p>
-                  <button
-                    type="button"
-                    onClick={openLiveChatWidget}
-                    className={`mt-4 inline-flex min-h-11 items-center justify-center rounded-full bg-teal-400/95 px-5 text-[13px] font-semibold text-zinc-950 shadow-[0_12px_40px_-18px_rgba(45,212,191,0.35)] transition-[transform,box-shadow] duration-300 active:scale-[0.99] ${focusRing} [@media(hover:hover)]:hover:shadow-[0_16px_48px_-20px_rgba(45,212,191,0.45)]`}
-                  >
-                    {brandChatbotShowcase.realChatButton}
-                  </button>
-                </div>
-              </div>
-            </Reveal>
+            </div>
           </div>
         </div>
       </SectionShell>
