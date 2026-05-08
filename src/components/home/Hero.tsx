@@ -100,37 +100,39 @@ export function Hero() {
       >
         <StaggerGroup
           mode="immediate"
-          className="flex min-w-0 max-w-3xl flex-col items-stretch overflow-x-visible text-left lg:max-w-[42rem]"
+          className="mx-auto flex min-w-0 max-w-2xl flex-col items-center overflow-x-visible text-center"
         >
           <StaggerItem>
             <header className="min-w-0 max-w-none">
-              <div className="flex min-w-0 flex-col gap-2 sm:gap-2.5">
-                <p className="min-w-0 text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--accent)] opacity-90 sm:tracking-[0.26em] dark:opacity-95">
+              <div className="flex min-w-0 flex-col items-center gap-2 sm:gap-2.5">
+                <p className="min-w-0 text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--accent)] opacity-90 sm:tracking-[0.26em]">
                   {siteBrandName}
                 </p>
                 <span
-                  className="h-px w-10 bg-[var(--accent)]/45 sm:w-12 dark:bg-[var(--accent)]/50"
+                  className="h-px w-10 bg-[var(--accent)]/45 sm:w-12"
                   aria-hidden
                 />
               </div>
               <h1
                 id="hero-heading"
-                className="font-display mt-4 max-w-[min(100%,40rem)] text-balance text-[1.8125rem] font-normal leading-[1.1] tracking-[-0.024em] text-[#F0F0FF] sm:mt-5 sm:text-[2.125rem] sm:leading-[1.08] md:mt-6 md:text-[2.625rem] md:leading-[1.06] lg:text-[2.95rem] lg:tracking-[-0.028em] xl:text-[3.15rem]"
+                className="font-display mt-4 text-balance text-[1.8125rem] font-normal leading-[1.1] tracking-[-0.024em] text-[#F0F0FF] sm:mt-5 sm:text-[2.125rem] sm:leading-[1.08] md:mt-6 md:text-[2.625rem] md:leading-[1.06] lg:text-[2.95rem] lg:tracking-[-0.028em] xl:text-[3.15rem]"
               >
                 {brandHero.headline}
               </h1>
             </header>
           </StaggerItem>
           <StaggerItem>
-            <p className="mt-4 max-w-[40rem] text-pretty text-[0.9375rem] leading-[1.62] text-[#C8C8D8]/85 sm:mt-5 sm:text-[1.0625rem] sm:leading-[1.64] md:mt-6 md:max-w-[44ch] md:text-[1.0625rem] md:leading-[1.66]">
+            <p className="mt-4 max-w-[42ch] text-pretty text-[0.9375rem] leading-[1.62] text-[#C8C8D8]/85 sm:mt-5 sm:text-[1.0625rem] sm:leading-[1.64] md:mt-6 md:text-[1.0625rem] md:leading-[1.66]">
               {brandHero.subheadline}
             </p>
           </StaggerItem>
           <StaggerItem>
-            <p className="mt-3 max-w-[40rem] border-l-2 border-violet-500/40 py-0.5 pl-3.5 text-[12px] font-semibold uppercase tracking-[0.12em] text-[#8888a8] sm:mt-4 sm:pl-4 sm:text-[11px] sm:tracking-[0.14em]">
+            <p className="mt-3 inline-flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.12em] text-[#8888a8] sm:mt-4 sm:text-[11px] sm:tracking-[0.14em]">
+              <span className="h-px w-6 bg-violet-500/40" aria-hidden />
               {brandHero.proofLabel}
+              <span className="h-px w-6 bg-violet-500/40" aria-hidden />
             </p>
-            <p className="mt-1.5 max-w-[40rem] pl-3.5 text-[13px] font-medium leading-relaxed text-[#C8C8D8] sm:pl-4 sm:text-[14px]">
+            <p className="mt-1.5 text-[13px] font-medium leading-relaxed text-[#C8C8D8] sm:text-[14px]">
               {caseStudyProofLine()}
             </p>
           </StaggerItem>
@@ -138,7 +140,7 @@ export function Hero() {
             <div className="mt-6 sm:mt-7 lg:mt-8">
               <nav
                 aria-label="Primary actions"
-                className="flex w-full max-w-md flex-col gap-3 sm:max-w-lg sm:flex-row sm:flex-wrap sm:items-center sm:gap-3"
+                className="mx-auto flex w-full max-w-md flex-col items-center gap-3 sm:max-w-lg sm:flex-row sm:justify-center sm:gap-3"
               >
                 <Link href="/#contact" className={primaryCtaClass}>
                   <span className="flex items-center justify-center gap-2">
@@ -155,13 +157,15 @@ export function Hero() {
                   {ctaViewWork}
                 </Link>
               </nav>
-              <p className="mt-3 max-w-md text-pretty text-[12px] leading-relaxed text-[#8888a8] sm:max-w-lg">
+              <p className="mx-auto mt-3 max-w-md text-center text-pretty text-[12px] leading-relaxed text-[#8888a8] sm:max-w-lg">
                 {brandHero.ctaSub}
               </p>
-              <Link href="/services#path" className={pathLinkClass}>
-                {brandHero.pathLink}
-                <span aria-hidden>→</span>
-              </Link>
+              <div className="flex justify-center">
+                <Link href="/services#path" className={pathLinkClass}>
+                  {brandHero.pathLink}
+                  <span aria-hidden>→</span>
+                </Link>
+              </div>
             </div>
           </StaggerItem>
         </StaggerGroup>

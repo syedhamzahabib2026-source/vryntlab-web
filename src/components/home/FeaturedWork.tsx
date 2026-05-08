@@ -39,10 +39,22 @@ const primaryCta = `inline-flex w-fit items-center gap-2 rounded-full border bor
 const secondaryCta = `inline-flex w-fit items-center gap-1.5 text-[12px] font-medium text-[#C8C8D8]/70 underline decoration-white/15 underline-offset-4 transition-colors duration-300 ${focusRing} rounded-sm [@media(hover:hover)]:hover:text-[#00E5FF]/90 [@media(hover:hover)]:hover:decoration-[#00E5FF]/35`;
 
 /** Decorative only — not client work, not links (visual depth for the portfolio row). */
-const ILLUSTRATIVE_INDUSTRY_LABELS = [
-  "E-commerce · Fashion",
-  "Local services · Booking system",
-  "SaaS · Landing page",
+const ILLUSTRATIVE_CARDS = [
+  {
+    label: "E-commerce · Fashion",
+    gradient: "from-violet-600/30 via-violet-900/15 to-[#0F0F1A]",
+    accent: "bg-violet-500/20",
+  },
+  {
+    label: "Local services · Booking system",
+    gradient: "from-[#00E5FF]/20 via-[#00E5FF]/05 to-[#0F0F1A]",
+    accent: "bg-[#00E5FF]/15",
+  },
+  {
+    label: "SaaS · Landing page",
+    gradient: "from-violet-500/25 via-[#00E5FF]/10 to-[#0F0F1A]",
+    accent: "bg-violet-400/15",
+  },
 ] as const;
 
 function WorkPortfolioHintCards() {
@@ -52,21 +64,25 @@ function WorkPortfolioHintCards() {
         aria-hidden="true"
         className="grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-4 lg:gap-5"
       >
-        {ILLUSTRATIVE_INDUSTRY_LABELS.map((label) => (
+        {ILLUSTRATIVE_CARDS.map(({ label, gradient, accent }) => (
           <div
             key={label}
-            className="pointer-events-none select-none overflow-hidden rounded-xl border border-white/[0.1] bg-white/[0.06] opacity-[0.68] shadow-[0_20px_60px_-40px_rgba(0,0,0,0.55)] backdrop-blur-xl backdrop-saturate-150 [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.06)] supports-[backdrop-filter]:bg-white/[0.045] sm:rounded-[1.1rem]"
+            className="pointer-events-none select-none overflow-hidden rounded-xl border border-[#1E1E35] bg-[#0F0F1A] opacity-[0.75] shadow-[0_20px_60px_-40px_rgba(0,0,0,0.55)] sm:rounded-[1.1rem]"
           >
-            <div className="aspect-[16/10] bg-gradient-to-br from-white/[0.12] via-white/[0.04] to-transparent ring-1 ring-inset ring-white/[0.08]" />
-            <div className="border-t border-white/[0.06] px-4 py-3.5 sm:px-4 sm:py-4">
-              <p className="text-[11px] font-medium tracking-tight text-zinc-400 sm:text-[12px]">
+            <div className={`relative aspect-[16/10] bg-gradient-to-br ${gradient} ring-1 ring-inset ring-white/[0.07]`}>
+              <div className={`absolute left-4 top-4 h-8 w-8 rounded-full ${accent} blur-xl`} />
+              <div className="absolute bottom-3 left-4 right-4 h-1.5 rounded-full bg-white/[0.08]" />
+              <div className="absolute bottom-6 left-4 w-2/3 h-1.5 rounded-full bg-white/[0.05]" />
+            </div>
+            <div className="border-t border-[#1E1E35] px-4 py-3.5 sm:px-4 sm:py-4">
+              <p className="text-[11px] font-medium tracking-tight text-[#C8C8D8]/60 sm:text-[12px]">
                 {label}
               </p>
             </div>
           </div>
         ))}
       </div>
-      <p className="text-center text-[12px] leading-relaxed text-zinc-500 sm:text-[13px]">
+      <p className="text-center text-[12px] leading-relaxed text-[#8888a8] sm:text-[13px]">
         Showing selected examples — more available on request
       </p>
     </div>
