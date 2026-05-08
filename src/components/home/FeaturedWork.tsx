@@ -32,11 +32,11 @@ function useDesktopFineHover(): boolean | null {
   return matches;
 }
 
-const cardShell = `overflow-hidden rounded-2xl border border-white/[0.09] bg-gradient-to-br from-white/[0.09] via-white/[0.03] to-black/35 text-left shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_32px_100px_-40px_rgba(0,0,0,0.62),0_0_90px_-30px_var(--slab-glow)] transition-[box-shadow,border-color,transform] duration-500 ease-[var(--ease-out-premium)] sm:rounded-[1.85rem] [@media(hover:hover)]:hover:-translate-y-[4px] [@media(hover:hover)]:hover:border-teal-400/28 [@media(hover:hover)]:hover:shadow-[0_0_0_1px_rgba(94,234,212,0.12),0_40px_120px_-40px_rgba(0,0,0,0.68),0_0_100px_-28px_rgba(94,234,212,0.12)] motion-reduce:transform-none motion-reduce:duration-200`;
+const cardShell = `overflow-hidden rounded-2xl border border-[#1E1E35] bg-gradient-to-br from-[#0F0F1A] via-[#0a0a15] to-[#080810] text-left shadow-[0_0_0_1px_rgba(124,63,255,0.08),0_32px_100px_-40px_rgba(0,0,0,0.62),0_0_90px_-30px_var(--slab-glow)] transition-[box-shadow,border-color,transform] duration-500 ease-[var(--ease-out-premium)] sm:rounded-[1.85rem] [@media(hover:hover)]:hover:-translate-y-[4px] [@media(hover:hover)]:hover:border-violet-500/35 [@media(hover:hover)]:hover:shadow-[0_0_0_1px_rgba(124,63,255,0.18),0_40px_120px_-40px_rgba(0,0,0,0.68),0_0_100px_-28px_rgba(124,63,255,0.15)] motion-reduce:transform-none motion-reduce:duration-200`;
 
-const primaryCta = `inline-flex w-fit items-center gap-2 rounded-full border border-white/14 bg-white/[0.07] px-4 py-2.5 text-[12px] font-semibold tracking-tight text-zinc-50 shadow-[0_10px_40px_-24px_rgba(0,0,0,0.55)] transition-[border-color,background-color,box-shadow,transform] duration-400 ease-[var(--ease-out-premium)] active:scale-[0.99] ${focusRing} [@media(hover:hover)]:hover:border-teal-400/40 [@media(hover:hover)]:hover:bg-white/[0.11] [@media(hover:hover)]:hover:shadow-[0_14px_48px_-28px_rgba(94,234,212,0.12)]`;
+const primaryCta = `inline-flex w-fit items-center gap-2 rounded-full border border-violet-500/25 bg-violet-500/[0.08] px-4 py-2.5 text-[12px] font-semibold tracking-tight text-[#F0F0FF] shadow-[0_10px_40px_-24px_rgba(0,0,0,0.55)] transition-[border-color,background-color,box-shadow,transform] duration-400 ease-[var(--ease-out-premium)] active:scale-[0.99] ${focusRing} [@media(hover:hover)]:hover:border-violet-400/55 [@media(hover:hover)]:hover:bg-violet-500/[0.14] [@media(hover:hover)]:hover:shadow-[0_14px_48px_-28px_rgba(124,63,255,0.25)]`;
 
-const secondaryCta = `inline-flex w-fit items-center gap-1.5 text-[12px] font-medium text-zinc-400 underline decoration-white/15 underline-offset-4 transition-colors duration-300 ${focusRing} rounded-sm [@media(hover:hover)]:hover:text-teal-200/90 [@media(hover:hover)]:hover:decoration-teal-400/35`;
+const secondaryCta = `inline-flex w-fit items-center gap-1.5 text-[12px] font-medium text-[#C8C8D8]/70 underline decoration-white/15 underline-offset-4 transition-colors duration-300 ${focusRing} rounded-sm [@media(hover:hover)]:hover:text-[#00E5FF]/90 [@media(hover:hover)]:hover:decoration-[#00E5FF]/35`;
 
 /** Decorative only — not client work, not links (visual depth for the portfolio row). */
 const ILLUSTRATIVE_INDUSTRY_LABELS = [
@@ -138,27 +138,27 @@ function WorkShowcaseCard({ study, index }: { study: CaseStudy; index: number })
           />
         </Link>
 
-        <div className="flex flex-col justify-center gap-5 border-t border-white/[0.08] bg-gradient-to-br from-black/40 to-zinc-950/90 px-6 py-8 sm:gap-6 sm:px-8 sm:py-10 lg:col-span-2 lg:border-l lg:border-t-0 lg:px-9 lg:py-11 xl:px-11">
+        <div className="flex flex-col justify-center gap-5 border-t border-[#1E1E35] bg-gradient-to-br from-[#080810]/95 to-[#0F0F1A] px-6 py-8 sm:gap-6 sm:px-8 sm:py-10 lg:col-span-2 lg:border-l lg:border-t-0 lg:px-9 lg:py-11 xl:px-11">
           <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-teal-300/85">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#00E5FF]/85">
               Project · {n}
             </p>
-            <span className="mt-3 inline-flex w-fit rounded-full border border-white/12 bg-white/[0.05] px-2.5 py-0.5 text-[10px] font-medium tracking-tight text-zinc-300 sm:text-[11px]">
+            <span className="mt-3 inline-flex w-fit rounded-full border border-violet-500/20 bg-violet-500/[0.07] px-2.5 py-0.5 text-[10px] font-medium tracking-tight text-[#C8C8D8] sm:text-[11px]">
               {study.typeLabel}
             </span>
-            <h3 className="mt-4 font-display text-2xl font-normal tracking-[-0.025em] text-zinc-50 sm:text-[1.65rem]">
+            <h3 className="mt-4 font-display text-2xl font-normal tracking-[-0.025em] text-[#F0F0FF] sm:text-[1.65rem]">
               {study.client}
             </h3>
-            <p className="mt-2 max-w-prose text-[14px] font-medium leading-snug tracking-[-0.01em] text-zinc-200 sm:text-[15px]">
+            <p className="mt-2 max-w-prose text-[14px] font-medium leading-snug tracking-[-0.01em] text-[#C8C8D8] sm:text-[15px]">
               {study.shortTitle}
             </p>
           </div>
 
-          <div className="space-y-2.5 rounded-xl border border-white/[0.06] bg-white/[0.03] px-4 py-3.5 sm:px-5 sm:py-4">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-teal-200/80">
+          <div className="space-y-2.5 rounded-xl border border-[#1E1E35] bg-[#0F0F1A]/80 px-4 py-3.5 sm:px-5 sm:py-4">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#00E5FF]/80">
               {study.cardStat}
             </p>
-            <p className="text-[13px] leading-relaxed text-zinc-400 sm:text-[14px]">
+            <p className="text-[13px] leading-relaxed text-[#C8C8D8]/80 sm:text-[14px]">
               {study.cardOutcome}
             </p>
           </div>
@@ -212,7 +212,7 @@ export function FeaturedWork() {
                 align="start"
               />
               {workNudge ? (
-                <p className="mt-4 max-w-xl border-l-2 border-teal-400/35 py-0.5 pl-3.5 text-[13px] leading-relaxed text-zinc-300 sm:mt-5 sm:pl-4 sm:text-[14px]">
+                <p className="mt-4 max-w-xl border-l-2 border-violet-500/40 py-0.5 pl-3.5 text-[13px] leading-relaxed text-[#C8C8D8] sm:mt-5 sm:pl-4 sm:text-[14px]">
                   {workNudge}
                 </p>
               ) : null}
@@ -243,17 +243,17 @@ export function FeaturedWork() {
             <Reveal>
               <div className="flex flex-col gap-5 pt-6 sm:flex-row sm:items-center sm:justify-between sm:gap-8 sm:pt-8">
                 <div className="max-w-xl space-y-1.5">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-zinc-500">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#8888a8]">
                     Beyond the highlights
                   </p>
-                  <p className="text-[14px] leading-relaxed text-zinc-400 sm:text-[15px]">
+                  <p className="text-[14px] leading-relaxed text-[#C8C8D8]/70 sm:text-[15px]">
                     Partner builds, internal tools, and launch work under NDA do
                     not appear here — the archive covers the full picture.
                   </p>
                 </div>
                 <Link
                   href="/work"
-                  className={`group/more inline-flex shrink-0 items-center gap-2 self-start rounded-full border border-white/12 bg-white/[0.04] px-4 py-2.5 text-[12px] font-semibold text-zinc-100 transition-[border-color,background-color,transform] duration-400 ease-[var(--ease-out-premium)] active:scale-[0.99] sm:self-center ${focusRing} [@media(hover:hover)]:hover:border-teal-400/35 [@media(hover:hover)]:hover:bg-white/[0.07]`}
+                  className={`group/more inline-flex shrink-0 items-center gap-2 self-start rounded-full border border-[#1E1E35] bg-[#0F0F1A]/80 px-4 py-2.5 text-[12px] font-semibold text-[#F0F0FF] transition-[border-color,background-color,transform] duration-400 ease-[var(--ease-out-premium)] active:scale-[0.99] sm:self-center ${focusRing} [@media(hover:hover)]:hover:border-violet-500/40 [@media(hover:hover)]:hover:bg-violet-500/[0.08]`}
                 >
                   More work
                   <span

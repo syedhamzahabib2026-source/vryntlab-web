@@ -30,10 +30,10 @@ export function Process() {
                   <span className="text-[11px] font-semibold tabular-nums text-[var(--accent)] opacity-85 dark:opacity-90">
                     {step.phase}
                   </span>
-                  <h3 className="font-display mt-3 text-[1.0625rem] font-normal tracking-[-0.02em] text-zinc-950 sm:mt-4 sm:text-lg md:text-xl dark:text-zinc-50">
+                  <h3 className="font-display mt-3 text-[1.0625rem] font-normal tracking-[-0.02em] text-[#F0F0FF] sm:mt-4 sm:text-lg md:text-xl">
                     {step.title}
                   </h3>
-                  <p className="mt-2.5 text-[14px] leading-[1.62] text-zinc-600 sm:mt-3 sm:text-[15px] sm:leading-[1.65] dark:text-zinc-400">
+                  <p className="mt-2.5 text-[14px] leading-[1.62] text-[#C8C8D8]/75 sm:mt-3 sm:text-[15px] sm:leading-[1.65]">
                     {step.description}
                   </p>
                 </article>

@@ -51,7 +51,7 @@ export function ContactCta() {
                 </div>
 
                 <div className="lg:col-span-6 lg:col-start-7">
-                  <div className="rounded-xl border border-zinc-200/90 bg-[#f4f4f5] p-4 shadow-[var(--shadow-md)] sm:rounded-2xl sm:p-6 md:p-7 dark:border-zinc-700/80 dark:bg-zinc-900/95">
+                  <div className="rounded-xl border border-[#1E1E35] bg-[#0F0F1A] p-4 shadow-[var(--shadow-md)] sm:rounded-2xl sm:p-6 md:p-7">
                     <ContactForm />
                   </div>
                   <div className="mt-5 sm:mt-6">
@@ -61,7 +61,7 @@ export function ContactCta() {
                       Prefer email?{" "}
                       <a
                         href={`mailto:${siteEmail}`}
-                        className={`inline-block min-h-11 rounded-md py-2 font-semibold text-teal-200/95 underline decoration-teal-500/40 underline-offset-[5px] transition-[color,text-decoration-color] duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 ${focusRing} active:text-white [@media(hover:hover)]:hover:text-white [@media(hover:hover)]:hover:decoration-teal-300/60`}
+                        className={`inline-block min-h-11 rounded-md py-2 font-semibold text-[#00E5FF]/95 underline decoration-[#00E5FF]/40 underline-offset-[5px] transition-[color,text-decoration-color] duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 ${focusRing} active:text-white [@media(hover:hover)]:hover:text-white [@media(hover:hover)]:hover:decoration-[#00E5FF]/65`}
                       >
                         {siteEmail}
                       </a>

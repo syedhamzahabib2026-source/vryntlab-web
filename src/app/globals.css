@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Class-based dark mode — html.dark activates all dark: utilities */
+@custom-variant dark (&:is(.dark, .dark *));
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 4.5rem;
@@ -24,70 +27,75 @@ html {
 }
 
 /**
- * Light-first product surface: bright base, ink contrast, teal signal.
- * Dark mode = layered charcoal + mint accent (not flat #000).
+ * Dark premium surface — violet-purple primary, cyan secondary.
+ * Always-dark design system: `:root` is the canonical dark palette.
+ * Class-based `dark:` utilities activated via `html.dark`.
  */
 :root {
-  color-scheme: light;
-  --background: #f6f5f2;
-  --background-2: #eef6f4;
-  --foreground: #0b0d12;
-  --surface: #ffffff;
-  --surface-soft: #eceae5;
-  --surface-ink: #0f1419;
-  --border: rgba(11, 13, 18, 0.1);
-  --border-strong: rgba(11, 13, 18, 0.16);
-  --accent: #0d6f64;
-  --accent-2: #0f8f81;
-  --accent-muted: rgba(13, 111, 100, 0.14);
-  --accent-glow: rgba(15, 143, 129, 0.22);
-  --ring-focus: rgba(13, 111, 100, 0.42);
+  color-scheme: dark;
+  --background: #080810;
+  --background-2: #0a0a18;
+  --foreground: #C8C8D8;
+  --heading-color: #F0F0FF;
+  --surface: #0F0F1A;
+  --surface-soft: #141428;
+  --surface-ink: #080810;
+  --border: #1E1E35;
+  --border-strong: rgba(124, 63, 255, 0.25);
+  --accent: #7C3FFF;
+  --accent-2: #00E5FF;
+  --accent-muted: rgba(124, 63, 255, 0.12);
+  --accent-glow: rgba(124, 63, 255, 0.22);
+  --cta-gradient: linear-gradient(135deg, #7C3FFF, #00E5FF);
+  --ring-focus: rgba(124, 63, 255, 0.45);
   --ease-out-premium: cubic-bezier(0.16, 1, 0.3, 1);
-  --shadow-xs: 0 1px 0 rgba(11, 13, 18, 0.05);
-  --shadow-sm: 0 2px 10px -2px rgba(11, 13, 18, 0.07),
-    0 10px 32px -14px rgba(11, 13, 18, 0.12);
-  --shadow-md: 0 6px 22px -6px rgba(11, 13, 18, 0.1),
-    0 22px 56px -28px rgba(11, 13, 18, 0.16);
-  --shadow-glow: 0 0 0 1px rgba(13, 111, 100, 0.08),
-    0 18px 50px -24px var(--accent-glow);
-  --mesh-a: rgba(13, 111, 100, 0.09);
-  --mesh-b: rgba(99, 102, 241, 0.06);
-  --mesh-c: rgba(251, 191, 36, 0.05);
+  --shadow-xs: 0 1px 0 rgba(255, 255, 255, 0.04);
+  --shadow-sm: 0 2px 14px -2px rgba(0, 0, 0, 0.45),
+    0 14px 40px -18px rgba(0, 0, 0, 0.55);
+  --shadow-md: 0 8px 28px -8px rgba(0, 0, 0, 0.55),
+    0 26px 64px -28px rgba(0, 0, 0, 0.65);
+  --shadow-glow: 0 0 0 1px rgba(124, 63, 255, 0.18),
+    0 22px 60px -28px rgba(0, 0, 0, 0.75);
+  --mesh-a: rgba(124, 63, 255, 0.08);
+  --mesh-b: rgba(0, 229, 255, 0.06);
+  --mesh-c: rgba(124, 63, 255, 0.04);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;
-    --background: #0f1114;
-    --background-2: #12151c;
-    --foreground: #eef1f0;
-    --surface: #181b22;
-    --surface-soft: #1f232d;
-    --surface-ink: #0b0d11;
-    --border: rgba(255, 255, 255, 0.09);
-    --border-strong: rgba(255, 255, 255, 0.14);
-    --accent: #5eead4;
-    --accent-2: #99f6e4;
-    --accent-muted: rgba(94, 234, 212, 0.12);
-    --accent-glow: rgba(94, 234, 212, 0.18);
-    --ring-focus: rgba(94, 234, 212, 0.45);
+    --background: #080810;
+    --background-2: #0a0a18;
+    --foreground: #C8C8D8;
+    --heading-color: #F0F0FF;
+    --surface: #0F0F1A;
+    --surface-soft: #141428;
+    --surface-ink: #080810;
+    --border: #1E1E35;
+    --border-strong: rgba(124, 63, 255, 0.25);
+    --accent: #7C3FFF;
+    --accent-2: #00E5FF;
+    --accent-muted: rgba(124, 63, 255, 0.12);
+    --accent-glow: rgba(124, 63, 255, 0.22);
+    --cta-gradient: linear-gradient(135deg, #7C3FFF, #00E5FF);
+    --ring-focus: rgba(124, 63, 255, 0.45);
     --shadow-xs: 0 1px 0 rgba(255, 255, 255, 0.04);
     --shadow-sm: 0 2px 14px -2px rgba(0, 0, 0, 0.45),
       0 14px 40px -18px rgba(0, 0, 0, 0.55);
     --shadow-md: 0 8px 28px -8px rgba(0, 0, 0, 0.55),
       0 26px 64px -28px rgba(0, 0, 0, 0.65);
-    --shadow-glow: 0 0 0 1px rgba(94, 234, 212, 0.12),
+    --shadow-glow: 0 0 0 1px rgba(124, 63, 255, 0.18),
       0 22px 60px -28px rgba(0, 0, 0, 0.75);
-    --mesh-a: rgba(94, 234, 212, 0.08);
-    --mesh-b: rgba(129, 140, 248, 0.07);
-    --mesh-c: rgba(251, 191, 36, 0.04);
+    --mesh-a: rgba(124, 63, 255, 0.08);
+    --mesh-b: rgba(0, 229, 255, 0.06);
+    --mesh-c: rgba(124, 63, 255, 0.04);
   }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
 /**
@@ -104,19 +112,19 @@ html {
 }
 
 .slab-dark {
-  --slab-fg: #f4f4f5;
-  --slab-muted: #a1a1aa;
-  --slab-faint: #71717a;
-  --slab-line: rgba(255, 255, 255, 0.08);
-  --slab-card: rgba(255, 255, 255, 0.035);
-  --slab-card-border: rgba(255, 255, 255, 0.1);
-  --slab-glow: rgba(94, 234, 212, 0.12);
+  --slab-fg: #F0F0FF;
+  --slab-muted: #C8C8D8;
+  --slab-faint: #8888a8;
+  --slab-line: rgba(255, 255, 255, 0.07);
+  --slab-card: rgba(255, 255, 255, 0.03);
+  --slab-card-border: rgba(255, 255, 255, 0.09);
+  --slab-glow: rgba(124, 63, 255, 0.14);
   color: var(--slab-fg);
   background: linear-gradient(
     165deg,
-    #080a0e 0%,
-    #0c0f14 42%,
-    #0a0c11 100%
+    #060610 0%,
+    #0a0a1a 42%,
+    #080810 100%
   );
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
@@ -147,8 +155,13 @@ html {
   inset: 0;
   background: radial-gradient(
     90% 55% at 15% -10%,
-    rgba(94, 234, 212, 0.09),
+    rgba(124, 63, 255, 0.10),
     transparent 55%
+  ),
+  radial-gradient(
+    60% 40% at 85% 110%,
+    rgba(0, 229, 255, 0.07),
+    transparent 50%
   );
   opacity: 0.85;
 }
@@ -262,7 +275,7 @@ dialog::backdrop {
 }
 
 .work-scroll-preview-track {
-  animation: work-scroll-preview 10s linear infinite;
+  animation: work-scroll-preview 4.5s linear 1 forwards;
   animation-play-state: paused;
 }
 
@@ -292,13 +305,13 @@ dialog::backdrop {
 /** One-shot attention ring on the floating chat launcher (triggered from ChatbotShowcase). */
 @keyframes chat-launcher-pulse-ring {
   0% {
-    box-shadow: 0 0 0 0 rgba(94, 234, 212, 0.55);
+    box-shadow: 0 0 0 0 rgba(124, 63, 255, 0.55);
   }
   70% {
-    box-shadow: 0 0 0 14px rgba(94, 234, 212, 0);
+    box-shadow: 0 0 0 14px rgba(124, 63, 255, 0);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(94, 234, 212, 0);
+    box-shadow: 0 0 0 0 rgba(124, 63, 255, 0);
   }
 }
 

@@ -4,7 +4,7 @@ import { SectionShell } from "@/components/layout/SectionShell";
 import { Reveal } from "@/components/motion/Reveal";
 import { brandAbout } from "@/lib/brand-knowledge";
 
-const bodyClass = `${proseComfort} max-w-[40ch] space-y-4 border-l-0 py-0 pl-0 text-[15px] leading-[1.62] text-zinc-600 sm:max-w-[42ch] sm:space-y-5 sm:border-l-2 sm:border-[var(--accent)]/22 sm:py-0.5 sm:pl-5 sm:text-[16px] sm:leading-[1.64] md:max-w-[44ch] lg:col-span-7 lg:col-start-6 lg:max-w-none lg:pl-8 dark:border-[var(--accent)]/28 dark:text-zinc-400`;
+const bodyClass = `${proseComfort} max-w-[40ch] space-y-4 border-l-0 py-0 pl-0 text-[15px] leading-[1.62] text-[#C8C8D8]/80 sm:max-w-[42ch] sm:space-y-5 sm:border-l-2 sm:border-violet-500/25 sm:py-0.5 sm:pl-5 sm:text-[16px] sm:leading-[1.64] md:max-w-[44ch] lg:col-span-7 lg:col-start-6 lg:max-w-none lg:pl-8`;
 
 export function About() {
   return (

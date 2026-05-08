@@ -251,7 +251,7 @@ function AnimatedExampleChat({ active }: { active: boolean }) {
                   <span className="pb-1 text-[10px] tabular-nums text-zinc-500">
                     {row.time}
                   </span>
-                  <div className="max-w-[92%] rounded-2xl rounded-br-md bg-teal-500/20 px-3.5 py-2.5 text-left text-[13px] leading-relaxed text-zinc-50 ring-1 ring-teal-400/25 sm:max-w-[85%] sm:text-[14px]">
+                  <div className="max-w-[92%] rounded-2xl rounded-br-md bg-violet-500/20 px-3.5 py-2.5 text-left text-[13px] leading-relaxed text-[#F0F0FF] ring-1 ring-violet-400/25 sm:max-w-[85%] sm:text-[14px]">
                     {row.text}
                   </div>
                 </div>
@@ -360,7 +360,7 @@ export function ChatbotShowcase() {
           <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[11fr_9fr] lg:gap-12 xl:gap-16">
             <Reveal>
               <div className="max-w-xl lg:max-w-none">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-teal-300/85">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#00E5FF]/85">
                   {brandChatbotShowcase.eyebrow}
                 </p>
                 <h2
@@ -376,7 +376,7 @@ export function ChatbotShowcase() {
                   {brandChatbotShowcase.bullets.map((line) => (
                     <li key={line} className="flex gap-2.5">
                       <span
-                        className="mt-2 h-1 w-1 shrink-0 rounded-full bg-teal-400/80"
+                        className="mt-2 h-1 w-1 shrink-0 rounded-full bg-[#00E5FF]/80"
                         aria-hidden
                       />
                       <span>{line}</span>
@@ -396,7 +396,7 @@ export function ChatbotShowcase() {
                   {brandChatbotShowcase.demoExampleCaption}
                 </p>
 
-                <div className="rounded-2xl border border-teal-400/20 bg-teal-950/25 px-5 py-5 sm:px-6 sm:py-6">
+                <div className="rounded-2xl border border-violet-500/20 bg-violet-950/20 px-5 py-5 sm:px-6 sm:py-6">
                   <p className="font-display text-lg font-normal tracking-[-0.02em] text-zinc-50 sm:text-xl">
                     {brandChatbotShowcase.realChatHeadline}
                   </p>
@@ -406,7 +406,7 @@ export function ChatbotShowcase() {
                   <button
                     type="button"
                     onClick={openLiveChatWidget}
-                    className={`mt-4 inline-flex min-h-11 items-center justify-center rounded-full bg-teal-400/95 px-5 text-[13px] font-semibold text-zinc-950 shadow-[0_12px_40px_-18px_rgba(45,212,191,0.35)] transition-[transform,box-shadow] duration-300 active:scale-[0.99] ${focusRing} [@media(hover:hover)]:hover:shadow-[0_16px_48px_-20px_rgba(45,212,191,0.45)]`}
+                    className={`mt-4 inline-flex min-h-11 items-center justify-center rounded-full bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF] px-5 text-[13px] font-semibold text-white shadow-[0_12px_40px_-18px_rgba(124,63,255,0.45)] transition-[transform,box-shadow] duration-300 active:scale-[0.99] ${focusRing} [@media(hover:hover)]:hover:shadow-[0_16px_48px_-20px_rgba(124,63,255,0.6)]`}
                   >
                     {brandChatbotShowcase.realChatButton}
                   </button>

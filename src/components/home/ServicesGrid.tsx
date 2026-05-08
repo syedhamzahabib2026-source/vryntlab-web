@@ -12,7 +12,7 @@ import {
 } from "@/lib/brand-knowledge";
 
 const cardClass =
-  `flex h-full flex-col rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow-xs)] ring-1 ring-black/[0.02] transition-[border-color,box-shadow] duration-300 ease-[var(--ease-out-premium)] sm:p-6 dark:border-zinc-800/85 dark:bg-[color-mix(in_oklab,var(--surface)_92%,var(--surface-soft))] dark:ring-white/[0.04] [@media(hover:hover)]:hover:border-zinc-300/70 [@media(hover:hover)]:hover:shadow-[var(--shadow-sm)] dark:[@media(hover:hover)]:hover:border-zinc-600/45`;
+  `flex h-full flex-col rounded-2xl border border-[#1E1E35] bg-[#0F0F1A] p-5 shadow-[var(--shadow-xs)] ring-1 ring-violet-500/[0.05] transition-[border-color,box-shadow] duration-300 ease-[var(--ease-out-premium)] sm:p-6 [@media(hover:hover)]:hover:border-violet-500/35 [@media(hover:hover)]:hover:shadow-[var(--shadow-sm),0_0_30px_-12px_rgba(124,63,255,0.2)]`;
 
 export function ServicesGrid() {
   return (
@@ -34,10 +34,10 @@ export function ServicesGrid() {
               {brandServiceGrid.map((item) => (
                 <li key={item.title}>
                   <article className={cardClass}>
-                    <h3 className="font-display text-base font-normal tracking-[-0.02em] text-zinc-950 sm:text-lg dark:text-zinc-50">
+                    <h3 className="font-display text-base font-normal tracking-[-0.02em] text-[#F0F0FF] sm:text-lg">
                       {item.title}
                     </h3>
-                    <p className="mt-2.5 text-[14px] leading-relaxed text-zinc-500 sm:mt-3 sm:text-[15px] dark:text-zinc-400">
+                    <p className="mt-2.5 text-[14px] leading-relaxed text-[#C8C8D8]/75 sm:mt-3 sm:text-[15px]">
                       {item.outcome}
                     </p>
                   </article>
@@ -49,7 +49,7 @@ export function ServicesGrid() {
 
         <Reveal>
           <p
-            className={`${contentWell} text-center text-[13px] leading-relaxed text-zinc-500 sm:text-[14px] dark:text-zinc-500`}
+            className={`${contentWell} text-center text-[13px] leading-relaxed text-[#8888a8] sm:text-[14px]`}
           >
             {brandServiceGridFooter}
           </p>
@@ -57,7 +57,7 @@ export function ServicesGrid() {
 
         <Reveal>
           <p
-            className={`${contentWell} border-l-2 border-[var(--accent)]/30 py-0.5 pl-3.5 text-[13px] leading-relaxed text-zinc-600 sm:pl-4 sm:text-[14px] dark:border-[var(--accent)]/35 dark:text-zinc-500`}
+            className={`${contentWell} border-l-2 border-violet-500/30 py-0.5 pl-3.5 text-[13px] leading-relaxed text-[#C8C8D8]/60 sm:pl-4 sm:text-[14px]`}
           >
             {brandServicesSection.footerNote}
           </p>
@@ -67,7 +67,7 @@ export function ServicesGrid() {
           <div className={`${contentWell} flex justify-center`}>
             <Link
               href="/#contact"
-              className={`inline-flex min-h-11 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] px-6 text-[13px] font-semibold text-[var(--foreground)] transition-[transform,border-color] duration-300 ease-[var(--ease-out-premium)] active:scale-[0.99] dark:border-zinc-700 dark:bg-[var(--surface)] ${focusRing} [@media(hover:hover)]:hover:border-[var(--accent)]/35`}
+              className={`inline-flex min-h-11 items-center justify-center rounded-full border border-[#1E1E35] bg-[#0F0F1A] px-6 text-[13px] font-semibold text-[#F0F0FF] transition-[transform,border-color] duration-300 ease-[var(--ease-out-premium)] active:scale-[0.99] ${focusRing} [@media(hover:hover)]:hover:border-violet-500/40`}
             >
               Tell us what to fix
             </Link>

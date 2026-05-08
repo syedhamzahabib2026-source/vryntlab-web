@@ -28,17 +28,17 @@ export function ServiceLanePanels() {
           {brandServiceLanes.map((lane, i) => (
             <Reveal key={lane.id} delay={i * 0.04}>
               <article id={lane.id} className={panelClass}>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--accent)] dark:text-teal-300/90">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#00E5FF]/90">
                   {lane.shortLabel}
                 </p>
-                <h3 className="mt-2 font-display text-xl font-normal tracking-[-0.02em] text-[var(--foreground)] sm:text-[1.35rem]">
+                <h3 className="mt-2 font-display text-xl font-normal tracking-[-0.02em] text-[#F0F0FF] sm:text-[1.35rem]">
                   {lane.title}
                 </h3>
-                <p className="mt-3 text-[15px] leading-relaxed text-zinc-700 dark:text-zinc-300">
+                <p className="mt-3 text-[15px] leading-relaxed text-[#C8C8D8]/80">
                   {lane.description}
                 </p>
-                <p className="mt-4 border-l-2 border-[var(--accent)]/35 py-0.5 pl-3.5 text-[13px] leading-relaxed text-zinc-600 sm:pl-4 sm:text-[14px] dark:border-teal-400/30 dark:text-zinc-400">
-                  <span className="font-semibold text-zinc-700 dark:text-zinc-300">
+                <p className="mt-4 border-l-2 border-violet-500/30 py-0.5 pl-3.5 text-[13px] leading-relaxed text-[#C8C8D8]/65 sm:pl-4 sm:text-[14px]">
+                  <span className="font-semibold text-[#C8C8D8]">
                     {brandServicesSection.panelHeading}:{" "}
                   </span>
                   {lane.scope}
@@ -46,7 +46,7 @@ export function ServiceLanePanels() {
                 <div className="mt-5">
                   <Link
                     href="/#contact"
-                    className={`inline-flex min-h-11 items-center justify-center rounded-full bg-[var(--surface-ink)] px-5 text-[13px] font-semibold tracking-tight text-white shadow-[var(--shadow-sm)] transition-[transform,box-shadow] duration-300 ease-[var(--ease-out-premium)] active:scale-[0.98] dark:bg-white dark:text-zinc-950 ${focusRing} [@media(hover:hover)]:hover:shadow-[var(--shadow-glow)]`}
+                    className={`inline-flex min-h-11 items-center justify-center rounded-full bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF] px-5 text-[13px] font-semibold tracking-tight text-white shadow-[0_8px_28px_-8px_rgba(124,63,255,0.4)] transition-[transform,box-shadow] duration-300 ease-[var(--ease-out-premium)] active:scale-[0.98] ${focusRing} [@media(hover:hover)]:hover:shadow-[var(--shadow-glow)]`}
                   >
                     Start a conversation
                   </Link>

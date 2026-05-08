@@ -44,7 +44,7 @@ export function ScrollingWorkPreview({
 
   return (
     <div
-      className="relative h-full min-h-[220px] w-full overflow-hidden bg-zinc-950 sm:min-h-[260px] lg:min-h-0 lg:h-full"
+      className="relative h-full min-h-[220px] w-full overflow-hidden bg-[#080810] sm:min-h-[260px] lg:min-h-0 lg:h-full"
       aria-labelledby={labelId}
     >
       <span id={labelId} className="sr-only">
@@ -95,7 +95,7 @@ export function ScrollingWorkPreview({
       ) : null}
 
       <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-[38%] bg-gradient-to-t from-zinc-950 via-zinc-950/55 to-transparent"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-[38%] bg-gradient-to-t from-[#080810] via-[#080810]/55 to-transparent"
         aria-hidden
       />
       <div

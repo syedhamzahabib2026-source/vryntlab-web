@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Instrument_Serif } from "next/font/google";
+import { Geist, Inter, Instrument_Serif } from "next/font/google";
 import { ConversionProvider } from "@/components/conversion/ConversionContext";
 import { QuickEstimateSheet } from "@/components/conversion/QuickEstimateSheet";
 import { StickyMobileCta } from "@/components/conversion/StickyMobileCta";
@@ -16,7 +16,13 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
-/** Display serif for headings — body stays Geist */
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+/** Display serif for headings — body stays Inter/Geist */
 const instrumentSerif = Instrument_Serif({
   weight: "400",
   subsets: ["latin"],
@@ -58,7 +64,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${instrumentSerif.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${inter.variable} ${instrumentSerif.variable} dark h-full antialiased`}
     >
       <body
         suppressHydrationWarning

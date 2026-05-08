@@ -165,18 +165,18 @@ export function NeedPathSelector() {
                 }}
                 className="mt-5 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow-md)] ring-1 ring-black/[0.03] sm:mt-6 sm:p-5 dark:border-zinc-700/75 dark:bg-[color-mix(in_oklab,var(--surface)_92%,var(--surface-soft))] dark:ring-white/[0.04]"
               >
-                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--accent)] dark:text-teal-300/90">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#00E5FF]/90">
                   {brandPathSelector.panelKicker}
                 </p>
                 <PathIntentTriad intentId={selected.id as PathIntentId} />
                 <p className="mt-4 text-[1.0625rem] font-semibold tracking-[-0.02em] text-[var(--foreground)] sm:mt-5 sm:text-lg">
                   {selected.headline}
                 </p>
-                <ul className="mt-3 space-y-2 text-[13px] leading-relaxed text-zinc-600 dark:text-zinc-400 sm:text-[14px]">
+                <ul className="mt-3 space-y-2 text-[13px] leading-relaxed text-[#C8C8D8]/80 sm:text-[14px]">
                   {selected.outcomes.map((line) => (
                     <li key={line} className="flex gap-2">
                       <span
-                        className="mt-2 h-1 w-1 shrink-0 rounded-full bg-[var(--accent)] shadow-[0_0_0_3px_var(--accent-muted)] dark:shadow-[0_0_0_3px_rgba(94,234,212,0.12)]"
+                        className="mt-2 h-1 w-1 shrink-0 rounded-full bg-[#7C3FFF] shadow-[0_0_0_3px_rgba(124,63,255,0.15)]"
                         aria-hidden
                       />
                       <span>{line}</span>

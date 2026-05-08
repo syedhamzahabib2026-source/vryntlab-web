@@ -16,11 +16,11 @@ import { caseStudies } from "@/lib/case-studies";
 
 const tapButton = `min-h-12 w-full justify-center rounded-full px-6 text-[13px] font-semibold tracking-tight transition-[transform,background-color,box-shadow,border-color] duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 active:scale-[0.98] ${focusRing} sm:w-auto sm:min-w-[160px] sm:px-8 md:min-w-[168px] md:px-9`;
 
-const primaryCtaClass = `${tapButton} group/hero-cta inline-flex shrink-0 items-center bg-[var(--surface-ink)] text-white shadow-[var(--shadow-md)] [@media(hover:hover)]:hover:shadow-[var(--shadow-glow)] dark:bg-white dark:text-zinc-950 dark:[@media(hover:hover)]:hover:bg-zinc-200`;
+const primaryCtaClass = `${tapButton} group/hero-cta inline-flex shrink-0 items-center bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF] text-white shadow-[var(--shadow-md),0_0_30px_-8px_rgba(124,63,255,0.4)] [@media(hover:hover)]:hover:shadow-[var(--shadow-glow),0_0_40px_-6px_rgba(124,63,255,0.55)]`;
 
-const secondaryCtaClass = `${tapButton} inline-flex shrink-0 items-center border border-[var(--border)] bg-[var(--surface)] text-[var(--foreground)] shadow-[var(--shadow-xs)] [@media(hover:hover)]:hover:border-[var(--accent)]/35 [@media(hover:hover)]:hover:shadow-[var(--shadow-sm)] dark:border-zinc-700 dark:bg-[var(--surface)] dark:text-zinc-200 dark:[@media(hover:hover)]:hover:border-[var(--accent)]/30`;
+const secondaryCtaClass = `${tapButton} inline-flex shrink-0 items-center border border-[#1E1E35] bg-[#0F0F1A] text-[#C8C8D8] shadow-[var(--shadow-xs)] [@media(hover:hover)]:hover:border-violet-500/35 [@media(hover:hover)]:hover:shadow-[var(--shadow-sm)]`;
 
-const pathLinkClass = `mt-3 inline-flex min-h-11 items-center gap-1.5 py-1 text-[13px] font-semibold text-[var(--accent)] underline decoration-[color-mix(in_oklab,var(--accent)_35%,transparent)] underline-offset-[5px] transition-[color,decoration-color,gap] duration-300 ease-[var(--ease-out-premium)] ${focusRing} rounded-md [@media(hover:hover)]:hover:gap-2 [@media(hover:hover)]:hover:decoration-[var(--accent)] sm:min-h-0 sm:py-0`;
+const pathLinkClass = `mt-3 inline-flex min-h-11 items-center gap-1.5 py-1 text-[13px] font-semibold text-[#00E5FF] underline decoration-[#00E5FF]/35 underline-offset-[5px] transition-[color,decoration-color,gap] duration-300 ease-[var(--ease-out-premium)] ${focusRing} rounded-md [@media(hover:hover)]:hover:gap-2 [@media(hover:hover)]:hover:decoration-[#00E5FF] sm:min-h-0 sm:py-0`;
 
 function caseStudyProofLine(): string {
   const names = caseStudies.map((s) => s.client);
@@ -95,22 +95,22 @@ export function Hero() {
               </div>
               <h1
                 id="hero-heading"
-                className="font-display mt-4 max-w-[min(100%,40rem)] text-balance text-[1.8125rem] font-normal leading-[1.1] tracking-[-0.024em] text-zinc-950 sm:mt-5 sm:text-[2.125rem] sm:leading-[1.08] md:mt-6 md:text-[2.625rem] md:leading-[1.06] lg:text-[2.95rem] lg:tracking-[-0.028em] xl:text-[3.15rem] dark:text-zinc-50"
+                className="font-display mt-4 max-w-[min(100%,40rem)] text-balance text-[1.8125rem] font-normal leading-[1.1] tracking-[-0.024em] text-[#F0F0FF] sm:mt-5 sm:text-[2.125rem] sm:leading-[1.08] md:mt-6 md:text-[2.625rem] md:leading-[1.06] lg:text-[2.95rem] lg:tracking-[-0.028em] xl:text-[3.15rem]"
               >
                 {brandHero.headline}
               </h1>
             </header>
           </StaggerItem>
           <StaggerItem>
-            <p className="mt-4 max-w-[40rem] text-pretty text-[0.9375rem] leading-[1.62] text-zinc-600 sm:mt-5 sm:text-[1.0625rem] sm:leading-[1.64] md:mt-6 md:max-w-[44ch] md:text-[1.0625rem] md:leading-[1.66] dark:text-zinc-400">
+            <p className="mt-4 max-w-[40rem] text-pretty text-[0.9375rem] leading-[1.62] text-[#C8C8D8]/85 sm:mt-5 sm:text-[1.0625rem] sm:leading-[1.64] md:mt-6 md:max-w-[44ch] md:text-[1.0625rem] md:leading-[1.66]">
               {brandHero.subheadline}
             </p>
           </StaggerItem>
           <StaggerItem>
-            <p className="mt-3 max-w-[40rem] border-l-2 border-[var(--accent)]/40 py-0.5 pl-3.5 text-[12px] font-semibold uppercase tracking-[0.12em] text-zinc-500 sm:mt-4 sm:pl-4 sm:text-[11px] sm:tracking-[0.14em] dark:border-teal-400/35 dark:text-zinc-400">
+            <p className="mt-3 max-w-[40rem] border-l-2 border-violet-500/40 py-0.5 pl-3.5 text-[12px] font-semibold uppercase tracking-[0.12em] text-[#8888a8] sm:mt-4 sm:pl-4 sm:text-[11px] sm:tracking-[0.14em]">
               {brandHero.proofLabel}
             </p>
-            <p className="mt-1.5 max-w-[40rem] pl-3.5 text-[13px] font-medium leading-relaxed text-zinc-700 sm:pl-4 sm:text-[14px] dark:text-zinc-300">
+            <p className="mt-1.5 max-w-[40rem] pl-3.5 text-[13px] font-medium leading-relaxed text-[#C8C8D8] sm:pl-4 sm:text-[14px]">
               {caseStudyProofLine()}
             </p>
           </StaggerItem>
@@ -135,7 +135,7 @@ export function Hero() {
                   {ctaViewWork}
                 </Link>
               </nav>
-              <p className="mt-3 max-w-md text-pretty text-[12px] leading-relaxed text-zinc-500 sm:max-w-lg dark:text-zinc-500">
+              <p className="mt-3 max-w-md text-pretty text-[12px] leading-relaxed text-[#8888a8] sm:max-w-lg">
                 {brandHero.ctaSub}
               </p>
               <Link href="/services#path" className={pathLinkClass}>
