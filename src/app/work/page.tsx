@@ -5,16 +5,16 @@ import { siteBrandName } from "@/lib/site";
 import { contentWell, focusRing } from "@/components/layout/layoutTokens";
 
 export const metadata: Metadata = {
-  title: `Work | ${siteBrandName}`,
+  title: "Our Work — Web & App Projects | VryntLab",
   description:
-    "Selected launches and partnerships — plus context on engagements we cannot show publicly.",
+    "See how VryntLab has built Shopify stores, logistics websites, and custom digital solutions for real businesses. Selected projects from our portfolio.",
   alternates: {
     canonical: "https://vryntlab.com/work",
   },
   openGraph: {
-    title: `Work | ${siteBrandName}`,
+    title: "Our Work — Web & App Projects | VryntLab",
     description:
-      "Selected launches and partnerships — plus context on engagements we cannot show publicly.",
+      "See how VryntLab has built Shopify stores, logistics websites, and custom digital solutions for real businesses. Selected projects from our portfolio.",
     url: "https://vryntlab.com/work",
     type: "website",
   },

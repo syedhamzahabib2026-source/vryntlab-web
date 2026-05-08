@@ -5,11 +5,11 @@
 
 /** Page title (metadata) */
 export const brandSiteTitle =
-  "VryntLab — Websites, SEO & automation";
+  "VryntLab — Web Design, AI Chatbots & Automations for Small Business";
 
 /** Meta / footer one-liner */
 export const brandMetaDescription =
-  "VryntLab builds websites, AI chatbots, and automations for businesses that need results fast. Clear pricing, direct communication, work that actually ships.";
+  "VryntLab builds websites, AI chatbots, booking systems and automations for small businesses. Fast delivery, clear pricing, no agency bloat. Get a free estimate.";
 
 /** Footer blurb (footer only; meta uses `brandMetaDescription`) */
 export const brandFooterTagline =

@@ -7,16 +7,16 @@ import { contentWell, focusRing } from "@/components/layout/layoutTokens";
 import { siteBrandName } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: `What we do — ${siteBrandName}`,
+  title: "Web Design, SEO, Chatbots & Automation Services | VryntLab",
   description:
-    "Pick a focus, browse common problems we solve, and see how we work across web, automation, and custom builds.",
+    "Website design, AI chatbots, booking systems, SEO, speed optimization and business automation — all from one lean digital studio. See what we do.",
   alternates: {
     canonical: "https://vryntlab.com/services",
   },
   openGraph: {
-    title: `What we do — ${siteBrandName}`,
+    title: "Web Design, SEO, Chatbots & Automation Services | VryntLab",
     description:
-      "Pick a focus, browse common problems we solve, and see how we work across web, automation, and custom builds.",
+      "Website design, AI chatbots, booking systems, SEO, speed optimization and business automation — all from one lean digital studio. See what we do.",
     url: "https://vryntlab.com/services",
     type: "website",
   },
