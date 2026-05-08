@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useState, useEffect, useId } from "react";
 import { useConversion } from "@/components/conversion/ConversionContext";
 import {
   contentWell,
@@ -16,10 +17,41 @@ import { caseStudies, caseStudyPosterUrl } from "@/lib/case-studies";
 function WorkShowcaseCard({ study, index }: { study: CaseStudy; index: number }) {
   const n = String(index + 1).padStart(2, "0");
   const posterSrc = caseStudyPosterUrl(study.media);
+  const [isHovered, setIsHovered] = useState(false);
+  const [reduceMotion, setReduceMotion] = useState(false);
+  const [layerKey, setLayerKey] = useState(0);
+  const labelId = useId();
+
+  // Get hero (poster) and tall scroll images
+  const [hero, tall] = study.media.images;
+  const altHero = study.imageAlts[0] ?? study.coverAlt;
+  const altTall = study.imageAlts[1] ?? study.coverAlt;
+
+  // Check for reduced motion preference
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReduceMotion(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  // Reset animation when hover ends
+  useEffect(() => {
+    if (!isHovered) {
+      const id = window.setTimeout(() => setLayerKey((k) => k + 1), 0);
+      return () => window.clearTimeout(id);
+    }
+    return undefined;
+  }, [isHovered]);
+
+  const scrollOn = isHovered && !reduceMotion;
 
   return (
     <article
       className="group relative overflow-hidden rounded-xl border border-[#1E1E35] bg-[#0F0F1A] transition-all duration-500 ease-[var(--ease-out-premium)] hover:-translate-y-1 hover:border-[#7C3FFF]/40 hover:shadow-[0_0_60px_-20px_rgba(124,63,255,0.2),0_0_40px_-15px_rgba(0,229,255,0.1)]"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {/* Gradient border glow on hover */}
       <div className="pointer-events-none absolute inset-0 rounded-xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{
@@ -27,19 +59,71 @@ function WorkShowcaseCard({ study, index }: { study: CaseStudy; index: number })
       }} />
       
       <div className="grid grid-cols-1 lg:grid-cols-2">
-        {/* Image Section */}
+        {/* Image Section with Scrolling Preview */}
         <Link
           href={`/work/${study.id}`}
           className={`relative block aspect-[16/10] overflow-hidden lg:aspect-auto lg:min-h-[360px] ${focusRing}`}
+          aria-labelledby={labelId}
         >
-          <Image
-            src={posterSrc}
-            alt={study.coverAlt}
-            fill
-            className="object-cover transition-transform duration-700 ease-[var(--ease-out-premium)] group-hover:scale-105"
-            sizes="(max-width: 1024px) 100vw, 50vw"
+          <span id={labelId} className="sr-only">
+            {study.coverAlt}
+          </span>
+
+          {/* Live preview badge */}
+          <div className="pointer-events-none absolute left-3 top-3 z-[4] rounded-md border border-white/[0.12] bg-black/55 px-2 py-1 text-[9px] font-semibold uppercase tracking-[0.16em] text-zinc-100 shadow-lg backdrop-blur-md sm:left-4 sm:top-4">
+            Live preview
+          </div>
+
+          {/* Static hero image (shows when not hovering) */}
+          <div className="absolute inset-0 z-[1]">
+            <Image
+              src={hero}
+              alt={altHero}
+              fill
+              className={`object-cover object-center transition-opacity duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none ${
+                scrollOn ? "opacity-0" : "opacity-100"
+              }`}
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              quality={90}
+            />
+          </div>
+
+          {/* Scrolling tall image (shows on hover) */}
+          {!reduceMotion && (
+            <div
+              className={`absolute inset-0 z-[0] overflow-hidden [container-type:size] transition-opacity duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none ${
+                scrollOn ? "opacity-100" : "opacity-0"
+              }`}
+              aria-hidden={!scrollOn}
+            >
+              <div
+                key={layerKey}
+                data-active={scrollOn ? "true" : "false"}
+                className="work-scroll-preview-track relative w-full will-change-transform"
+              >
+                <Image
+                  src={tall}
+                  alt={altTall}
+                  width={1600}
+                  height={2600}
+                  className="h-auto w-full max-w-none object-cover object-top"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  quality={90}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Bottom gradient overlay */}
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-[38%] bg-gradient-to-t from-[#0F0F1A] via-[#0F0F1A]/55 to-transparent"
+            aria-hidden
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F1A]/80 via-transparent to-transparent lg:bg-gradient-to-r" />
+          {/* Inner ring */}
+          <div
+            className="pointer-events-none absolute inset-0 z-[3] ring-1 ring-inset ring-white/[0.06]"
+            aria-hidden
+          />
         </Link>
 
         {/* Content Section */}
