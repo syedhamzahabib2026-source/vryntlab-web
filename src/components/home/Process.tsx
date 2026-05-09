@@ -40,7 +40,7 @@ export function Process() {
 
         {/* Steps container */}
         <div ref={lineRef} className="relative">
-          {/* Connecting line (desktop) */}
+          {/* Connecting line (desktop only) */}
           <div
             className="pointer-events-none absolute left-[calc(10%+2.5rem)] right-[calc(10%+2.5rem)] top-[2.25rem] hidden h-px bg-[#1E1E35] lg:block"
             aria-hidden
@@ -56,16 +56,40 @@ export function Process() {
             )}
           </div>
 
+          {/* Connecting line (mobile only) — runs along the left at x=20px */}
+          <div
+            className="pointer-events-none absolute bottom-5 left-5 top-5 w-px bg-[#1E1E35] lg:hidden"
+            aria-hidden
+          >
+            {!reduceMotion && (
+              <motion.div
+                className="w-full bg-gradient-to-b from-[#7C3FFF] to-[#00E5FF]"
+                initial={{ scaleY: 0 }}
+                animate={{ scaleY: isInView ? 1 : 0 }}
+                transition={{ duration: 1.1, delay: 0.4, ease }}
+                style={{ transformOrigin: "top center", height: "100%" }}
+              />
+            )}
+          </div>
+
           {/* Steps grid */}
-          <div className="grid grid-cols-1 gap-12 sm:gap-14 lg:grid-cols-3 lg:gap-8">
+          <div className="grid grid-cols-1 gap-10 sm:gap-12 lg:grid-cols-3 lg:gap-8">
             {brandProcess.steps.map((step, i) => (
               <Reveal key={step.phase} delay={i * 0.1}>
-                <div className="flex flex-col items-start lg:items-center lg:text-center">
-                  {/* Large outlined number */}
-                  <div className="relative flex h-[4.5rem] w-[4.5rem] items-center justify-center">
-                    {/* Dot on connecting line */}
+                {/* Mobile: flex-row with small circle on left; Desktop: flex-col centered */}
+                <div className="flex items-start gap-5 lg:flex-col lg:items-center lg:text-center">
+
+                  {/* Mobile number circle (hidden on desktop) */}
+                  <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#7C3FFF]/35 bg-[#0A0A14] lg:hidden">
+                    <span className="font-mono text-[0.6875rem] font-bold text-[#7C3FFF]">
+                      {step.phase}
+                    </span>
+                  </div>
+
+                  {/* Desktop large outlined number (hidden on mobile) */}
+                  <div className="relative hidden h-[4.5rem] w-[4.5rem] items-center justify-center lg:flex">
                     <div
-                      className="absolute -bottom-px left-1/2 hidden h-3 w-3 -translate-x-1/2 rounded-full border-2 border-[#7C3FFF] bg-[#080810] lg:block"
+                      className="absolute -bottom-px left-1/2 h-3 w-3 -translate-x-1/2 rounded-full border-2 border-[#7C3FFF] bg-[#080810]"
                       aria-hidden
                     />
                     <span
@@ -77,12 +101,15 @@ export function Process() {
                     </span>
                   </div>
 
-                  <h3 className="mt-5 text-[1.25rem] font-bold tracking-[-0.02em] text-[#F0F0FF] sm:text-[1.375rem]">
-                    {step.title}
-                  </h3>
-                  <p className="mt-2 text-[14px] leading-[1.65] text-[#C8C8D8]/70 sm:text-[15px]">
-                    {step.description}
-                  </p>
+                  {/* Text content */}
+                  <div className="flex-1 lg:flex-none">
+                    <h3 className="text-[1.0625rem] font-bold tracking-[-0.02em] text-[#F0F0FF] sm:text-[1.125rem] lg:mt-5 lg:text-[1.375rem]">
+                      {step.title}
+                    </h3>
+                    <p className="mt-1.5 text-[13px] leading-[1.65] text-[#C8C8D8]/70 sm:text-[14px] lg:mt-2 lg:text-[15px]">
+                      {step.description}
+                    </p>
+                  </div>
                 </div>
               </Reveal>
             ))}

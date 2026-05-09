@@ -176,7 +176,7 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative flex min-h-[calc(100vh-4.5rem)] flex-col justify-center pb-16 pt-8 sm:min-h-[calc(100vh-5rem)] sm:pb-20 sm:pt-12 lg:min-h-[calc(100vh-5.5rem)] lg:pb-24 lg:pt-16"
+      className="relative flex flex-col justify-center pb-12 pt-8 sm:min-h-[calc(100vh-5rem)] sm:pb-20 sm:pt-12 lg:min-h-[calc(100vh-5.5rem)] lg:pb-24 lg:pt-16"
       aria-labelledby="hero-heading"
     >
       {/* Dot grid background */}
@@ -265,12 +265,12 @@ export function Hero() {
             </motion.p>
           </div>
 
-          {/* RIGHT: Dashboard card */}
+          {/* RIGHT: Dashboard card — visible on all sizes, below text on mobile */}
           <motion.div
             initial={reduceMotion ? undefined : { opacity: 0, x: 28 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.75, delay: 0.22, ease }}
-            className="hidden lg:block"
+            className="block mt-6 sm:mt-8 lg:mt-0"
           >
             <DashboardCard reduceMotion={reduceMotion} />
           </motion.div>

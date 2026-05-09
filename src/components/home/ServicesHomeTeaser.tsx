@@ -113,18 +113,18 @@ function ServiceRow({
       className="group relative cursor-default select-none overflow-hidden border-b border-[#1E1E35] px-2 last:border-0 sm:px-4"
       style={{ opacity: isDimmed && reduceMotion ? 0.35 : 1 }}
     >
-      <div className="flex items-center gap-5 py-5 sm:gap-8 sm:py-6">
+      <div className="flex items-center gap-3 py-4 sm:gap-5 sm:py-5 lg:gap-8 lg:py-6">
         {/* Number */}
-        <span className="w-8 shrink-0 font-mono text-[12px] font-bold text-[#7C3FFF]/55 sm:text-[13px]">
+        <span className="w-8 shrink-0 font-mono text-[11px] font-bold text-[#7C3FFF]/55 sm:text-[12px] lg:text-[13px]">
           {service.n}
         </span>
 
         {/* Name + desc */}
         <div className="flex min-w-0 flex-1 flex-col gap-0.5 sm:flex-row sm:items-baseline sm:gap-6">
-          <h3 className="text-[1.125rem] font-bold tracking-[-0.02em] text-[#F0F0FF] sm:text-[1.375rem] md:text-[1.5rem]">
+          <h3 className="text-[0.9375rem] font-bold tracking-[-0.02em] text-[#F0F0FF] sm:text-[1.125rem] md:text-[1.375rem] lg:text-[1.5rem]">
             {service.name}
           </h3>
-          <p className="text-[13px] text-[#8888a8] sm:text-[14px]">{service.desc}</p>
+          <p className="text-[12px] text-[#8888a8] sm:text-[13px] lg:text-[14px]">{service.desc}</p>
         </div>
 
         {/* Outcome on hover — slides in from right */}

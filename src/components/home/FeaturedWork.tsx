@@ -232,7 +232,7 @@ function HeroWorkCard() {
   return (
     <article
       ref={cardRef}
-      className={`${cardBase} min-h-[480px] sm:min-h-[540px] lg:min-h-[560px]`}
+      className={`${cardBase} min-h-[280px] sm:min-h-[480px] lg:min-h-[560px]`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -298,7 +298,7 @@ function SecondaryWorkCard() {
   return (
     <article
       ref={cardRef}
-      className={`${cardBase} min-h-[340px] sm:min-h-[380px]`}
+      className={`${cardBase} min-h-[220px] sm:min-h-[340px] lg:min-h-[380px]`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >

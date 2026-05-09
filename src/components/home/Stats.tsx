@@ -76,47 +76,52 @@ export function Stats() {
         <Reveal>
           <div
             ref={ref}
-            className="grid grid-cols-2 divide-x divide-[#1E1E35] border border-[#1E1E35] lg:grid-cols-4"
+            className="grid grid-cols-2 border border-[#1E1E35] lg:grid-cols-4"
           >
-            {STATS.map((stat, i) => (
-              <div
-                key={stat.label}
-                className="flex flex-col items-center justify-center px-4 py-10 text-center sm:px-6 sm:py-12"
-              >
-                {/* Accessible static value */}
-                <span className="sr-only">
-                  {stat.display} {stat.label}
-                </span>
-
-                <span
-                  className="text-[3rem] font-black leading-none tracking-[-0.04em] text-[#F0F0FF] sm:text-[4rem] lg:text-[4.5rem]"
-                  aria-hidden
+            {STATS.map((stat, i) => {
+              // Mobile 2×2: col-right gets left border, bottom row gets top border
+              // Desktop 4-col: all but first get left border only
+              const borderClass =
+                i === 0 ? "" :
+                i === 1 ? "border-l border-[#1E1E35]" :
+                i === 2 ? "border-t border-[#1E1E35] lg:border-t-0 lg:border-l" :
+                          "border-l border-t border-[#1E1E35] lg:border-t-0";
+              return (
+                <div
+                  key={stat.label}
+                  className={`flex flex-col items-center justify-center px-3 py-8 text-center sm:px-6 sm:py-10 lg:py-12 ${borderClass}`}
                 >
-                  {stat.isStatic ? (
-                    stat.display
-                  ) : (
-                    <>
-                      {stat.prefix}
-                      <CountUp
-                        target={stat.value}
-                        suffix={stat.suffix}
-                        started={isInView}
-                      />
-                    </>
-                  )}
-                </span>
+                  <span className="sr-only">{stat.display} {stat.label}</span>
 
-                {/* Divider line */}
-                <span
-                  className="my-3 h-px w-8 bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF]"
-                  aria-hidden
-                />
+                  <span
+                    className="text-[2.25rem] font-black leading-none tracking-[-0.04em] text-[#F0F0FF] sm:text-[3rem] lg:text-[4.5rem]"
+                    aria-hidden
+                  >
+                    {stat.isStatic ? (
+                      stat.display
+                    ) : (
+                      <>
+                        {stat.prefix}
+                        <CountUp
+                          target={stat.value}
+                          suffix={stat.suffix}
+                          started={isInView}
+                        />
+                      </>
+                    )}
+                  </span>
 
-                <span className="text-[12px] font-semibold uppercase tracking-[0.18em] text-[#8888a8]">
-                  {stat.label}
-                </span>
-              </div>
-            ))}
+                  <span
+                    className="my-2.5 h-px w-7 bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF] sm:my-3 sm:w-8"
+                    aria-hidden
+                  />
+
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#8888a8] sm:text-[12px]">
+                    {stat.label}
+                  </span>
+                </div>
+              );
+            })}
           </div>
         </Reveal>
       </div>
