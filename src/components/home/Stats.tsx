@@ -11,13 +11,14 @@ type Stat = {
   prefix?: string;
   suffix?: string;
   label: string;
+  isStatic?: boolean;
 };
 
 const STATS: Stat[] = [
-  { value: 9, display: "9", label: "Services" },
-  { value: 2, display: "2", label: "Live Projects" },
+  { value: 2, display: "2wk", suffix: "wk", label: "Not Months" },
   { value: 100, display: "100%", suffix: "%", label: "Client Ownership" },
-  { value: 0, display: "0", label: "Agency Overhead" },
+  { value: 0, display: "$0", prefix: "$", label: "Agency Overhead" },
+  { value: 0, display: "1:1", isStatic: true, label: "Direct Access" },
 ];
 
 function CountUp({
@@ -91,11 +92,18 @@ export function Stats() {
                   className="text-[3rem] font-black leading-none tracking-[-0.04em] text-[#F0F0FF] sm:text-[4rem] lg:text-[4.5rem]"
                   aria-hidden
                 >
-                  <CountUp
-                    target={stat.value}
-                    suffix={stat.suffix}
-                    started={isInView}
-                  />
+                  {stat.isStatic ? (
+                    stat.display
+                  ) : (
+                    <>
+                      {stat.prefix}
+                      <CountUp
+                        target={stat.value}
+                        suffix={stat.suffix}
+                        started={isInView}
+                      />
+                    </>
+                  )}
                 </span>
 
                 {/* Divider line */}
