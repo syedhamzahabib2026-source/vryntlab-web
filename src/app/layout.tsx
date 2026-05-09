@@ -54,6 +54,9 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     images: ["/brand/og-image.png"],
   },
+  verification: {
+    google: "google-site-verification",
+  },
 };
 
 export default function RootLayout({

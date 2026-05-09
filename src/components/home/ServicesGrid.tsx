@@ -33,14 +33,17 @@ export function ServicesGrid() {
             <ul className="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2 md:gap-5 lg:gap-6">
               {brandServiceGrid.map((item) => (
                 <li key={item.title}>
-                  <article className={cardClass}>
+                  <Link
+                    href={item.href}
+                    className={`${cardClass} ${focusRing} cursor-pointer`}
+                  >
                     <h3 className="font-display text-base font-normal tracking-[-0.02em] text-[#F0F0FF] sm:text-lg">
                       {item.title}
                     </h3>
                     <p className="mt-2.5 text-[14px] leading-relaxed text-[#C8C8D8]/75 sm:mt-3 sm:text-[15px]">
                       {item.outcome}
                     </p>
-                  </article>
+                  </Link>
                 </li>
               ))}
             </ul>

@@ -204,41 +204,49 @@ export const brandServiceGrid = [
     title: "Site feels slow or broken on phones",
     outcome:
       "Faster loads and fewer layout surprises so people actually read your offer before they leave.",
+    href: "/services/web-design",
   },
   {
     title: "Website doesn’t explain what you sell",
     outcome:
       "Clear story, stronger structure, and a straight path to contact or checkout.",
+    href: "/services/web-design",
   },
   {
     title: "Shopify or storefront isn’t converting",
     outcome:
       "Product pages, collections, and checkout tuned so trust shows up before the cart.",
+    href: "/services/shopify",
   },
   {
     title: "Booking is a back-and-forth mess",
     outcome:
       "Calendars and forms that sync where you work—fewer no-shows and less inbox ping-pong.",
+    href: "/services/booking-systems",
   },
   {
     title: "Same customer questions all day",
     outcome:
       "An on-site assistant that answers the repeat stuff and hands off real leads cleanly.",
+    href: "/services/ai-chatbot",
   },
   {
     title: "Data stuck in three different tools",
     outcome:
       "Light automations so bookings, CRM, and email stay in sync without retyping.",
+    href: "/services/automation",
   },
   {
     title: "Hard to find on Google or Maps",
     outcome:
       "SEO and local presence work so the right searches surface your business.",
+    href: "/services/seo",
   },
   {
     title: "Nothing off-the-shelf fits how you work",
     outcome:
       "Small custom screens, APIs, or internal tools—shipped in slices you can try early.",
+    href: "/#contact",
   },
 ] as const;
 
