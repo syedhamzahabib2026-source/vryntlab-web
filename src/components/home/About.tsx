@@ -1,31 +1,41 @@
-import { proseComfort } from "@/components/layout/layoutTokens";
-import { SectionIntro } from "@/components/layout/SectionIntro";
-import { SectionShell } from "@/components/layout/SectionShell";
+import { contentWell } from "@/components/layout/layoutTokens";
 import { Reveal } from "@/components/motion/Reveal";
 import { brandAbout } from "@/lib/brand-knowledge";
 
-const bodyClass = `${proseComfort} max-w-[40ch] space-y-4 border-l-0 py-0 pl-0 text-[15px] leading-[1.62] text-[#C8C8D8]/80 sm:max-w-[42ch] sm:space-y-5 sm:border-l-2 sm:border-violet-500/25 sm:py-0.5 sm:pl-5 sm:text-[16px] sm:leading-[1.64] md:max-w-[44ch] lg:col-span-7 lg:col-start-6 lg:max-w-none lg:pl-8`;
-
 export function About() {
   return (
-    <SectionShell id="about" labelledBy="about-heading">
-      <Reveal>
-        <div className="grid gap-7 border-t border-[var(--border)] pt-9 sm:gap-8 sm:pt-10 md:gap-9 md:pt-11 lg:grid-cols-12 lg:items-start lg:gap-x-14 lg:gap-y-0 lg:pt-14 xl:pt-[3.25rem]">
-          <div className="max-w-[min(100%,24rem)] lg:col-span-4 lg:max-w-none">
-            <SectionIntro
-              eyebrow={brandAbout.eyebrow}
-              titleId="about-heading"
-              title={brandAbout.title}
-              className="max-w-none"
-            />
+    <section
+      id="about"
+      aria-labelledby="about-heading"
+      className="scroll-mt-[calc(4.5rem+0.25rem)] py-16 sm:scroll-mt-24 sm:py-20 md:scroll-mt-28"
+    >
+      <div className={contentWell}>
+        <Reveal>
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-20 lg:items-start">
+            {/* Left: bold statement */}
+            <div>
+              <h2
+                id="about-heading"
+                className="text-[2.5rem] font-black leading-[1.04] tracking-[-0.035em] text-[#F0F0FF] sm:text-[3rem] lg:text-[3.5rem]"
+              >
+                Small&nbsp;team.<br />
+                Full&nbsp;stack.<br />
+                No&nbsp;bullshit.
+              </h2>
+              <p className="mt-4 text-[12px] font-semibold uppercase tracking-[0.2em] text-[#7C3FFF]/70">
+                About VryntLab
+              </p>
+            </div>
+
+            {/* Right: paragraphs with violet accent line */}
+            <div className="space-y-4 border-l-2 border-[#7C3FFF]/30 pl-6 text-[15px] leading-[1.65] text-[#C8C8D8]/80 sm:space-y-5 sm:text-[16px] lg:pl-8">
+              {brandAbout.paragraphs.map((text) => (
+                <p key={text}>{text}</p>
+              ))}
+            </div>
           </div>
-          <div className={bodyClass}>
-            {brandAbout.paragraphs.map((text) => (
-              <p key={text}>{text}</p>
-            ))}
-          </div>
-        </div>
-      </Reveal>
-    </SectionShell>
+        </Reveal>
+      </div>
+    </section>
   );
 }

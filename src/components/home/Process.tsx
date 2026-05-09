@@ -1,47 +1,94 @@
-import { SectionIntro } from "@/components/layout/SectionIntro";
-import { SectionShell } from "@/components/layout/SectionShell";
-import { Reveal } from "@/components/motion/Reveal";
+"use client";
+
+import { useRef } from "react";
+import { motion, useInView, useReducedMotion } from "motion/react";
 import { brandProcess } from "@/lib/brand-knowledge";
+import { contentWell } from "@/components/layout/layoutTokens";
+import { Reveal } from "@/components/motion/Reveal";
 
-const steps = brandProcess.steps;
-
-const stepCardClass =
-  "group/step flex h-full flex-col rounded-2xl border border-[var(--border)] bg-[color-mix(in_oklab,var(--surface)_88%,var(--surface-soft))] p-6 shadow-[var(--shadow-sm)] ring-1 ring-black/[0.02] transition-[border-color,box-shadow,transform] duration-300 ease-[var(--ease-out-premium)] motion-reduce:transform-none motion-reduce:duration-150 active:scale-[0.995] sm:p-7 md:p-8 dark:bg-[color-mix(in_oklab,var(--surface)_75%,var(--surface-soft))] dark:ring-white/[0.04] [@media(hover:hover)]:hover:-translate-y-0.5 [@media(hover:hover)]:hover:border-zinc-300/70 [@media(hover:hover)]:hover:shadow-[var(--shadow-md)] dark:[@media(hover:hover)]:hover:border-zinc-600/45";
+const ease = [0.16, 1, 0.3, 1] as const;
 
 export function Process() {
+  const lineRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(lineRef, { once: true, margin: "-80px 0px" });
+  const reduceMotion = useReducedMotion() ?? false;
+
   return (
-    <SectionShell id="process" labelledBy="process-heading">
-      <div className="flex flex-col gap-7 border-t border-[var(--border)] pt-8 sm:gap-10 sm:pt-11 md:gap-12 md:pt-12 lg:gap-14 lg:pt-14 xl:gap-16 xl:pt-16">
+    <section
+      id="process"
+      aria-labelledby="process-heading"
+      className="scroll-mt-[calc(4.5rem+0.25rem)] py-16 sm:scroll-mt-24 sm:py-20 md:scroll-mt-28"
+    >
+      <div className={contentWell}>
+        {/* Section header */}
         <Reveal>
-          <SectionIntro
-            eyebrow={brandProcess.eyebrow}
-            titleId="process-heading"
-            title={brandProcess.title}
-            description={<>{brandProcess.description}</>}
-            align="start"
-          />
+          <div className="mb-14 sm:mb-16">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#7C3FFF]/90">
+              {brandProcess.eyebrow}
+            </p>
+            <h2
+              id="process-heading"
+              className="mt-2 text-[1.875rem] font-bold tracking-[-0.025em] text-[#F0F0FF] sm:text-[2.25rem]"
+            >
+              {brandProcess.title}
+            </h2>
+            <p className="mt-2.5 text-[14px] text-[#C8C8D8]/70 sm:text-[15px]">
+              {brandProcess.description}
+            </p>
+          </div>
         </Reveal>
 
-        <ol className="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-3 md:gap-4 lg:gap-6 xl:gap-8">
-          {steps.map((step, index) => (
-            <li key={step.title}>
-              <Reveal delay={index * 0.045}>
-                <article className={stepCardClass}>
-                  <span className="text-[11px] font-semibold tabular-nums text-[var(--accent)] opacity-85 dark:opacity-90">
-                    {step.phase}
-                  </span>
-                  <h3 className="font-display mt-3 text-[1.0625rem] font-normal tracking-[-0.02em] text-[#F0F0FF] sm:mt-4 sm:text-lg md:text-xl">
+        {/* Steps container */}
+        <div ref={lineRef} className="relative">
+          {/* Connecting line (desktop) */}
+          <div
+            className="pointer-events-none absolute left-[calc(10%+2.5rem)] right-[calc(10%+2.5rem)] top-[2.25rem] hidden h-px bg-[#1E1E35] lg:block"
+            aria-hidden
+          >
+            {!reduceMotion && (
+              <motion.div
+                className="h-full bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF]"
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: isInView ? 1 : 0 }}
+                transition={{ duration: 1.1, delay: 0.4, ease }}
+                style={{ transformOrigin: "left center" }}
+              />
+            )}
+          </div>
+
+          {/* Steps grid */}
+          <div className="grid grid-cols-1 gap-12 sm:gap-14 lg:grid-cols-3 lg:gap-8">
+            {brandProcess.steps.map((step, i) => (
+              <Reveal key={step.phase} delay={i * 0.1}>
+                <div className="flex flex-col items-start lg:items-center lg:text-center">
+                  {/* Large outlined number */}
+                  <div className="relative flex h-[4.5rem] w-[4.5rem] items-center justify-center">
+                    {/* Dot on connecting line */}
+                    <div
+                      className="absolute -bottom-px left-1/2 hidden h-3 w-3 -translate-x-1/2 rounded-full border-2 border-[#7C3FFF] bg-[#080810] lg:block"
+                      aria-hidden
+                    />
+                    <span
+                      className="select-none text-[4rem] font-black leading-none tracking-[-0.06em] text-transparent"
+                      style={{ WebkitTextStroke: "1.5px rgba(124,63,255,0.6)" }}
+                      aria-hidden
+                    >
+                      {step.phase}
+                    </span>
+                  </div>
+
+                  <h3 className="mt-5 text-[1.25rem] font-bold tracking-[-0.02em] text-[#F0F0FF] sm:text-[1.375rem]">
                     {step.title}
                   </h3>
-                  <p className="mt-2.5 text-[14px] leading-[1.62] text-[#C8C8D8]/75 sm:mt-3 sm:text-[15px] sm:leading-[1.65]">
+                  <p className="mt-2 text-[14px] leading-[1.65] text-[#C8C8D8]/70 sm:text-[15px]">
                     {step.description}
                   </p>
-                </article>
+                </div>
               </Reveal>
-            </li>
-          ))}
-        </ol>
+            ))}
+          </div>
+        </div>
       </div>
-    </SectionShell>
+    </section>
   );
 }

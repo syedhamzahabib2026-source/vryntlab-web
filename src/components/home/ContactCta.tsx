@@ -1,78 +1,60 @@
 "use client";
 
-import { Reveal } from "@/components/motion/Reveal";
-import {
-  contentWell,
-  focusRing,
-  narrowMeasure,
-  proseComfort,
-  slabBleed,
-  slabContent,
-} from "@/components/layout/layoutTokens";
-import { SectionIntro } from "@/components/layout/SectionIntro";
-import { SectionShell } from "@/components/layout/SectionShell";
 import { ContactForm } from "@/components/ui/ContactForm";
 import { brandContact } from "@/lib/brand-knowledge";
 import { siteEmail } from "@/lib/site";
-import { ContactEstimateButton } from "./ContactEstimateButton";
-
-const leadClass = `${proseComfort} mt-4 max-w-[40ch] space-y-3.5 text-[0.9375rem] leading-[1.62] text-zinc-300 sm:mt-5 sm:max-w-[42ch] sm:space-y-4 sm:text-[1.0625rem] sm:leading-[1.64] md:text-[1.0625rem] md:leading-[1.65] lg:max-w-sm`;
-
-const followUpClass = `${proseComfort} ${narrowMeasure} mt-5 border-t border-white/10 pt-5 text-[13px] leading-[1.58] text-zinc-500 sm:mt-6 sm:max-w-[38ch] sm:pt-5 sm:text-[14px] sm:leading-[1.6] lg:max-w-sm`;
+import { contentWell, focusRing, slabBleed, slabContent } from "@/components/layout/layoutTokens";
+import { Reveal } from "@/components/motion/Reveal";
 
 export function ContactCta() {
   return (
     <div className={slabBleed}>
-      <SectionShell
+      <section
         id="contact"
-        labelledBy="contact-heading"
-        pad="compact"
-        className={`${slabContent} !scroll-mt-[calc(4.5rem+0.25rem)] border-0 pb-8 pt-4 sm:!scroll-mt-24 sm:pb-10 sm:pt-5 md:!scroll-mt-28 md:pb-12 md:pt-6 lg:pb-14 lg:pt-8`}
+        aria-labelledby="contact-heading"
+        className={`${slabContent} scroll-mt-[calc(4.5rem+0.25rem)] py-16 sm:scroll-mt-24 sm:py-20 md:scroll-mt-28`}
       >
-        <Reveal>
-          <div className={contentWell}>
-            <div className="rounded-2xl border border-white/[0.1] bg-white/[0.04] p-5 shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_28px_80px_-32px_rgba(0,0,0,0.55)] ring-1 ring-white/[0.05] sm:rounded-[1.35rem] sm:p-7 sm:py-9 md:p-9 md:py-11 lg:p-11 lg:py-14 xl:py-[3.75rem]">
-              <div className="grid gap-7 sm:gap-8 md:gap-9 lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-14">
-                <div className="lg:col-span-5">
-                  <SectionIntro
-                    eyebrow={brandContact.eyebrow}
-                    titleId="contact-heading"
-                    title={brandContact.title}
-                    tone="onDark"
-                    className="max-w-[min(100%,22rem)] sm:max-w-none"
-                  />
-                  <div className={leadClass}>
-                    {brandContact.lead.map((text) => (
-                      <p key={text}>{text}</p>
-                    ))}
-                  </div>
-                  <p className={followUpClass}>{brandContact.followUp}</p>
-                  <ContactEstimateButton variant="onDark" />
-                </div>
-
-                <div className="lg:col-span-6 lg:col-start-7">
-                  <div className="rounded-xl border border-[#1E1E35] bg-[#0F0F1A] p-4 shadow-[var(--shadow-md)] sm:rounded-2xl sm:p-6 md:p-7">
-                    <ContactForm />
-                  </div>
-                  <div className="mt-5 sm:mt-6">
-                    <p
-                      className={`text-[12px] leading-relaxed text-zinc-500 sm:text-[13px] ${narrowMeasure} lg:max-w-none`}
-                    >
-                      Prefer email?{" "}
-                      <a
-                        href={`mailto:${siteEmail}`}
-                        className={`inline-block min-h-11 rounded-md py-2 font-semibold text-[#00E5FF]/95 underline decoration-[#00E5FF]/40 underline-offset-[5px] transition-[color,text-decoration-color] duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 ${focusRing} active:text-white [@media(hover:hover)]:hover:text-white [@media(hover:hover)]:hover:decoration-[#00E5FF]/65`}
-                      >
-                        {siteEmail}
-                      </a>
-                    </p>
-                  </div>
-                </div>
-              </div>
+        <div className={contentWell}>
+          {/* Large centered headline */}
+          <Reveal>
+            <div className="mb-12 text-center sm:mb-14">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#7C3FFF]/90">
+                {brandContact.eyebrow}
+              </p>
+              <h2
+                id="contact-heading"
+                className="mt-3 text-[2rem] font-bold tracking-[-0.025em] text-[#F0F0FF] sm:text-[2.75rem] lg:text-[3.25rem]"
+              >
+                {brandContact.title}
+              </h2>
+              <p className="mx-auto mt-4 max-w-[50ch] text-[15px] leading-relaxed text-[#C8C8D8]/70">
+                {brandContact.lead[0]}
+              </p>
             </div>
-          </div>
-        </Reveal>
-      </SectionShell>
+          </Reveal>
+
+          {/* Form */}
+          <Reveal>
+            <div className="mx-auto max-w-lg">
+              <ContactForm />
+            </div>
+          </Reveal>
+
+          {/* Email link */}
+          <Reveal>
+            <div className="mt-14 text-center">
+              <p className="mb-3 text-[13px] text-[#8888a8]">Prefer to write directly?</p>
+              <a
+                href={`mailto:${siteEmail}`}
+                className={`text-[1.25rem] font-bold tracking-tight text-[#F0F0FF] underline decoration-[#7C3FFF]/35 underline-offset-4 transition-[text-decoration-color,color] duration-300 ease-[var(--ease-out-premium)] ${focusRing} rounded-md sm:text-[1.5rem] [@media(hover:hover)]:hover:text-[#7C3FFF] [@media(hover:hover)]:hover:decoration-[#7C3FFF]/70`}
+              >
+                {siteEmail}
+              </a>
+              <p className="mt-4 text-[12px] text-[#8888a8]">{brandContact.followUp}</p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
     </div>
   );
 }

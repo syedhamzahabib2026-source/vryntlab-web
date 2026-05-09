@@ -369,3 +369,23 @@ dialog::backdrop {
       0 0 0 1px color-mix(in oklab, var(--accent) 45%, transparent);
   }
 }
+
+/** Marquee scrolling ticker (MarqueeBar). */
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: marquee-scroll 32s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}

@@ -1,52 +1,226 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { contentWell, focusRing } from "@/components/layout/layoutTokens";
 import { Reveal } from "@/components/motion/Reveal";
-import { SectionShell } from "@/components/layout/SectionShell";
-import { brandHomeServicesTeaser } from "@/lib/brand-knowledge";
-import { StaggerGroup, StaggerItem } from "@/components/motion/StaggerGroup";
 
-const linkClass = `inline-flex min-h-11 items-center gap-1.5 text-[13px] font-semibold text-[#00E5FF] underline decoration-[#00E5FF]/35 underline-offset-[4px] transition-[gap,color,text-decoration-color] duration-300 ease-[var(--ease-out-premium)] ${focusRing} rounded-md [@media(hover:hover)]:hover:gap-2 [@media(hover:hover)]:hover:decoration-[#00E5FF]`;
+type Service = {
+  n: string;
+  name: string;
+  desc: string;
+  outcome: string;
+  icon: string;
+};
+
+const SERVICES: Service[] = [
+  {
+    n: "01",
+    name: "Website Design & Development",
+    desc: "Marketing sites that load fast and convert",
+    outcome: "More visitors complete your contact or checkout flow",
+    icon: "⟡",
+  },
+  {
+    n: "02",
+    name: "Shopify & E-commerce",
+    desc: "Stores built to sell — not just display",
+    outcome: "Higher product page trust and cart completion",
+    icon: "◈",
+  },
+  {
+    n: "03",
+    name: "AI Chatbots",
+    desc: "On-site assistants trained on your business",
+    outcome: "Fewer repeat support questions, more captured leads",
+    icon: "✦",
+  },
+  {
+    n: "04",
+    name: "Automation & Integrations",
+    desc: "Connect your tools so data moves once",
+    outcome: "No more copying leads between three spreadsheets",
+    icon: "⇢",
+  },
+  {
+    n: "05",
+    name: "SEO & Local Search",
+    desc: "Get found on Google and Maps",
+    outcome: "The right searches surface your business",
+    icon: "◉",
+  },
+  {
+    n: "06",
+    name: "Booking Systems & Forms",
+    desc: "Calendars and intake that sync where you work",
+    outcome: "Fewer no-shows and less inbox back-and-forth",
+    icon: "▢",
+  },
+  {
+    n: "07",
+    name: "App Development",
+    desc: "iOS, Android, or cross-platform — scoped in milestones",
+    outcome: "Testable builds early before you're locked in",
+    icon: "◷",
+  },
+  {
+    n: "08",
+    name: "Custom Software & APIs",
+    desc: "Internal tools and flows that match how you work",
+    outcome: "Browser-based tools shipped in slices you can try",
+    icon: "❖",
+  },
+  {
+    n: "09",
+    name: "Backend & Infrastructure",
+    desc: "APIs, data pipelines, and reliable hosting",
+    outcome: "Less downtime, documented so anyone can maintain it",
+    icon: "⬡",
+  },
+];
+
+type ServiceRowProps = {
+  service: Service;
+  isActive: boolean;
+  isDimmed: boolean;
+  onHoverStart: () => void;
+  onHoverEnd: () => void;
+  reduceMotion: boolean;
+};
+
+function ServiceRow({
+  service,
+  isActive,
+  isDimmed,
+  onHoverStart,
+  onHoverEnd,
+  reduceMotion,
+}: ServiceRowProps) {
+  return (
+    <motion.div
+      onHoverStart={onHoverStart}
+      onHoverEnd={onHoverEnd}
+      animate={
+        reduceMotion
+          ? {}
+          : {
+              opacity: isDimmed ? 0.35 : 1,
+              backgroundColor: isActive ? "#0F0F1A" : "rgba(0,0,0,0)",
+            }
+      }
+      transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+      className="group relative cursor-default select-none overflow-hidden border-b border-[#1E1E35] px-2 last:border-0 sm:px-4"
+      style={{ opacity: isDimmed && reduceMotion ? 0.35 : 1 }}
+    >
+      <div className="flex items-center gap-5 py-5 sm:gap-8 sm:py-6">
+        {/* Number */}
+        <span className="w-8 shrink-0 font-mono text-[12px] font-bold text-[#7C3FFF]/55 sm:text-[13px]">
+          {service.n}
+        </span>
+
+        {/* Name + desc */}
+        <div className="flex min-w-0 flex-1 flex-col gap-0.5 sm:flex-row sm:items-baseline sm:gap-6">
+          <h3 className="text-[1.125rem] font-bold tracking-[-0.02em] text-[#F0F0FF] sm:text-[1.375rem] md:text-[1.5rem]">
+            {service.name}
+          </h3>
+          <p className="text-[13px] text-[#8888a8] sm:text-[14px]">{service.desc}</p>
+        </div>
+
+        {/* Outcome on hover — slides in from right */}
+        <AnimatePresence>
+          {isActive && !reduceMotion && (
+            <motion.div
+              key="outcome"
+              initial={{ opacity: 0, x: 16 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 8 }}
+              transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+              className="hidden shrink-0 items-center gap-2 lg:flex"
+            >
+              <span className="text-[1rem] text-[#7C3FFF]">{service.icon}</span>
+              <span className="max-w-[22ch] text-[13px] font-medium text-[#00E5FF]">
+                {service.outcome}
+              </span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Arrow */}
+        <motion.span
+          animate={reduceMotion ? {} : { x: isActive ? 2 : 0 }}
+          transition={{ duration: 0.2 }}
+          className="shrink-0 text-[#8888a8] transition-colors duration-200 group-hover:text-[#F0F0FF]"
+          aria-hidden
+        >
+          →
+        </motion.span>
+      </div>
+    </motion.div>
+  );
+}
 
 export function ServicesHomeTeaser() {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const reduceMotion = useReducedMotion() ?? false;
+
   return (
-    <SectionShell
-      id="services-teaser"
-      labelledBy="services-teaser-heading"
-      pad="compact"
-      className="!scroll-mt-[calc(4.5rem+0.25rem)] border-t border-[var(--border)] sm:!scroll-mt-24 md:!scroll-mt-28"
+    <section
+      id="services"
+      aria-labelledby="services-heading"
+      className="scroll-mt-[calc(4.5rem+0.25rem)] py-16 sm:scroll-mt-24 sm:py-20 md:scroll-mt-28"
     >
-      <Reveal>
-        <div className={contentWell}>
-          <h2
-            id="services-teaser-heading"
-            className="font-display text-lg font-normal tracking-[-0.02em] text-[#F0F0FF] sm:text-xl"
-          >
-            What we do
-          </h2>
-          <StaggerGroup
-            className="mt-4 grid grid-cols-1 gap-3 sm:mt-5 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3"
-            inViewMargin="-8% 0px -8% 0px"
-            inViewAmount={0.1}
-          >
-            {brandHomeServicesTeaser.lines.map((line) => (
-              <StaggerItem key={line}>
-                <div className="flex items-start gap-3.5 rounded-xl border border-[#1E1E35] bg-[#0F0F1A] p-5 transition-[border-color,box-shadow] duration-300 ease-[var(--ease-out-premium)] [@media(hover:hover)]:hover:border-violet-500/35 [@media(hover:hover)]:hover:shadow-[0_0_24px_-8px_rgba(124,63,255,0.2)]">
-                  <span
-                    className="mt-[0.35rem] h-2 w-2 shrink-0 rounded-full bg-gradient-to-br from-[#7C3FFF] to-[#00E5FF] shadow-[0_0_8px_rgba(124,63,255,0.5)]"
-                    aria-hidden
-                  />
-                  <p className="text-pretty text-[0.9375rem] leading-relaxed text-[#C8C8D8]/85 sm:text-[1rem] sm:leading-[1.65]">
-                    {line}
-                  </p>
-                </div>
-              </StaggerItem>
+      <div className={contentWell}>
+        {/* Section header */}
+        <Reveal>
+          <div className="mb-10 sm:mb-12">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#7C3FFF]/90">
+              Services
+            </p>
+            <h2
+              id="services-heading"
+              className="mt-2 text-[1.875rem] font-bold tracking-[-0.025em] text-[#F0F0FF] sm:text-[2.25rem]"
+            >
+              Where we step in
+            </h2>
+            <p className="mt-2.5 max-w-[52ch] text-[14px] text-[#C8C8D8]/70 sm:text-[15px]">
+              Most teams don&apos;t care what stack we use — they care what gets fixed.
+            </p>
+          </div>
+        </Reveal>
+
+        {/* Service list */}
+        <Reveal>
+          <div className="divide-y divide-[#1E1E35] border-t border-[#1E1E35]">
+            {SERVICES.map((service, i) => (
+              <ServiceRow
+                key={service.n}
+                service={service}
+                isActive={activeIndex === i}
+                isDimmed={activeIndex !== null && activeIndex !== i}
+                onHoverStart={() => setActiveIndex(i)}
+                onHoverEnd={() => setActiveIndex(null)}
+                reduceMotion={reduceMotion}
+              />
             ))}
-          </StaggerGroup>
-          <Link href="/services" className={`${linkClass} mt-5 inline-flex sm:mt-6`}>
-            {brandHomeServicesTeaser.ctaLabel}
-          </Link>
-        </div>
-      </Reveal>
-    </SectionShell>
+          </div>
+        </Reveal>
+
+        {/* Footer CTA */}
+        <Reveal>
+          <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-[13px] text-[#8888a8]">
+              Every project is scoped to your actual problem.
+            </p>
+            <Link
+              href="/services"
+              className={`inline-flex items-center gap-2 rounded-full border border-[#1E1E35] bg-[#0F0F1A] px-5 py-2.5 text-[13px] font-semibold text-[#F0F0FF] transition-[border-color,transform] duration-300 active:scale-[0.98] ${focusRing} [@media(hover:hover)]:hover:border-violet-500/40 [@media(hover:hover)]:hover:-translate-y-px`}
+            >
+              Full services →
+            </Link>
+          </div>
+        </Reveal>
+      </div>
+    </section>
   );
 }

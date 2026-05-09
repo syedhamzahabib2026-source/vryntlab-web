@@ -1,174 +1,280 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
-import { useRef } from "react";
-import { contentWell, focusRing } from "@/components/layout/layoutTokens";
-import { StaggerGroup, StaggerItem } from "@/components/motion/StaggerGroup";
-import { brandHero, brandIntentActionLabels } from "@/lib/brand-knowledge";
+import { useEffect, useState } from "react";
 import { useConversion } from "@/components/conversion/ConversionContext";
-import {
-  ctaStartProject,
-  ctaViewWork,
-  siteBrandName,
-} from "@/lib/site";
-import { caseStudies } from "@/lib/case-studies";
+import { brandIntentActionLabels } from "@/lib/brand-knowledge";
+import { ctaStartProject, ctaViewWork } from "@/lib/site";
+import { contentWell, focusRing } from "@/components/layout/layoutTokens";
 
-const tapButton = `min-h-12 w-full justify-center rounded-full px-6 text-[13px] font-semibold tracking-tight transition-[transform,background-color,box-shadow,border-color] duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 active:scale-[0.98] ${focusRing} sm:w-auto sm:min-w-[160px] sm:px-8 md:min-w-[168px] md:px-9`;
+const ease = [0.16, 1, 0.3, 1] as const;
 
-const primaryCtaClass = `${tapButton} group/hero-cta inline-flex shrink-0 items-center bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF] text-white shadow-[var(--shadow-md),0_0_30px_-8px_rgba(124,63,255,0.4)] [@media(hover:hover)]:hover:shadow-[var(--shadow-glow),0_0_40px_-6px_rgba(124,63,255,0.55)]`;
+const primaryBtnClass =
+  `inline-flex min-h-12 items-center gap-2 rounded-full bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF] px-8 text-[14px] font-semibold tracking-tight text-white shadow-[0_0_32px_-8px_rgba(124,63,255,0.5)] transition-[transform,box-shadow] duration-300 ease-[var(--ease-out-premium)] active:scale-[0.98] ${focusRing} [@media(hover:hover)]:hover:-translate-y-px [@media(hover:hover)]:hover:shadow-[0_0_44px_-6px_rgba(124,63,255,0.65)]`;
 
-const secondaryCtaClass = `${tapButton} inline-flex shrink-0 items-center border border-[#1E1E35] bg-[#0F0F1A] text-[#C8C8D8] shadow-[var(--shadow-xs)] [@media(hover:hover)]:hover:border-violet-500/35 [@media(hover:hover)]:hover:shadow-[var(--shadow-sm)]`;
+const secondaryBtnClass =
+  `inline-flex min-h-12 items-center gap-2 rounded-full border border-[#1E1E35] bg-[#0F0F1A] px-8 text-[14px] font-semibold tracking-tight text-[#C8C8D8] transition-[border-color,transform] duration-300 ease-[var(--ease-out-premium)] active:scale-[0.98] ${focusRing} [@media(hover:hover)]:hover:-translate-y-px [@media(hover:hover)]:hover:border-violet-500/40`;
 
-const pathLinkClass = `mt-3 inline-flex min-h-11 items-center gap-1.5 py-1 text-[13px] font-semibold text-[#00E5FF] underline decoration-[#00E5FF]/35 underline-offset-[5px] transition-[color,decoration-color,gap] duration-300 ease-[var(--ease-out-premium)] ${focusRing} rounded-md [@media(hover:hover)]:hover:gap-2 [@media(hover:hover)]:hover:decoration-[#00E5FF] sm:min-h-0 sm:py-0`;
+function LiveDot() {
+  return (
+    <span className="relative flex h-2 w-2" aria-hidden>
+      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+      <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+    </span>
+  );
+}
 
-function caseStudyProofLine(): string {
-  const names = caseStudies.map((s) => s.client);
-  if (names.length === 0) return "";
-  if (names.length === 1) return `${names[0]} — live today.`;
-  if (names.length === 2) return `${names[0]} and ${names[1]} — both live.`;
-  const head = names.slice(0, -1).join(", ");
-  const last = names[names.length - 1];
-  return `${head}, and ${last} — all live today.`;
+function DashboardCard({ reduceMotion }: { reduceMotion: boolean }) {
+  const [responseTime, setResponseTime] = useState(42);
+  const [deployPct, setDeployPct] = useState(73);
+
+  useEffect(() => {
+    if (reduceMotion) return;
+    const id = setInterval(() => {
+      setResponseTime(38 + Math.floor(Math.random() * 18));
+      setDeployPct((v) => {
+        const next = v + Math.floor(Math.random() * 4);
+        return next > 98 ? 72 : next;
+      });
+    }, 2200);
+    return () => clearInterval(id);
+  }, [reduceMotion]);
+
+  const card = (
+    <div
+      className="relative w-full max-w-[460px] overflow-hidden rounded-2xl border border-[#1E1E35] bg-[#09090f] shadow-[0_0_0_1px_rgba(124,63,255,0.09),0_32px_80px_-20px_rgba(0,0,0,0.75),0_0_60px_-20px_rgba(124,63,255,0.12)]"
+      aria-hidden="true"
+    >
+      {/* Title bar */}
+      <div className="flex items-center justify-between border-b border-[#1E1E35] bg-[#0A0A14] px-4 py-2.5">
+        <div className="flex items-center gap-3">
+          <div className="flex gap-1.5">
+            <span className="h-2.5 w-2.5 rounded-full bg-[#FF5F57]/80" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#FFBD2E]/80" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#28C840]/80" />
+          </div>
+          <span className="font-mono text-[11px] text-[#8888a8]">vryntlab.ops</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <LiveDot />
+          <span className="font-mono text-[10px] text-emerald-400/80">live</span>
+        </div>
+      </div>
+
+      {/* Metric rows */}
+      <div className="divide-y divide-[#1E1E35]/50 px-4">
+        <div className="flex items-center justify-between py-2.5">
+          <span className="font-mono text-[11px] text-[#8888a8]">projects.deploying</span>
+          <div className="flex items-center gap-2.5">
+            <div className="h-1.5 w-16 overflow-hidden rounded-full bg-[#1E1E35]">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF] transition-[width] duration-1000 ease-in-out"
+                style={{ width: `${deployPct}%` }}
+              />
+            </div>
+            <span className="font-mono text-[12px] font-semibold text-[#F0F0FF]">3</span>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between py-2.5">
+          <span className="font-mono text-[11px] text-[#8888a8]">uptime</span>
+          <span className="font-mono text-[12px] text-emerald-400">99.98% · 847d</span>
+        </div>
+
+        <div className="flex items-center justify-between py-2.5">
+          <span className="font-mono text-[11px] text-[#8888a8]">avg.response</span>
+          <span
+            className={`font-mono text-[12px] transition-colors duration-700 ${
+              responseTime < 50 ? "text-emerald-400" : "text-yellow-400"
+            }`}
+          >
+            {responseTime}ms
+          </span>
+        </div>
+
+        <div className="flex items-center justify-between py-2.5">
+          <span className="font-mono text-[11px] text-[#8888a8]">latest.build</span>
+          <span className="font-mono text-[12px] text-[#7C3FFF]">✓ passing</span>
+        </div>
+      </div>
+
+      {/* Code block */}
+      <div className="mx-4 my-3 overflow-hidden rounded-lg border border-[#1E1E35] bg-[#05050c] px-4 py-3">
+        <p className="font-mono text-[11px] text-[#8888a8]">
+          $ <span className="text-[#00E5FF]">ship</span>{" "}
+          <span className="text-violet-400">--env</span> prod
+        </p>
+        <p className="mt-0.5 font-mono text-[11px] text-emerald-400">
+          → deployed in 1.2s ✓
+        </p>
+        <p className="mt-0.5 font-mono text-[11px] text-[#8888a8]">
+          ${" "}
+          <span
+            className="inline-block w-2 bg-[#8888a8]"
+            style={{
+              animation: reduceMotion ? "none" : "pulse 1.2s step-start infinite",
+            }}
+          >
+            &nbsp;
+          </span>
+        </p>
+      </div>
+
+      {/* Site status rows */}
+      <div className="border-t border-[#1E1E35] px-4 py-3 space-y-2">
+        {[
+          { url: "living-silica.com", status: "live", color: "text-emerald-400" },
+          { url: "dkexpresslogistics.co.uk", status: "live", color: "text-emerald-400" },
+          { url: "client-03.preview", status: "staging", color: "text-[#7C3FFF]" },
+        ].map(({ url, status, color }) => (
+          <div key={url} className="flex items-center justify-between">
+            <span className="font-mono text-[10px] text-[#8888a8]">{url}</span>
+            <span className={`flex items-center gap-1 font-mono text-[10px] ${color}`}>
+              <span>●</span> {status}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* Scanline overlay */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        aria-hidden
+        style={{
+          background:
+            "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px)",
+        }}
+      />
+    </div>
+  );
+
+  if (reduceMotion) {
+    return <div className="flex justify-center lg:justify-end">{card}</div>;
+  }
+
+  return (
+    <motion.div
+      className="flex justify-center lg:justify-end"
+      animate={{ y: [0, -10, 0] }}
+      transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+    >
+      {card}
+    </motion.div>
+  );
 }
 
 export function Hero() {
   const { selectedIntent } = useConversion();
-  const sectionRef = useRef<HTMLElement>(null);
-  const reduceMotion = useReducedMotion();
-  const contactLabel =
+  const reduceMotion = useReducedMotion() ?? false;
+
+  const ctaLabel =
     selectedIntent != null
       ? brandIntentActionLabels[selectedIntent].contactPrimary
       : ctaStartProject;
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
-
-  const parallaxY = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [0, reduceMotion ? 0 : -14],
-  );
 
   return (
     <section
       id="top"
-      ref={sectionRef}
-      className="relative overflow-x-visible overflow-y-visible pb-10 pt-1 sm:pb-14 sm:pt-2 md:pb-16 md:pt-3 lg:pb-20 lg:pt-4"
+      className="relative flex min-h-[calc(100vh-4.5rem)] flex-col justify-center pb-16 pt-8 sm:min-h-[calc(100vh-5rem)] sm:pb-20 sm:pt-12 lg:min-h-[calc(100vh-5.5rem)] lg:pb-24 lg:pt-16"
       aria-labelledby="hero-heading"
     >
-      {/* Dot grid */}
+      {/* Dot grid background */}
+      <div aria-hidden className="hero-dot-grid pointer-events-none absolute inset-0" />
+
+      {/* Ambient violet glow */}
       <div
         aria-hidden
-        className="hero-dot-grid pointer-events-none absolute inset-0"
+        className="pointer-events-none absolute -left-24 bottom-0 h-[44rem] w-[44rem] rounded-full blur-[160px]"
+        style={{ background: "rgba(124,63,255,0.08)" }}
       />
-
-      {/* Violet glow — bottom-left */}
+      {/* Ambient cyan glow */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -bottom-20 -left-16 h-[32rem] w-[32rem] rounded-full blur-[120px]"
-        style={{ background: "rgba(124,63,255,0.12)" }}
+        className="pointer-events-none absolute -right-16 -top-16 h-[28rem] w-[28rem] rounded-full blur-[130px]"
+        style={{ background: "rgba(0,229,255,0.055)" }}
       />
 
-      {/* Cyan glow — top-right */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -right-16 -top-16 h-[22rem] w-[22rem] rounded-full blur-[100px]"
-        style={{ background: "rgba(0,229,255,0.06)" }}
-      />
+      <div className={`relative ${contentWell}`}>
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[55fr_45fr] lg:gap-14 xl:gap-20">
 
-      {reduceMotion ? (
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-[-10%] flex justify-center opacity-[0.45]"
-        >
-          <div className="h-[min(16rem,52vw)] w-[min(32rem,90vw)] rounded-full bg-[var(--accent-muted)] blur-3xl sm:h-[min(20rem,58vw)] sm:w-[min(36rem,86vw)]" />
+          {/* LEFT: Text content */}
+          <div className="flex flex-col items-start">
+            <motion.p
+              initial={reduceMotion ? undefined : { opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, ease }}
+              className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.26em] text-[#7C3FFF]"
+            >
+              <span className="h-px w-8 bg-[#7C3FFF]" aria-hidden />
+              Chicago · Web, AI & Automation Studio
+            </motion.p>
+
+            <motion.h1
+              id="hero-heading"
+              initial={reduceMotion ? undefined : { opacity: 0, y: 22 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.08, ease }}
+              className="mt-5 text-[2.625rem] font-black leading-[1.04] tracking-[-0.032em] text-[#F0F0FF] sm:text-[3.5rem] md:text-[4.125rem] lg:text-[4.5rem] xl:text-[5.25rem]"
+            >
+              Websites,<br />
+              chatbots,{" "}
+              <span
+                className="bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF] bg-clip-text text-transparent"
+              >
+                &amp;&nbsp;automation
+              </span>
+              <br />
+              that actually ship.
+            </motion.h1>
+
+            <motion.p
+              initial={reduceMotion ? undefined : { opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.18, ease }}
+              className="mt-6 max-w-[44ch] text-[1rem] leading-[1.66] text-[#C8C8D8]/80 sm:text-[1.0625rem]"
+            >
+              We fix what&apos;s broken, build what&apos;s missing, and ship it — with
+              a clear scope and price before work starts.
+            </motion.p>
+
+            <motion.div
+              initial={reduceMotion ? undefined : { opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.28, ease }}
+              className="mt-8 flex flex-wrap items-center gap-3"
+            >
+              <Link href="/#contact" className={primaryBtnClass}>
+                {ctaLabel}
+                <span aria-hidden className="text-[0.95em] opacity-90">
+                  →
+                </span>
+              </Link>
+              <Link href="/#work" className={secondaryBtnClass}>
+                {ctaViewWork}
+              </Link>
+            </motion.div>
+
+            <motion.p
+              initial={reduceMotion ? undefined : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.45 }}
+              className="mt-5 text-[12px] text-[#8888a8]"
+            >
+              Living Silica · DK Express Logistics — both live today.
+            </motion.p>
+          </div>
+
+          {/* RIGHT: Dashboard card */}
+          <motion.div
+            initial={reduceMotion ? undefined : { opacity: 0, x: 28 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.75, delay: 0.22, ease }}
+            className="hidden lg:block"
+          >
+            <DashboardCard reduceMotion={reduceMotion} />
+          </motion.div>
         </div>
-      ) : (
-        <motion.div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-[-10%] flex justify-center opacity-[0.45]"
-          style={{ y: parallaxY }}
-        >
-          <div className="h-[min(16rem,52vw)] w-[min(32rem,90vw)] rounded-full bg-[var(--accent-muted)] blur-3xl sm:h-[min(20rem,58vw)] sm:w-[min(36rem,86vw)]" />
-        </motion.div>
-      )}
-
-      <div
-        className={`relative flex w-full min-w-0 flex-col gap-7 sm:gap-9 md:gap-10 ${contentWell}`}
-      >
-        <StaggerGroup
-          mode="immediate"
-          className="mx-auto flex min-w-0 max-w-2xl flex-col items-center overflow-x-visible text-center"
-        >
-          <StaggerItem>
-            <header className="min-w-0 max-w-none">
-              <div className="flex min-w-0 flex-col items-center gap-2 sm:gap-2.5">
-                <p className="min-w-0 text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--accent)] opacity-90 sm:tracking-[0.26em]">
-                  {siteBrandName}
-                </p>
-                <span
-                  className="h-px w-10 bg-[var(--accent)]/45 sm:w-12"
-                  aria-hidden
-                />
-              </div>
-              <h1
-                id="hero-heading"
-                className="font-display mt-4 text-balance text-[1.8125rem] font-normal leading-[1.1] tracking-[-0.024em] text-[#F0F0FF] sm:mt-5 sm:text-[2.125rem] sm:leading-[1.08] md:mt-6 md:text-[2.625rem] md:leading-[1.06] lg:text-[2.95rem] lg:tracking-[-0.028em] xl:text-[3.15rem]"
-              >
-                {brandHero.headline}
-              </h1>
-            </header>
-          </StaggerItem>
-          <StaggerItem>
-            <p className="mt-4 max-w-[42ch] text-pretty text-[0.9375rem] leading-[1.62] text-[#C8C8D8]/85 sm:mt-5 sm:text-[1.0625rem] sm:leading-[1.64] md:mt-6 md:text-[1.0625rem] md:leading-[1.66]">
-              {brandHero.subheadline}
-            </p>
-          </StaggerItem>
-          <StaggerItem>
-            <p className="mt-3 inline-flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.12em] text-[#8888a8] sm:mt-4 sm:text-[11px] sm:tracking-[0.14em]">
-              <span className="h-px w-6 bg-violet-500/40" aria-hidden />
-              {brandHero.proofLabel}
-              <span className="h-px w-6 bg-violet-500/40" aria-hidden />
-            </p>
-            <p className="mt-1.5 text-[13px] font-medium leading-relaxed text-[#C8C8D8] sm:text-[14px]">
-              {caseStudyProofLine()}
-            </p>
-          </StaggerItem>
-          <StaggerItem>
-            <div className="mt-6 sm:mt-7 lg:mt-8">
-              <nav
-                aria-label="Primary actions"
-                className="mx-auto flex w-full max-w-md flex-col items-center gap-3 sm:max-w-lg sm:flex-row sm:justify-center sm:gap-3"
-              >
-                <Link href="/#contact" className={primaryCtaClass}>
-                  <span className="flex items-center justify-center gap-2">
-                    {contactLabel}
-                    <span
-                      aria-hidden
-                      className="text-[1.05em] opacity-80 transition-transform duration-300 ease-[var(--ease-out-premium)] [@media(hover:hover)]:group-hover/hero-cta:translate-x-0.5"
-                    >
-                      →
-                    </span>
-                  </span>
-                </Link>
-                <Link href="/#work" className={secondaryCtaClass}>
-                  {ctaViewWork}
-                </Link>
-              </nav>
-              <p className="mx-auto mt-3 max-w-md text-center text-pretty text-[12px] leading-relaxed text-[#8888a8] sm:max-w-lg">
-                {brandHero.ctaSub}
-              </p>
-              <div className="flex justify-center">
-                <Link href="/services#path" className={pathLinkClass}>
-                  {brandHero.pathLink}
-                  <span aria-hidden>→</span>
-                </Link>
-              </div>
-            </div>
-          </StaggerItem>
-        </StaggerGroup>
       </div>
     </section>
   );
