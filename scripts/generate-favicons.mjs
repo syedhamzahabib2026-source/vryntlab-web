@@ -1,6 +1,6 @@
 /**
- * Favicons from the brand file: crop top ~42% (serif VL monogram), then square resize.
- * Source: public/brand/vl-logo.webp
+ * Generates a clean VL mark favicon from an SVG string.
+ * No source image required — mark is drawn entirely in SVG.
  * Run: node scripts/generate-favicons.mjs  →  npm run generate-favicons
  */
 import { writeFileSync } from "node:fs";
@@ -11,60 +11,43 @@ import sharp from "sharp";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, "..");
-const inputPath = join(root, "public", "brand", "vl-logo.webp");
 const appDir = join(root, "src", "app");
 
-/** Top portion of source image = monogram band above wordmark */
-const CROP_HEIGHT_RATIO = 0.42;
+const SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect width="100" height="100" rx="22" fill="#7C3FFF"/>
+  <text x="50" y="68" text-anchor="middle"
+    font-family="Arial Black, Arial, sans-serif"
+    font-weight="900" font-size="52" fill="white">
+    VL
+  </text>
+</svg>`;
 
-const canvasBg = { r: 255, g: 255, b: 255, alpha: 1 };
-
-async function monogramPipeline() {
-  const meta = await sharp(inputPath).metadata();
-  const w = meta.width;
-  const h = meta.height;
-  if (!w || !h) {
-    throw new Error(`Could not read dimensions from ${inputPath}`);
-  }
-  const cropH = Math.max(1, Math.round(h * CROP_HEIGHT_RATIO));
-  console.log(`Source ${w}×${h}px → crop top ${cropH}px (full width)`);
-
-  return sharp(inputPath).extract({
-    left: 0,
-    top: 0,
-    width: w,
-    height: cropH,
-  });
-}
-
-async function toSquarePng(pipeline, size) {
-  return pipeline
-    .clone()
-    .resize(size, size, {
-      fit: "contain",
-      background: canvasBg,
-    })
+async function svgToPng(size) {
+  return sharp(Buffer.from(SVG))
+    .resize(size, size)
     .png()
     .toBuffer();
 }
 
 async function main() {
-  const base = await monogramPipeline();
-
-  const png512 = await toSquarePng(base, 512);
-  const png180 = await toSquarePng(base, 180);
-  const png32 = await toSquarePng(base, 32);
-  const png16 = await toSquarePng(base, 16);
+  const [png512, png180, png32, png16] = await Promise.all([
+    svgToPng(512),
+    svgToPng(180),
+    svgToPng(32),
+    svgToPng(16),
+  ]);
 
   writeFileSync(join(appDir, "icon.png"), png512);
+  console.log("  ✓ icon.png      (512×512)");
+
   writeFileSync(join(appDir, "apple-icon.png"), png180);
+  console.log("  ✓ apple-icon.png (180×180)");
 
   const ico = await pngToIco([png32, png16]);
   writeFileSync(join(appDir, "favicon.ico"), ico);
+  console.log("  ✓ favicon.ico   (32+16px)");
 
-  console.log(
-    "Wrote src/app/icon.png, apple-icon.png, favicon.ico (cropped VL monogram)",
-  );
+  console.log("\nDone — VL mark on violet background.");
 }
 
 main().catch((err) => {
