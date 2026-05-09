@@ -74,7 +74,7 @@ export function SiteHeader() {
                 width={1000}
                 height={300}
                 sizes="(max-width: 640px) 640px, (max-width: 1024px) 800px, 960px"
-                className="h-[5.5rem] w-auto max-h-[calc(100%-0.25rem)] max-w-[min(88vw,20rem)] object-contain object-left brightness-0 dark:filter-none sm:h-[6.25rem] sm:max-h-none sm:max-w-[min(70vw,22rem)] md:h-[7rem] md:max-w-none lg:h-[8rem] xl:h-[9rem]"
+                className="h-7 w-auto object-contain brightness-0 dark:filter-none sm:h-8"
                 priority
               />
             </Link>

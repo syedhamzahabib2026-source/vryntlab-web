@@ -37,6 +37,7 @@ export const metadata: Metadata = {
   /** File-based icons in ./icon.png, ./apple-icon.png, ./favicon.ico — generated from public/brand/vl-logo.webp */
   icons: {
     icon: [
+      { url: "/brand/favicon.png", type: "image/png" },
       { url: "/favicon.ico", sizes: "32x32" },
       { url: "/icon.png", type: "image/png", sizes: "512x512" },
     ],
