@@ -70,5 +70,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.7,
     },
+    {
+      url: `${BASE_URL}/services/automation`,
+      lastModified: new Date("2026-05-09"),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/services/booking-systems`,
+      lastModified: new Date("2026-05-09"),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/blog/what-is-geo-generative-engine-optimization`,
+      lastModified: new Date("2026-05-09"),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
   ];
 }

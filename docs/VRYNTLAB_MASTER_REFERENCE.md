@@ -79,6 +79,8 @@ Every page needs:
 | /services/shopify | src/app/services/shopify/page.tsx |
 | /services/ai-chatbot | src/app/services/ai-chatbot/page.tsx |
 | /services/seo | src/app/services/seo/page.tsx |
+| /services/automation | src/app/services/automation/page.tsx |
+| /services/booking-systems | src/app/services/booking-systems/page.tsx |
 
 ### Work / case studies
 | URL | File |
@@ -95,9 +97,10 @@ Project images: public/projects/[slug]/[slug]_1.webp and _2.webp
 |-----|------|
 | /blog/how-much-does-a-website-cost | src/app/blog/how-much-does-a-website-cost/page.tsx |
 | /blog/signs-your-website-needs-a-redesign | src/app/blog/signs-your-website-needs-a-redesign/page.tsx |
+| /blog/what-is-geo-generative-engine-optimization | src/app/blog/what-is-geo-generative-engine-optimization/page.tsx |
 
 ## Sitemap — Current URLs
-(11 total as of 2026-05-09)
+(14 total as of 2026-05-09)
 
 | URL | Priority |
 |-----|----------|
@@ -107,11 +110,14 @@ Project images: public/projects/[slug]/[slug]_1.webp and _2.webp
 | vryntlab.com/services/shopify | 0.8 |
 | vryntlab.com/services/ai-chatbot | 0.8 |
 | vryntlab.com/services/seo | 0.8 |
+| vryntlab.com/services/automation | 0.8 |
+| vryntlab.com/services/booking-systems | 0.8 |
 | vryntlab.com/work | 0.7 |
 | vryntlab.com/work/living-silica | 0.6 |
 | vryntlab.com/work/dkexpress | 0.6 |
 | vryntlab.com/blog/how-much-does-a-website-cost | 0.7 |
 | vryntlab.com/blog/signs-your-website-needs-a-redesign | 0.7 |
+| vryntlab.com/blog/what-is-geo-generative-engine-optimization | 0.7 |
 
 ## How to Add a New Page
 
@@ -190,11 +196,6 @@ Outputs to: `src/app/icon.png`, `apple-icon.png`, `favicon.ico`
 
 ## Content Roadmap — Remaining
 
-### Service pages
-- /services/booking-systems
-- /services/automation
-
 ### Blog posts
-- "What is GEO — Generative Engine Optimization"
 - "How to get your business on Google Maps"
 - "Best website builder for small business 2026"
