@@ -327,11 +327,11 @@ export const brandAbout = {
   eyebrow: "About",
   title: "Who we are",
   paragraphs: [
-    "VryntLab is a small, fast-moving studio that builds websites, AI chatbots, and automations for businesses that need results — not a 6-week agency process.",
+    "VryntLab is a lean studio that builds websites, AI chatbots, and automations for businesses that want results — not a drawn-out agency process.",
 
-    "You work directly with the people shipping the work. No account managers, no handoffs, no disappearing after launch.",
+    "You work directly with the people doing the work. No layers, no handoffs, no going quiet after launch.",
 
-    "We're upfront about fit, scope, and price from day one. Projects typically start at $500 — if it's not a fit, we'll say so before you spend anything.",
+    "We're direct about scope and fit before anything starts.",
   ] as const,
 } as const;
 

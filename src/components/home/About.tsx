@@ -20,7 +20,7 @@ export function About() {
               >
                 Small&nbsp;team.<br />
                 Full&nbsp;stack.<br />
-                No&nbsp;bullshit.
+                Done&nbsp;right.
               </h2>
               <p className="mt-4 text-[12px] font-semibold uppercase tracking-[0.2em] text-[#7C3FFF]/70">
                 About VryntLab
