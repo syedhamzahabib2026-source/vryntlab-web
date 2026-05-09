@@ -1,7 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import { focusRing } from "@/components/layout/layoutTokens";
-import { navLinks, siteBrandName, siteEmail, siteTagline, siteLogoSrc } from "@/lib/site";
+import { navLinks, siteBrandName, siteEmail, siteTagline } from "@/lib/site";
 import { SocialLinks } from "@/components/layout/SocialLinks";
 
 const navLinkClass =
@@ -32,13 +31,9 @@ export function SiteFooter() {
               className={`inline-block ${focusRing} rounded-md`}
               aria-label={`${siteBrandName} — home`}
             >
-              <Image
-                src={siteLogoSrc}
-                alt={`${siteBrandName} logo`}
-                width={140}
-                height={42}
-                className="h-9 w-auto brightness-0 dark:filter-none"
-              />
+              <span className="text-[1rem] font-black tracking-[-0.04em] text-[#F0F0FF]">
+                Vrynt<span className="text-[#7C3FFF]">Lab</span>
+              </span>
             </Link>
           </div>
 
