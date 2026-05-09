@@ -12,12 +12,12 @@ export function ContactCta() {
       <section
         id="contact"
         aria-labelledby="contact-heading"
-        className={`${slabContent} scroll-mt-[calc(4.5rem+0.25rem)] py-16 sm:scroll-mt-24 sm:py-20 md:scroll-mt-28`}
+        className={`${slabContent} scroll-mt-[calc(4.5rem+0.25rem)] py-8 sm:scroll-mt-24 sm:py-10 md:scroll-mt-28`}
       >
         <div className={contentWell}>
           {/* Large centered headline */}
           <Reveal>
-            <div className="mb-12 text-center sm:mb-14">
+            <div className="mb-8 text-center sm:mb-10">
               <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#7C3FFF]/90">
                 {brandContact.eyebrow}
               </p>
@@ -42,7 +42,7 @@ export function ContactCta() {
 
           {/* Email link */}
           <Reveal>
-            <div className="mt-14 text-center">
+            <div className="mt-8 text-center">
               <p className="mb-3 text-[13px] text-[#8888a8]">Prefer to write directly?</p>
               <a
                 href={`mailto:${siteEmail}`}

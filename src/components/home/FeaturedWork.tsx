@@ -367,7 +367,7 @@ export function FeaturedWork() {
       <section
         id="work"
         aria-labelledby="work-heading"
-        className={`${slabContent} scroll-mt-[calc(4.5rem+0.25rem)] py-16 sm:scroll-mt-24 sm:py-20 md:scroll-mt-28`}
+        className={`${slabContent} scroll-mt-[calc(4.5rem+0.25rem)] py-8 sm:scroll-mt-24 sm:py-10 md:scroll-mt-28`}
       >
         <div className={`${contentWell} flex flex-col gap-5 sm:gap-6`}>
           {/* Section intro */}

@@ -176,7 +176,7 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative flex flex-col justify-center pb-12 pt-8 sm:min-h-[calc(100vh-5rem)] sm:pb-20 sm:pt-12 lg:min-h-[calc(100vh-5.5rem)] lg:pb-24 lg:pt-16"
+      className="relative flex flex-col justify-center pb-6 pt-8 sm:min-h-[calc(100vh-5rem)] sm:pb-10 sm:pt-12 lg:min-h-[calc(100vh-5.5rem)] lg:pb-14 lg:pt-16"
       aria-labelledby="hero-heading"
     >
       {/* Dot grid background */}

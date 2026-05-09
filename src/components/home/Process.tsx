@@ -17,12 +17,12 @@ export function Process() {
     <section
       id="process"
       aria-labelledby="process-heading"
-      className="scroll-mt-[calc(4.5rem+0.25rem)] py-16 sm:scroll-mt-24 sm:py-20 md:scroll-mt-28"
+      className="scroll-mt-[calc(4.5rem+0.25rem)] py-8 sm:scroll-mt-24 sm:py-10 md:scroll-mt-28"
     >
       <div className={contentWell}>
         {/* Section header */}
         <Reveal>
-          <div className="mb-14 sm:mb-16">
+          <div className="mb-8 sm:mb-10">
             <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#7C3FFF]/90">
               {brandProcess.eyebrow}
             </p>

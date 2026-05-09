@@ -307,7 +307,7 @@ export function ChatbotShowcase() {
       <section
         id="chat-showcase"
         aria-labelledby="chat-showcase-heading"
-        className={`${slabContent} scroll-mt-[calc(4.5rem+0.25rem)] border-y border-[#1E1E35] py-16 sm:scroll-mt-24 sm:py-20 md:scroll-mt-28`}
+        className={`${slabContent} scroll-mt-[calc(4.5rem+0.25rem)] border-y border-[#1E1E35] py-8 sm:scroll-mt-24 sm:py-10 md:scroll-mt-28`}
       >
         <div className={`${contentWell}`}>
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">

@@ -168,12 +168,12 @@ export function ServicesHomeTeaser() {
     <section
       id="services"
       aria-labelledby="services-heading"
-      className="scroll-mt-[calc(4.5rem+0.25rem)] py-16 sm:scroll-mt-24 sm:py-20 md:scroll-mt-28"
+      className="scroll-mt-[calc(4.5rem+0.25rem)] py-8 sm:scroll-mt-24 sm:py-10 md:scroll-mt-28"
     >
       <div className={contentWell}>
         {/* Section header */}
         <Reveal>
-          <div className="mb-10 sm:mb-12">
+          <div className="mb-6 sm:mb-8">
             <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#7C3FFF]/90">
               Services
             </p>
@@ -208,7 +208,7 @@ export function ServicesHomeTeaser() {
 
         {/* Footer CTA */}
         <Reveal>
-          <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-[13px] text-[#8888a8]">
               Every project is scoped to your actual problem.
             </p>

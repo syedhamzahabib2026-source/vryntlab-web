@@ -71,7 +71,7 @@ export function Stats() {
   const isInView = useInView(ref, { once: true, margin: "-80px 0px" });
 
   return (
-    <section aria-label="Key numbers" className="py-10 sm:py-12">
+    <section aria-label="Key numbers" className="py-5 sm:py-6">
       <div className={contentWell}>
         <Reveal>
           <div
