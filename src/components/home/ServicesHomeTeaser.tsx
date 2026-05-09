@@ -12,6 +12,7 @@ type Service = {
   desc: string;
   outcome: string;
   icon: string;
+  href: string;
 };
 
 const SERVICES: Service[] = [
@@ -21,6 +22,7 @@ const SERVICES: Service[] = [
     desc: "Fast, clear sites that turn visitors into customers",
     outcome: "More visitors complete your contact or checkout flow",
     icon: "⟡",
+    href: "/services/web-design",
   },
   {
     n: "02",
@@ -28,6 +30,7 @@ const SERVICES: Service[] = [
     desc: "Stores that guide people to checkout, not just browse",
     outcome: "Higher product page trust and cart completion",
     icon: "◈",
+    href: "/services/shopify",
   },
   {
     n: "03",
@@ -35,6 +38,7 @@ const SERVICES: Service[] = [
     desc: "Trained on your business, not a generic FAQ",
     outcome: "Fewer repeat support questions, more captured leads",
     icon: "✦",
+    href: "/services/ai-chatbot",
   },
   {
     n: "04",
@@ -42,6 +46,7 @@ const SERVICES: Service[] = [
     desc: "Your tools talk to each other — no manual copy-paste",
     outcome: "No more copying leads between three spreadsheets",
     icon: "⇢",
+    href: "/services/automation",
   },
   {
     n: "05",
@@ -49,6 +54,7 @@ const SERVICES: Service[] = [
     desc: "Show up when people search for what you offer",
     outcome: "The right searches surface your business",
     icon: "◉",
+    href: "/services/seo",
   },
   {
     n: "06",
@@ -56,6 +62,7 @@ const SERVICES: Service[] = [
     desc: "Booking and intake that runs without chasing people",
     outcome: "Fewer no-shows and less inbox back-and-forth",
     icon: "▢",
+    href: "/services/booking-systems",
   },
   {
     n: "07",
@@ -63,6 +70,7 @@ const SERVICES: Service[] = [
     desc: "iOS, Android, or web — built in testable stages",
     outcome: "Testable builds early before you're locked in",
     icon: "◷",
+    href: "/#contact",
   },
   {
     n: "08",
@@ -70,6 +78,7 @@ const SERVICES: Service[] = [
     desc: "Custom tools built for how you actually work",
     outcome: "Browser-based tools shipped in slices you can try",
     icon: "❖",
+    href: "/#contact",
   },
   {
     n: "09",
@@ -77,6 +86,7 @@ const SERVICES: Service[] = [
     desc: "Infrastructure that doesn't break at the wrong moment",
     outcome: "Less downtime, documented so anyone can maintain it",
     icon: "⬡",
+    href: "/#contact",
   },
 ];
 
@@ -98,65 +108,70 @@ function ServiceRow({
   reduceMotion,
 }: ServiceRowProps) {
   return (
-    <motion.div
-      onHoverStart={onHoverStart}
-      onHoverEnd={onHoverEnd}
-      animate={
-        reduceMotion
-          ? {}
-          : {
-              opacity: isDimmed ? 0.35 : 1,
-              backgroundColor: isActive ? "#0F0F1A" : "rgba(0,0,0,0)",
-            }
-      }
-      transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-      className="group relative cursor-default select-none overflow-hidden border-b border-[#1E1E35] px-2 last:border-0 sm:px-4"
-      style={{ opacity: isDimmed && reduceMotion ? 0.35 : 1 }}
+    <Link
+      href={service.href}
+      className={`block border-b border-[#1E1E35] last:border-0 ${focusRing} rounded-sm`}
     >
-      <div className="flex items-center gap-3 py-4 sm:gap-5 sm:py-5 lg:gap-8 lg:py-6">
-        {/* Number */}
-        <span className="w-8 shrink-0 font-mono text-[11px] font-bold text-[#7C3FFF]/55 sm:text-[12px] lg:text-[13px]">
-          {service.n}
-        </span>
+      <motion.div
+        onHoverStart={onHoverStart}
+        onHoverEnd={onHoverEnd}
+        animate={
+          reduceMotion
+            ? {}
+            : {
+                opacity: isDimmed ? 0.35 : 1,
+                backgroundColor: isActive ? "#0F0F1A" : "rgba(0,0,0,0)",
+              }
+        }
+        transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+        className="group relative cursor-pointer select-none overflow-hidden px-2 sm:px-4"
+        style={{ opacity: isDimmed && reduceMotion ? 0.35 : 1 }}
+      >
+        <div className="flex items-center gap-3 py-4 sm:gap-5 sm:py-5 lg:gap-8 lg:py-6">
+          {/* Number */}
+          <span className="w-8 shrink-0 font-mono text-[11px] font-bold text-[#7C3FFF]/55 sm:text-[12px] lg:text-[13px]">
+            {service.n}
+          </span>
 
-        {/* Name + desc */}
-        <div className="flex min-w-0 flex-1 flex-col gap-0.5 sm:flex-row sm:items-baseline sm:gap-6">
-          <h3 className="text-[0.9375rem] font-bold tracking-[-0.02em] text-[#F0F0FF] sm:text-[1.125rem] md:text-[1.375rem] lg:text-[1.5rem]">
-            {service.name}
-          </h3>
-          <p className="text-[12px] text-[#8888a8] sm:text-[13px] lg:text-[14px]">{service.desc}</p>
+          {/* Name + desc */}
+          <div className="flex min-w-0 flex-1 flex-col gap-0.5 sm:flex-row sm:items-baseline sm:gap-6">
+            <h3 className="text-[0.9375rem] font-bold tracking-[-0.02em] text-[#F0F0FF] sm:text-[1.125rem] md:text-[1.375rem] lg:text-[1.5rem]">
+              {service.name}
+            </h3>
+            <p className="text-[12px] text-[#8888a8] sm:text-[13px] lg:text-[14px]">{service.desc}</p>
+          </div>
+
+          {/* Outcome on hover — slides in from right */}
+          <AnimatePresence>
+            {isActive && !reduceMotion && (
+              <motion.div
+                key="outcome"
+                initial={{ opacity: 0, x: 16 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 8 }}
+                transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                className="hidden shrink-0 items-center gap-2 lg:flex"
+              >
+                <span className="text-[1rem] text-[#7C3FFF]">{service.icon}</span>
+                <span className="max-w-[22ch] text-[13px] font-medium text-[#00E5FF]">
+                  {service.outcome}
+                </span>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Arrow */}
+          <motion.span
+            animate={reduceMotion ? {} : { x: isActive ? 2 : 0 }}
+            transition={{ duration: 0.2 }}
+            className="shrink-0 text-[#8888a8] transition-colors duration-200 group-hover:text-[#F0F0FF]"
+            aria-hidden
+          >
+            →
+          </motion.span>
         </div>
-
-        {/* Outcome on hover — slides in from right */}
-        <AnimatePresence>
-          {isActive && !reduceMotion && (
-            <motion.div
-              key="outcome"
-              initial={{ opacity: 0, x: 16 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 8 }}
-              transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-              className="hidden shrink-0 items-center gap-2 lg:flex"
-            >
-              <span className="text-[1rem] text-[#7C3FFF]">{service.icon}</span>
-              <span className="max-w-[22ch] text-[13px] font-medium text-[#00E5FF]">
-                {service.outcome}
-              </span>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Arrow */}
-        <motion.span
-          animate={reduceMotion ? {} : { x: isActive ? 2 : 0 }}
-          transition={{ duration: 0.2 }}
-          className="shrink-0 text-[#8888a8] transition-colors duration-200 group-hover:text-[#F0F0FF]"
-          aria-hidden
-        >
-          →
-        </motion.span>
-      </div>
-    </motion.div>
+      </motion.div>
+    </Link>
   );
 }
 
@@ -191,7 +206,7 @@ export function ServicesHomeTeaser() {
 
         {/* Service list */}
         <Reveal>
-          <div className="divide-y divide-[#1E1E35] border-t border-[#1E1E35]">
+          <div className="border-t border-[#1E1E35]">
             {SERVICES.map((service, i) => (
               <ServiceRow
                 key={service.n}
