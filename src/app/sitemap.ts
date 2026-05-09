@@ -58,5 +58,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.6,
     },
+    {
+      url: `${BASE_URL}/services/seo`,
+      lastModified: new Date("2026-05-09"),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/blog/signs-your-website-needs-a-redesign`,
+      lastModified: new Date("2026-05-09"),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
   ];
 }
