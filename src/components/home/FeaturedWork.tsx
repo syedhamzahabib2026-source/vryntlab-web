@@ -33,53 +33,53 @@ const secondaryCta =
 
 function BrowserChrome({ urlColor }: { urlColor: string }) {
   return (
-    <div className="flex items-center gap-2 border-b border-white/[0.05] bg-white/[0.02] px-3 py-2 shrink-0">
+    <div className="flex shrink-0 items-center gap-2 border-b border-white/[0.10] bg-white/[0.04] px-3 py-2">
       <div className="flex gap-1">
-        <span className="h-2 w-2 rounded-full bg-red-500/40" />
-        <span className="h-2 w-2 rounded-full bg-yellow-500/40" />
-        <span className="h-2 w-2 rounded-full bg-emerald-500/40" />
+        <span className="h-2 w-2 rounded-full bg-red-500/70" />
+        <span className="h-2 w-2 rounded-full bg-yellow-500/70" />
+        <span className="h-2 w-2 rounded-full bg-emerald-500/70" />
       </div>
-      <div className={`h-1.5 flex-1 rounded-full ${urlColor} opacity-25`} />
+      <div className={`h-1.5 flex-1 rounded-full ${urlColor} opacity-50`} />
     </div>
   );
 }
 
 function MockEcommerce() {
   return (
-    <div className="flex flex-col bg-[#06060f]">
+    <div className="flex min-h-[200px] flex-col bg-[#06060f]">
       <BrowserChrome urlColor="bg-violet-400" />
       {/* Nav */}
-      <div className="flex items-center justify-between border-b border-white/[0.04] px-3 py-2">
-        <div className="h-2 w-14 rounded bg-violet-400/30" />
+      <div className="flex items-center justify-between border-b border-white/[0.10] px-3 py-2">
+        <div className="h-2 w-14 rounded bg-violet-400/60" />
         <div className="flex gap-2">
-          <div className="h-1.5 w-7 rounded bg-white/[0.07]" />
-          <div className="h-1.5 w-7 rounded bg-white/[0.07]" />
-          <div className="h-1.5 w-7 rounded bg-white/[0.07]" />
+          <div className="h-1.5 w-7 rounded bg-white/[0.15]" />
+          <div className="h-1.5 w-7 rounded bg-white/[0.15]" />
+          <div className="h-1.5 w-7 rounded bg-white/[0.15]" />
         </div>
-        <div className="h-5 w-14 rounded-full border border-violet-500/30 bg-violet-500/10" />
+        <div className="h-5 w-14 rounded-full border border-violet-500/50 bg-violet-500/20" />
       </div>
       {/* Hero */}
       <div className="flex gap-3 p-3">
         <div className="flex-1 space-y-2 pt-1">
-          <div className="h-3 w-4/5 rounded bg-[#F0F0FF]/22" />
-          <div className="h-3 w-3/5 rounded bg-[#F0F0FF]/16" />
-          <div className="h-1.5 w-full rounded bg-white/[0.06]" />
-          <div className="h-1.5 w-11/12 rounded bg-white/[0.05]" />
-          <div className="h-1.5 w-4/5 rounded bg-white/[0.04]" />
+          <div className="h-3 w-4/5 rounded bg-[#F0F0FF]/44" />
+          <div className="h-3 w-3/5 rounded bg-[#F0F0FF]/32" />
+          <div className="h-1.5 w-full rounded bg-white/[0.12]" />
+          <div className="h-1.5 w-11/12 rounded bg-white/[0.10]" />
+          <div className="h-1.5 w-4/5 rounded bg-white/[0.08]" />
           <div className="mt-2.5 flex gap-2">
-            <div className="h-5 w-16 rounded-full bg-gradient-to-r from-violet-500/55 to-violet-400/35" />
-            <div className="h-5 w-14 rounded-full border border-white/[0.10]" />
+            <div className="h-5 w-16 rounded-full bg-gradient-to-r from-violet-500/80 to-violet-400/60" />
+            <div className="h-5 w-14 rounded-full border border-white/[0.20]" />
           </div>
         </div>
-        <div className="h-[5.5rem] w-[3.5rem] shrink-0 rounded-xl bg-gradient-to-b from-violet-500/22 to-violet-900/18 ring-1 ring-white/[0.06]" />
+        <div className="h-[5.5rem] w-[3.5rem] shrink-0 rounded-xl bg-gradient-to-b from-violet-500/45 to-violet-900/35 ring-1 ring-white/[0.12]" />
       </div>
       {/* Product row */}
-      <div className="grid grid-cols-3 gap-2 border-t border-white/[0.04] px-3 py-3">
-        {(["from-violet-600/22 to-violet-900/14", "from-violet-400/18 to-violet-800/12", "from-violet-500/20 to-violet-700/14"] as const).map((g, i) => (
+      <div className="grid grid-cols-3 gap-2 border-t border-white/[0.08] px-3 py-3">
+        {(["from-violet-600/45 to-violet-900/30", "from-violet-400/36 to-violet-800/24", "from-violet-500/40 to-violet-700/28"] as const).map((g, i) => (
           <div key={i} className="space-y-1.5">
-            <div className={`aspect-square rounded-lg bg-gradient-to-b ${g} ring-1 ring-white/[0.04]`} />
-            <div className="h-1.5 w-full rounded bg-white/[0.07]" />
-            <div className="h-1 w-2/3 rounded bg-violet-400/20" />
+            <div className={`aspect-square rounded-lg bg-gradient-to-b ${g} ring-1 ring-white/[0.08]`} />
+            <div className="h-1.5 w-full rounded bg-white/[0.14]" />
+            <div className="h-1 w-2/3 rounded bg-violet-400/40" />
           </div>
         ))}
       </div>
@@ -90,49 +90,49 @@ function MockEcommerce() {
 function MockBooking() {
   const days = [null, null, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
   return (
-    <div className="flex flex-col bg-[#06060f]">
+    <div className="flex min-h-[200px] flex-col bg-[#06060f]">
       <BrowserChrome urlColor="bg-cyan-400" />
       {/* Nav */}
-      <div className="flex items-center justify-between border-b border-white/[0.04] px-3 py-2">
-        <div className="h-2 w-12 rounded bg-[#00E5FF]/30" />
+      <div className="flex items-center justify-between border-b border-white/[0.10] px-3 py-2">
+        <div className="h-2 w-12 rounded bg-[#00E5FF]/60" />
         <div className="flex gap-2">
-          <div className="h-1.5 w-7 rounded bg-white/[0.07]" />
-          <div className="h-1.5 w-7 rounded bg-white/[0.07]" />
+          <div className="h-1.5 w-7 rounded bg-white/[0.15]" />
+          <div className="h-1.5 w-7 rounded bg-white/[0.15]" />
         </div>
-        <div className="h-5 w-16 rounded-full border border-[#00E5FF]/30 bg-[#00E5FF]/10" />
+        <div className="h-5 w-16 rounded-full border border-[#00E5FF]/55 bg-[#00E5FF]/20" />
       </div>
       {/* Hero text */}
       <div className="space-y-1.5 p-3 pb-2">
         <div className="flex items-center gap-1">
           {"★★★★★".split("").map((s, i) => (
-            <span key={i} className="text-[7px] leading-none text-[#00E5FF]/55">{s}</span>
+            <span key={i} className="text-[7px] leading-none text-[#00E5FF]/90">{s}</span>
           ))}
-          <div className="ml-1 h-1.5 w-10 rounded bg-white/[0.06]" />
+          <div className="ml-1 h-1.5 w-10 rounded bg-white/[0.12]" />
         </div>
-        <div className="h-2.5 w-4/5 rounded bg-[#F0F0FF]/22" />
-        <div className="h-2 w-3/5 rounded bg-white/[0.10]" />
+        <div className="h-2.5 w-4/5 rounded bg-[#F0F0FF]/44" />
+        <div className="h-2 w-3/5 rounded bg-white/[0.20]" />
       </div>
       {/* Calendar */}
-      <div className="mx-3 rounded-lg border border-[#00E5FF]/14 bg-white/[0.02] p-2">
+      <div className="mx-3 rounded-lg border border-[#00E5FF]/28 bg-white/[0.04] p-2">
         <div className="mb-2 flex items-center justify-between">
-          <div className="h-1.5 w-16 rounded bg-white/[0.10]" />
+          <div className="h-1.5 w-16 rounded bg-white/[0.20]" />
           <div className="flex gap-1.5">
-            <div className="h-3 w-3 rounded bg-white/[0.07]" />
-            <div className="h-3 w-3 rounded bg-white/[0.07]" />
+            <div className="h-3 w-3 rounded bg-white/[0.14]" />
+            <div className="h-3 w-3 rounded bg-white/[0.14]" />
           </div>
         </div>
         <div className="grid grid-cols-7 gap-[3px]">
           {["S","M","T","W","T","F","S"].map((d, i) => (
-            <div key={i} className="h-1.5 rounded bg-white/[0.06] text-center text-[5px]" />
+            <div key={i} className="h-1.5 rounded bg-white/[0.12] text-center text-[5px]" />
           ))}
           {days.map((d, i) => (
             <div
               key={i}
               className={`h-3.5 rounded text-center text-[6px] leading-[14px] ${
                 d === null ? "" :
-                d === 9 ? "bg-[#00E5FF]/30 text-[#00E5FF]/90" :
-                d === 12 ? "bg-[#00E5FF]/18 text-[#00E5FF]/65" :
-                "bg-white/[0.04] text-white/25"
+                d === 9 ? "bg-[#00E5FF]/55 text-[#00E5FF]" :
+                d === 12 ? "bg-[#00E5FF]/36 text-[#00E5FF]/90" :
+                "bg-white/[0.08] text-white/50"
               }`}
             />
           ))}
@@ -141,9 +141,9 @@ function MockBooking() {
       {/* Time slots */}
       <div className="flex gap-1.5 px-3 py-2.5">
         {["9 am", "11 am", "2 pm"].map((t) => (
-          <div key={t} className="flex items-center gap-1 rounded-full border border-[#00E5FF]/22 bg-[#00E5FF]/[0.07] px-2 py-1">
-            <span className="h-1 w-1 rounded-full bg-[#00E5FF]/55" />
-            <span className="text-[7px] font-medium text-[#00E5FF]/65">{t}</span>
+          <div key={t} className="flex items-center gap-1 rounded-full border border-[#00E5FF]/44 bg-[#00E5FF]/[0.14] px-2 py-1">
+            <span className="h-1 w-1 rounded-full bg-[#00E5FF]/90" />
+            <span className="text-[7px] font-medium text-[#00E5FF]/90">{t}</span>
           </div>
         ))}
       </div>
@@ -153,45 +153,45 @@ function MockBooking() {
 
 function MockSaaS() {
   return (
-    <div className="flex flex-col bg-[#06060f]">
+    <div className="flex min-h-[200px] flex-col bg-[#06060f]">
       <BrowserChrome urlColor="bg-violet-400" />
       {/* Nav */}
-      <div className="flex items-center justify-between border-b border-white/[0.04] px-3 py-2">
+      <div className="flex items-center justify-between border-b border-white/[0.10] px-3 py-2">
         <div className="flex items-center gap-1.5">
-          <div className="h-3 w-3 rounded-sm bg-gradient-to-br from-violet-400/60 to-cyan-400/40" />
-          <div className="h-1.5 w-12 rounded bg-white/[0.12]" />
+          <div className="h-3 w-3 rounded-sm bg-gradient-to-br from-violet-400/90 to-cyan-400/70" />
+          <div className="h-1.5 w-12 rounded bg-white/[0.24]" />
         </div>
         <div className="flex gap-2">
-          <div className="h-1.5 w-7 rounded bg-white/[0.07]" />
-          <div className="h-1.5 w-7 rounded bg-white/[0.07]" />
-          <div className="h-1.5 w-7 rounded bg-white/[0.07]" />
+          <div className="h-1.5 w-7 rounded bg-white/[0.15]" />
+          <div className="h-1.5 w-7 rounded bg-white/[0.15]" />
+          <div className="h-1.5 w-7 rounded bg-white/[0.15]" />
         </div>
-        <div className="h-5 w-14 rounded-full bg-gradient-to-r from-violet-500/45 to-cyan-500/30" />
+        <div className="h-5 w-14 rounded-full bg-gradient-to-r from-violet-500/75 to-cyan-500/55" />
       </div>
       {/* Centered hero */}
       <div className="flex flex-col items-center p-3 pb-2 text-center">
-        <div className="mb-2 h-4 w-20 rounded-full border border-violet-500/25 bg-violet-500/10" />
-        <div className="h-3 w-4/5 rounded bg-gradient-to-r from-violet-300/28 to-cyan-300/22" />
-        <div className="mt-1.5 h-3 w-3/5 rounded bg-gradient-to-r from-violet-300/22 to-cyan-300/16" />
-        <div className="mt-2 h-1.5 w-4/5 rounded bg-white/[0.06]" />
-        <div className="mt-1 h-1.5 w-2/3 rounded bg-white/[0.04]" />
+        <div className="mb-2 h-4 w-20 rounded-full border border-violet-500/50 bg-violet-500/20" />
+        <div className="h-3 w-4/5 rounded bg-gradient-to-r from-violet-300/55 to-cyan-300/44" />
+        <div className="mt-1.5 h-3 w-3/5 rounded bg-gradient-to-r from-violet-300/44 to-cyan-300/32" />
+        <div className="mt-2 h-1.5 w-4/5 rounded bg-white/[0.12]" />
+        <div className="mt-1 h-1.5 w-2/3 rounded bg-white/[0.08]" />
         <div className="mt-3 flex gap-2">
-          <div className="h-5 w-16 rounded-full bg-gradient-to-r from-violet-500/50 to-cyan-500/35" />
-          <div className="h-5 w-16 rounded-full border border-white/[0.10]" />
+          <div className="h-5 w-16 rounded-full bg-gradient-to-r from-violet-500/80 to-cyan-500/60" />
+          <div className="h-5 w-16 rounded-full border border-white/[0.20]" />
         </div>
       </div>
       {/* Feature cards */}
-      <div className="grid grid-cols-3 gap-2 border-t border-white/[0.04] px-3 py-3">
+      <div className="grid grid-cols-3 gap-2 border-t border-white/[0.08] px-3 py-3">
         {([
-          "from-violet-500/35 to-violet-400/18",
-          "from-cyan-500/30 to-cyan-400/14",
-          "from-violet-400/30 to-cyan-500/18",
+          "from-violet-500/65 to-violet-400/40",
+          "from-cyan-500/60 to-cyan-400/30",
+          "from-violet-400/60 to-cyan-500/40",
         ] as const).map((g, i) => (
-          <div key={i} className="rounded-lg border border-white/[0.05] bg-white/[0.02] p-2 space-y-1.5">
+          <div key={i} className="space-y-1.5 rounded-lg border border-white/[0.10] bg-white/[0.04] p-2">
             <div className={`h-4 w-4 rounded-md bg-gradient-to-br ${g}`} />
-            <div className="h-1.5 w-full rounded bg-white/[0.08]" />
-            <div className="h-1 w-4/5 rounded bg-white/[0.05]" />
-            <div className="h-1 w-3/5 rounded bg-white/[0.04]" />
+            <div className="h-1.5 w-full rounded bg-white/[0.16]" />
+            <div className="h-1 w-4/5 rounded bg-white/[0.10]" />
+            <div className="h-1 w-3/5 rounded bg-white/[0.08]" />
           </div>
         ))}
       </div>
@@ -427,11 +427,11 @@ export function FeaturedWork() {
               {ILLUSTRATIVE_CARDS.map(({ label, Mock }) => (
                 <div
                   key={label}
-                  className="pointer-events-none select-none overflow-hidden rounded-2xl border border-[#1E1E35] bg-[#06060f] opacity-80 transition-[border-color,box-shadow] duration-500 ease-[var(--ease-out-premium)] [@media(hover:hover)]:hover:border-violet-500/30 [@media(hover:hover)]:hover:shadow-[0_0_0_1px_rgba(124,63,255,0.14),0_0_40px_-12px_rgba(124,63,255,0.18)] [@media(hover:hover)]:hover:opacity-95"
+                  className="pointer-events-none select-none overflow-hidden rounded-2xl border border-[#1E1E35] bg-[#06060f] transition-[border-color,box-shadow] duration-500 ease-[var(--ease-out-premium)] [@media(hover:hover)]:hover:border-violet-500/30 [@media(hover:hover)]:hover:shadow-[0_0_0_1px_rgba(124,63,255,0.14),0_0_40px_-12px_rgba(124,63,255,0.18)]"
                 >
                   <Mock />
                   <div className="border-t border-[#1E1E35] px-4 py-3">
-                    <p className="text-[11px] font-medium tracking-tight text-[#C8C8D8]/45">
+                    <p className="text-[11px] font-medium tracking-tight text-[#C8C8D8]/75">
                       {label}
                     </p>
                   </div>
