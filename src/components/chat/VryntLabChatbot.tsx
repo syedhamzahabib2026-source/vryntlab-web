@@ -408,6 +408,11 @@ export function VryntLabChatbot({
             {loading ? chatWidgetDefaults.sendingLabel : chatWidgetDefaults.sendLabel}
           </button>
         </div>
+        <p className="chat-widget-legal">
+          By chatting, you agree to our{" "}
+          <a href="/terms">Terms</a> and{" "}
+          <a href="/acceptable-use">Acceptable Use Policy</a>.
+        </p>
       </div>
 
       <div className="chat-widget-launcher-wrap">

@@ -47,8 +47,8 @@ export function SiteHeader() {
   const shellClass = heroAtTop
     ? "border-b border-transparent bg-transparent py-3 shadow-none backdrop-blur-none backdrop-saturate-100 sm:py-4 md:py-5"
     : scrolled
-      ? "border-b border-white/[0.08] bg-[color-mix(in_srgb,var(--background)_42%,transparent)] py-3 shadow-[0_12px_44px_-32px_rgba(0,0,0,0.45)] backdrop-blur-2xl backdrop-saturate-150 sm:py-4 md:py-5"
-      : "border-b border-white/[0.05] bg-[color-mix(in_srgb,var(--background)_45%,transparent)] py-3 shadow-none backdrop-blur-md backdrop-saturate-110 sm:py-4 md:py-5";
+      ? "border-b border-[var(--border)] bg-[color-mix(in_srgb,var(--background)_42%,transparent)] py-3 shadow-[0_12px_44px_-32px_rgba(0,0,0,0.45)] backdrop-blur-2xl backdrop-saturate-150 sm:py-4 md:py-5"
+      : "border-b border-[var(--border)] bg-[color-mix(in_srgb,var(--background)_45%,transparent)] py-3 shadow-none backdrop-blur-md backdrop-saturate-110 sm:py-4 md:py-5";
 
   const menuBtnClass = `flex min-h-12 min-w-12 items-center justify-center rounded-lg px-2 text-[13px] font-medium text-[#C8C8D8]/80 transition-[background-color,color,transform] duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 active:scale-[0.98] active:bg-white/[0.07] ${focusRing} [@media(hover:hover)]:hover:bg-white/[0.07] [@media(hover:hover)]:hover:text-[#F0F0FF] lg:hidden`;
 

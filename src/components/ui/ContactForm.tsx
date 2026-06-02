@@ -170,10 +170,27 @@ export function ContactForm({ className = "" }: ContactFormProps) {
           placeholder="Problem, timeline, budget ballpark if you have one, link to your site or product."
         />
       </div>
-      <div>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         <button type="submit" className={primaryBtnClass} disabled={loading}>
           {loading ? "Sending…" : "Send message"}
         </button>
+        <p className="text-[11px] leading-relaxed text-zinc-500">
+          By submitting, you agree to our{" "}
+          <a
+            href="/terms"
+            className="underline decoration-transparent underline-offset-4 transition-colors duration-200 hover:text-zinc-400 hover:decoration-current"
+          >
+            Terms of Service
+          </a>{" "}
+          and{" "}
+          <a
+            href="/privacy"
+            className="underline decoration-transparent underline-offset-4 transition-colors duration-200 hover:text-zinc-400 hover:decoration-current"
+          >
+            Privacy Policy
+          </a>
+          .
+        </p>
       </div>
     </form>
   );

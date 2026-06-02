@@ -447,6 +447,30 @@
   background: color-mix(in oklab, var(--surface) 95%, var(--background));
 }
 
+.chat-widget-legal {
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0 0.85rem 0.6rem;
+  font-size: 0.7rem;
+  line-height: 1.45;
+  text-align: center;
+  color: color-mix(in oklab, var(--foreground) 30%, transparent);
+  background: color-mix(in oklab, var(--surface) 95%, var(--background));
+}
+
+.chat-widget-legal a {
+  color: color-mix(in oklab, var(--foreground) 42%, transparent);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 2px;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+.chat-widget-legal a:hover {
+  color: color-mix(in oklab, var(--foreground) 65%, transparent);
+  text-decoration-color: currentColor;
+}
+
 @media (min-width: 641px) and (max-width: 1023px) {
   .chat-widget-panel {
     bottom: calc(5.5rem + 4.75rem + env(safe-area-inset-bottom, 0px));
