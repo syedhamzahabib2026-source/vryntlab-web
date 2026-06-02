@@ -1,5 +1,21 @@
 # Build log
 
+## 2026-06-02 — Legal / policy pages + footer legal links
+
+**What changed:**
+
+1. **`src/app/privacy/page.tsx`** — Privacy Policy (`/privacy`): covers contact form (Resend, no DB), chat lead extraction (Supabase structured data only, no transcripts), sessionStorage usage, no cookies/analytics, third-party providers table (Resend, Supabase, OpenRouter, Slack, Google Fonts), CCPA + GDPR rights, children's privacy, retention policy.
+2. **`src/app/terms/page.tsx`** — Terms of Service (`/terms`): agreement, services, IP ownership + client deliverable transfer on full payment, AI chatbot disclaimers, no-guarantee clause, third-party platform liability, limitation of liability, indemnification, Illinois governing law, severability.
+3. **`src/app/disclaimer/page.tsx`** — Disclaimer (`/disclaimer`): informational-only content, AI response limitations, no outcome guarantees (SEO/revenue/timeline), third-party platform non-liability, client responsibility, no professional advice (legal/financial/tax/medical).
+4. **`src/app/acceptable-use/page.tsx`** — Acceptable Use Policy (`/acceptable-use`): permitted use, prohibited use (abuse/scraping/prompt injection/spam), no-sensitive-data warning, chat-not-contractual clause, enforcement rights.
+5. **`src/components/layout/SiteFooter.tsx`** — Added `legalLinks` array and a fourth row below the copyright/social row with links to all four policy pages. Styled with `legalLinkClass` (dimmer than nav links, separate from `navLinks` so policy pages don't appear in the header).
+
+All four pages: server components, `noindex`/`nofollow` robots metadata, no `"use client"`, `contentWell` + design-system typography consistent with other site pages.
+
+**Files:** `src/app/privacy/page.tsx`, `src/app/terms/page.tsx`, `src/app/disclaimer/page.tsx`, `src/app/acceptable-use/page.tsx`, `src/components/layout/SiteFooter.tsx`, `docs/BUILD_LOG.md`
+
+---
+
 ## 2026-06-02 — Blog frontmatter source + BlogPosting schema
 
 **What changed:**

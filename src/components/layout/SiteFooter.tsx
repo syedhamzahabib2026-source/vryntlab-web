@@ -6,6 +6,16 @@ import { SocialLinks } from "@/components/layout/SocialLinks";
 const navLinkClass =
   `inline-flex min-h-11 items-center rounded-md px-1.5 py-0.5 text-[13px] font-medium text-[#8888a8] transition-colors duration-200 ${focusRing} [@media(hover:hover)]:hover:text-[#F0F0FF]`;
 
+const legalLinks = [
+  { href: "/privacy", label: "Privacy Policy" },
+  { href: "/terms", label: "Terms of Service" },
+  { href: "/disclaimer", label: "Disclaimer" },
+  { href: "/acceptable-use", label: "Acceptable Use" },
+] as const;
+
+const legalLinkClass =
+  `${focusRing} inline-flex min-h-10 items-center rounded-sm text-[11px] font-medium text-[#6B6B85] transition-colors duration-200 [@media(hover:hover)]:hover:text-[#8888a8]`;
+
 export function SiteFooter() {
   const year = new Date().getFullYear();
 
@@ -70,6 +80,15 @@ export function SiteFooter() {
             </a>
           </div>
           <SocialLinks className="justify-start sm:justify-end" />
+        </div>
+
+        {/* Legal links row */}
+        <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-1.5 border-t border-[#1E1E35] pt-5">
+          {legalLinks.map((link) => (
+            <Link key={link.href} href={link.href} className={legalLinkClass}>
+              {link.label}
+            </Link>
+          ))}
         </div>
       </div>
     </footer>
