@@ -224,14 +224,13 @@ export default function ShopifyPage() {
         <div className={`${contentWell} border-t border-[#1E1E35]`}>
           <div className="flex flex-col gap-2 bg-[#0F0F1A] px-5 py-4 sm:flex-row sm:items-center sm:justify-between rounded-xl border border-[#1E1E35]">
             <p className="text-[13px] text-[#C8C8D8]/75">
-              <span className="font-semibold text-[#F0F0FF]">Living Silica</span>
-              {" "}— DTC supplement brand, Shopify redesign, product page clarity improved
+              Shopify redesign for a DTC supplement brand. Product pages and checkout tuned to convert.
             </p>
             <Link
-              href="/work/living-silica"
+              href="/work"
               className={`shrink-0 text-[12px] font-semibold text-[#7C3FFF] transition-colors duration-200 hover:text-[#00E5FF] ${focusRing} rounded-sm`}
             >
-              View case study →
+              See our Shopify work →
             </Link>
           </div>
         </div>

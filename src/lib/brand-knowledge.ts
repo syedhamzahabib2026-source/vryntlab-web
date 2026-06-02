@@ -5,15 +5,15 @@
 
 /** Page title (metadata) */
 export const brandSiteTitle =
-  "VryntLab — Web Design, AI Chatbots & Automations for Small Business";
+  "VryntLab — Shopify Stores, Web Design & Ecommerce for Small Business";
 
 /** Meta / footer one-liner */
 export const brandMetaDescription =
-  "VryntLab is a Chicago-based web agency building websites, AI chatbots, and automations for small businesses. Fast delivery, clear pricing. Get a free estimate.";
+  "VryntLab builds Shopify stores and websites for growing businesses. Ecommerce, web design, AI chatbots, and automations. Fast delivery. Free estimate.";
 
 /** Footer blurb (footer only; meta uses `brandMetaDescription`) */
 export const brandFooterTagline =
-  "We help businesses get found, booked, and selling—through better sites, smarter automation, and faster performance.";
+  "We build online stores and websites that bring in customers.";
 
 export const brandHero = {
   headline:
@@ -39,8 +39,7 @@ export const brandHomeServicesTeaser = {
 export const brandWorkSection = {
   eyebrow: "Selected Work",
   title: "A sample of what we build",
-  description:
-    "Real problems, real results — a small selection from recent projects.",
+  description: "A selection of recent projects.",
 } as const;
 
 /** Shown under the work intro when a path is selected — ties selected projects to intent */
@@ -52,11 +51,11 @@ export const brandWorkIntentNudge = {
   custom:
     "You picked custom work—these examples lean on tools and flows built for how you actually operate.",
   app:
-    "You picked app work—these examples still skew web and product; tell us if you’re mobile-first.",
+    "You picked app work—these examples still skew web and product; tell us if you're mobile-first.",
   backend:
-    "You picked backend or infrastructure—examples below are still product-shaped; we’ll align in the estimate.",
+    "You picked backend or infrastructure—examples below are still product-shaped; we'll align in the estimate.",
   other:
-    "You picked other—browse the work for craft and process; we’ll sort fit in the estimate.",
+    "You picked other—browse the work for craft and process; we'll sort fit in the estimate.",
 } as const;
 
 export const brandMidPageCta = {
@@ -70,7 +69,7 @@ export const brandMidPageCta = {
   "after-services": {
     kicker: "Next step",
     title: "Estimate or full brief",
-    body: "Same people read both. Quick estimate for structured intake; contact form when you’ve already written it out.",
+    body: "Same people read both. Quick estimate for structured intake; contact form when you've already written it out.",
     primary: "Open quick estimate",
     secondary: "Use the contact form",
   },
@@ -80,17 +79,17 @@ export const brandMidPageCta = {
 export const brandMidPageIntentNudge = {
   "after-work": {
     website:
-      "“Website & storefront” is selected—we’ll assume that lane unless you tell us otherwise.",
+      "\"Website & storefront\" is selected — we'll assume that lane unless you tell us otherwise.",
     automation:
-      "“Automation & integrations” is selected—we’ll focus the estimate on wiring and handoffs.",
+      "\"Automation & integrations\" is selected — we'll focus the estimate on wiring and handoffs.",
     custom:
-      "“Custom product” is selected—we’ll assume a build conversation, not a template tweak.",
+      "\"Custom product\" is selected — we'll assume a build conversation, not a template tweak.",
     app:
-      "“App development” is selected—we’ll assume native or cross-platform unless you say otherwise.",
+      "\"App development\" is selected — we'll assume native or cross-platform unless you say otherwise.",
     backend:
-      "“Backend / infrastructure” is selected—we’ll focus the estimate on APIs, data, and reliability.",
+      "\"Backend / infrastructure\" is selected — we'll focus the estimate on APIs, data, and reliability.",
     other:
-      "“Other” is selected—we’ll lead with your note and keep the bucket flexible.",
+      "\"Other\" is selected — we'll lead with your note and keep the bucket flexible.",
   },
   "after-services": {
     website:
@@ -121,12 +120,12 @@ export const brandPathSelector = {
 export const brandIntentCopy = {
   website: {
     label: "Website & storefront",
-    headline: "When your site or store isn’t bringing in the business it should",
+    headline: "When your site or store isn't bringing in the business it should",
     summary:
-      "Clearer pages, faster load times, booking and forms people complete, plus SEO and Google Business Profile when that’s part of the job.",
+      "Clearer pages, faster load times, booking and forms people complete, plus SEO and Google Business Profile when that's part of the job.",
     outcomes: [
       "Help visitors find booking, checkout, or your contact form without getting lost.",
-      "Speed up slow pages so people don’t leave before they read your offer.",
+      "Speed up slow pages so people don't leave before they read your offer.",
       "Improve how you show up in search and maps—not a one-off tweak, but something you can keep up.",
     ],
   },
@@ -147,41 +146,41 @@ export const brandIntentCopy = {
     summary:
       "Custom screens and workflows—built in steps you can review before everything is final.",
     outcomes: [
-      "See working previews early, before you’re locked in.",
+      "See working previews early, before you're locked in.",
       "Get a clear handoff: where things live and how to maintain them.",
-      "We’ll say no if a simpler tool or integration is the smarter move.",
+      "We'll say no if a simpler tool or integration is the smarter move.",
     ],
   },
   app: {
     label: "App development",
     headline: "When you need a real app—not just a responsive site",
     summary:
-      "iOS, Android, or cross-platform—scoped milestones so you can try builds before you’re locked in.",
+      "iOS, Android, or cross-platform—scoped milestones so you can try builds before you're locked in.",
     outcomes: [
       "Clarify what has to work offline vs online before we chase features.",
       "Ship testable builds early, then tighten access, data, and release.",
-      "We’ll say no if a PWA or your existing stack is the smarter move.",
+      "We'll say no if a PWA or your existing stack is the smarter move.",
     ],
   },
   backend: {
     label: "Backend / infrastructure",
-    headline: "When APIs, data, or hosting can’t keep up",
+    headline: "When APIs, data, or hosting can't keep up",
     summary:
       "Services, jobs, queues, and environments—documented so you know what runs where.",
     outcomes: [
-      "Map what’s fragile today (latency, failures, manual deploys).",
+      "Map what's fragile today (latency, failures, manual deploys).",
       "Harden the path that matters before layering new features.",
-      "Hand off runbooks and ownership so it’s not tribal knowledge.",
+      "Hand off runbooks and ownership so it's not tribal knowledge.",
     ],
   },
   other: {
     label: "Other",
-    headline: "When it doesn’t fit a neat box",
+    headline: "When it doesn't fit a neat box",
     summary:
-      "Describe what you’re trying to do—we’ll reply with an honest read on fit and next steps.",
+      "Describe what you're trying to do—we'll reply with an honest read on fit and next steps.",
     outcomes: [
       "Plain language is enough—links and rough notes help.",
-      "We may suggest a smaller scope or a different partner if that’s fairer.",
+      "We may suggest a smaller scope or a different partner if that's fairer.",
       "No forced category—use the note field freely.",
     ],
   },
@@ -191,15 +190,21 @@ export const brandServicesSection = {
   eyebrow: "Services",
   title: "Where we usually step in",
   description:
-    "Most teams don’t care what stack we use—they care what gets fixed. Here’s how we usually help as a web design agency.",
+    "Most clients don't care what tools we use. They care what gets fixed. Here's how we usually help.",
   panelHeading: "This lane",
   deliverablesLabel: "What often ships",
   footerNote:
-    "We’ll pass if we’re not the right fit—better for everyone.",
+    "We'll pass if we're not the right fit — better for everyone.",
 } as const;
 
 /** Problem-first service grid (replaces tab UI). */
 export const brandServiceGrid = [
+  {
+    title: "Shopify or storefront isn't converting",
+    outcome:
+      "Your Shopify store tuned so product pages, collections, and checkout build trust before the cart.",
+    href: "/services/shopify",
+  },
   {
     title: "Site feels slow or broken on phones",
     outcome:
@@ -207,45 +212,39 @@ export const brandServiceGrid = [
     href: "/services/web-design",
   },
   {
-    title: "Website doesn’t explain what you sell",
+    title: "Website doesn't explain what you sell",
     outcome:
-      "Clear story and stronger structure—whether it’s a new build or a full website redesign.",
+      "Clear story and stronger structure, whether it's a new build or a full redesign.",
     href: "/services/web-design",
-  },
-  {
-    title: "Shopify or storefront isn’t converting",
-    outcome:
-      "Your Shopify store tuned so product pages, collections, and checkout build trust before the cart.",
-    href: "/services/shopify",
-  },
-  {
-    title: "Booking is a back-and-forth mess",
-    outcome:
-      "Calendars and forms that sync where you work—fewer no-shows and less inbox ping-pong.",
-    href: "/services/booking-systems",
   },
   {
     title: "Same customer questions all day",
     outcome:
-      "AI chatbot for your website—development trained on your offer, answering repeat questions and handing off real leads cleanly.",
+      "An AI chatbot trained on your business, answering repeat questions and routing real leads to you.",
     href: "/services/ai-chatbot",
-  },
-  {
-    title: "Data stuck in three different tools",
-    outcome:
-      "Practical business automation so bookings, CRM, and email stay in sync without retyping.",
-    href: "/services/automation",
   },
   {
     title: "Hard to find on Google or Maps",
     outcome:
-      "SEO and Google Business Profile optimization so the right searches surface your business.",
+      "SEO and Google Business Profile so the right searches surface your business.",
     href: "/services/seo",
+  },
+  {
+    title: "Data stuck in three different tools",
+    outcome:
+      "Automations that keep bookings, your inbox, and customer records in sync without manual copying.",
+    href: "/services/automation",
+  },
+  {
+    title: "Booking is a back-and-forth mess",
+    outcome:
+      "Calendars and forms that sync where you work. Fewer no-shows, less inbox ping-pong.",
+    href: "/services/booking-systems",
   },
   {
     title: "Nothing off-the-shelf fits how you work",
     outcome:
-      "Small custom screens, APIs, or internal tools—shipped in slices you can try early.",
+      "Custom tools, screens, or connections built around how you actually operate.",
     href: "/#contact",
   },
 ] as const;
@@ -257,12 +256,12 @@ export const brandServiceLanes = [
   {
     intent: "website" as const,
     id: "service-websites" as const,
-    shortLabel: "Web + store",
-    title: "Websites & storefronts",
+    shortLabel: "Shopify & web",
+    title: "Shopify & websites",
     description:
-      "Marketing sites and Shopify stores: clearer layouts, faster pages, and a path that actually converts.",
+      "Shopify stores and marketing sites: product pages that build trust, faster loads, and checkout paths that work.",
     scope:
-      "Redesigns and page cleanup, speed work, SEO and Google Business Profile alongside the site, Shopify updates—we can also work with your existing web person if you have one.",
+      "Redesigns and page cleanup, speed work, SEO and Google Business Profile alongside the site, Shopify updates. We can also work with your existing web person if you have one.",
   },
   {
     intent: "automation" as const,
@@ -280,7 +279,7 @@ export const brandServiceLanes = [
     shortLabel: "Custom build",
     title: "Custom software & APIs",
     description:
-      "Internal tools, customer-facing flows, and process fixes that don’t come out of a box—delivered in slices you can try before you commit.",
+      "Internal tools, customer-facing flows, and process fixes that don't come out of a box—delivered in slices you can try before you commit.",
     scope:
       "Browser-based tools, secure logins where needed, phased rollouts, and notes for whoever looks after it next.",
   },
@@ -308,25 +307,25 @@ export const brandChatbotShowcase = {
 export const brandProcess = {
   eyebrow: "Process",
   title: "How we usually work",
-  description: "Three steps—no guessing what happens next.",
+  description: "Three steps. No guessing what happens next.",
   steps: [
     {
       phase: "01",
       title: "Discover",
       description:
-        "We clarify what’s wrong or missing, what you already use, and what success looks like. You get a clear written scope before real work starts.",
+        "We figure out exactly what you need and what it costs. You get a clear written plan before any work starts.",
     },
     {
       phase: "02",
       title: "Design",
       description:
-        "Layout and flow come first. You approve real screens before anything gets polished.",
+        "Layout and design come first. You approve the look before we build anything.",
     },
     {
       phase: "03",
       title: "Build",
       description:
-        "We ship in pieces—with links you can open. Easy to adjust while changes are still cheap.",
+        "We build in stages and share links as we go. Easy to adjust while changes are still cheap.",
     },
   ] as const,
 } as const;
@@ -347,24 +346,24 @@ export const brandContact = {
   eyebrow: "Contact",
   title: "Say what you need",
   lead: [
-    "Short note: what’s broken or what you want to launch, when you need it, links if you have them.",
-    "We reply by email. If it’s a fit, you get a clear scope and price before real work starts.",
+    "Short note: what you need, when you need it, links if you have them.",
+    "We reply by email. If it's a fit, you get a clear plan and price before we start.",
     "Plain language beats a polished brief.",
   ] as const,
   followUp:
-    "A human replies—no fake “we got it” theater unless something actually breaks.",
+    "A real person reads every message and replies within two business days.",
 } as const;
 
 export const brandContactForm = {
   sentTitle: "Thanks — received.",
   sentBody:
-    "We read what you sent and usually reply within two business days: a direct answer, a few questions, or a time to talk if it’s a fit.",
+    "We read what you sent and usually reply within two business days: a direct answer, a few questions, or a time to talk if it's a fit.",
   sentFooter: "No drip sequence. No obligation.",
 } as const;
 
 export const brandCredibility = {
   srOnlyTitle: "Who we usually work with",
-  body: "Teams that rely on their website to win customers—and can’t afford it to underperform.",
+  body: "Teams that rely on their website to win customers—and can't afford it to underperform.",
   segments: ["SaaS", "Professional services", "E-commerce", "Online-first teams"] as const,
 } as const;
 
@@ -384,13 +383,13 @@ export const brandDeliveryFooter = {
     automation:
       "Automation focus: map sources and destinations, then harden handoffs before extras.",
     custom:
-      "Custom focus: small shippable slices first, then access, data, and how you’ll own it.",
+      "Custom focus: small shippable slices first, then access, data, and how you'll own it.",
     app:
       "App focus: device targets and core flows first, then polish and store/release steps.",
     backend:
       "Backend focus: contracts and failure modes first, then scale and observability.",
     other:
-      "We’ll align on what “done” means from your note—then propose a sensible slice.",
+      "We'll align on what \"done\" means from your note — then propose a sensible slice.",
   },
 } as const;
 
@@ -399,7 +398,7 @@ export const brandQuickEstimate = {
     "Takes two minutes. We reply with clear next steps—plain language is fine.",
   /** When no intent is selected yet — copy mirrors path selector language */
   pickLaneHint: "Pick a lane—everything below adapts to it.",
-  /** Fallback when intent-specific adaptive copy isn’t shown */
+  /** Fallback when intent-specific adaptive copy isn't shown */
   notePlaceholderFallback:
     "e.g. Shopify feels slow, or we need HubSpot connected to Sheets.",
   sentTitle: "Got it.",
@@ -409,17 +408,17 @@ export const brandQuickEstimate = {
 /** Shown under the main intro in the quick estimate dialog when an intent chip is selected */
 export const brandQuickEstimateIntentHint = {
   website:
-    "We’ll prioritize site or storefront work—UX, speed, SEO/GBP, checkout, forms.",
+    "We'll prioritize site or storefront work—UX, speed, SEO/GBP, checkout, forms.",
   automation:
-    "We’ll prioritize integrations, workflows, or a chatbot that earns its keep.",
+    "We'll prioritize integrations, workflows, or a chatbot that earns its keep.",
   custom:
-    "We’ll prioritize custom tools, APIs, or internal software—not a theme tweak.",
+    "We'll prioritize custom tools, APIs, or internal software—not a theme tweak.",
   app:
-    "We’ll prioritize app work—platform, core flows, and what ships in v1.",
+    "We'll prioritize app work—platform, core flows, and what ships in v1.",
   backend:
-    "We’ll prioritize backend and infra—APIs, data, hosting, and what breaks today.",
+    "We'll prioritize backend and infra—APIs, data, hosting, and what breaks today.",
   other:
-    "We’ll lead with your note—no need to force-fit a category.",
+    "We'll lead with your note—no need to force-fit a category.",
 } as const;
 
 export const brandContactEstimateCta =
@@ -482,18 +481,18 @@ export const brandIntentTriad = {
   },
   custom: {
     frictionLabel: "The friction",
-    friction: "Spreadsheets and hacks can’t scale the workflow.",
+    friction: "Spreadsheets and hacks can't scale the workflow.",
     fixLabel: "What we fix",
     fix: "Scoped product slices in the browser + APIs when needed.",
     outcomeLabel: "What you get",
-    outcome: "Something you can click through before it’s “final.”",
+    outcome: "Something you can click through before it's final.",
   },
 } as const;
 
 /** Quick estimate field copy + scannable prompts per intent. */
 export const brandQuickEstimateAdaptive = {
   website: {
-    noteLabel: "What’s off? (optional)",
+    noteLabel: "What's off? (optional)",
     notePlaceholder:
       "e.g. Slow product pages, confusing nav, checkout drop-off, need GBP + on-page work with the site…",
     prompts: [
@@ -533,7 +532,7 @@ export const brandQuickEstimateAdaptive = {
     ] as const,
   },
   backend: {
-    noteLabel: "What’s failing or missing? (optional)",
+    noteLabel: "What's failing or missing? (optional)",
     notePlaceholder:
       "e.g. API timeouts at peak, messy deploys, need audit logs…",
     prompts: [

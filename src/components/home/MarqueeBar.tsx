@@ -1,13 +1,13 @@
 const ITEMS = [
+  "Shopify Stores",
   "Web Design",
   "AI Chatbots",
-  "Automation",
   "SEO & GEO",
-  "Chicago-Based",
-  "Ships Fast",
-  "Fair Pricing",
-  "No Agency Bloat",
+  "Automations",
   "Booking Systems",
+  "Fair Pricing",
+  "Fast Delivery",
+  "No Agency Fees",
   "App Development",
 ];
 

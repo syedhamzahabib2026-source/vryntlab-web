@@ -1,12 +1,13 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { contentWell, focusRing } from "@/components/layout/layoutTokens";
 import { useConversion } from "@/components/conversion/ConversionContext";
 import { brandIntentActionLabels } from "@/lib/brand-knowledge";
-import { navLinks, siteBrandName } from "@/lib/site";
+import { navLinks, siteBrandName, siteLogoSrc } from "@/lib/site";
 
 const ctaButtonCore = `inline-flex h-12 min-h-12 items-center justify-center rounded-full border border-violet-500/40 bg-transparent px-6 text-[13px] font-semibold tracking-tight text-[#F0F0FF] shadow-[var(--shadow-sm)] transition-[background-color,border-color,box-shadow,transform] duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 active:scale-[0.98] ${focusRing} [@media(hover:hover)]:hover:border-violet-400/65 [@media(hover:hover)]:hover:bg-violet-500/10 [@media(hover:hover)]:hover:shadow-[0_0_24px_-6px_rgba(124,63,255,0.35)]`;
 
@@ -64,31 +65,17 @@ export function SiteHeader() {
           <div className="flex min-h-0 min-w-0 shrink-0 self-stretch items-center justify-start">
             <Link
               href="/"
-              className={`group/logo relative flex min-h-0 min-w-0 shrink-0 items-center ${focusRing} rounded-md transition-opacity duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 [@media(hover:hover)]:hover:opacity-88`}
-              aria-label={`${siteBrandName} — home`}
+              className={`group/logo relative flex min-h-0 min-w-0 shrink-0 items-center ${focusRing} rounded-md transition-opacity duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 [@media(hover:hover)]:hover:opacity-80`}
+              aria-label={`${siteBrandName}, home`}
             >
-              <span className="flex items-center gap-1.5">
-                <span
-                  className="text-[1.125rem] font-black tracking-[-0.04em] text-[#F0F0FF] sm:text-[1.25rem]"
-                  style={{
-                    background: "linear-gradient(135deg, #F0F0FF 0%, #C8C8D8 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                  }}
-                >
-                  Vrynt
-                </span>
-                <span
-                  className="text-[1.125rem] font-black tracking-[-0.04em] sm:text-[1.25rem]"
-                  style={{
-                    background: "linear-gradient(135deg, #7C3FFF 0%, #00E5FF 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                  }}
-                >
-                  Lab
-                </span>
-              </span>
+              <Image
+                src={siteLogoSrc}
+                alt={siteBrandName}
+                width={120}
+                height={80}
+                className="h-7 w-auto object-contain sm:h-8"
+                priority
+              />
             </Link>
           </div>
 

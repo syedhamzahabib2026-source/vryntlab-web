@@ -18,19 +18,19 @@ type Service = {
 const SERVICES: Service[] = [
   {
     n: "01",
-    name: "Website Design & Development",
-    desc: "Fast, clear sites that turn visitors into customers",
-    outcome: "More visitors complete your contact or checkout flow",
-    icon: "⟡",
-    href: "/services/web-design",
-  },
-  {
-    n: "02",
     name: "Shopify & E-commerce",
     desc: "Stores that guide people to checkout, not just browse",
     outcome: "Higher product page trust and cart completion",
     icon: "◈",
     href: "/services/shopify",
+  },
+  {
+    n: "02",
+    name: "Website Design & Development",
+    desc: "Fast, clear sites that turn visitors into customers",
+    outcome: "More visitors complete your contact or checkout flow",
+    icon: "⟡",
+    href: "/services/web-design",
   },
   {
     n: "03",
@@ -42,19 +42,19 @@ const SERVICES: Service[] = [
   },
   {
     n: "04",
-    name: "Automation & Integrations",
-    desc: "Your tools talk to each other — no manual copy-paste",
-    outcome: "No more copying leads between three spreadsheets",
-    icon: "⇢",
-    href: "/services/automation",
-  },
-  {
-    n: "05",
     name: "SEO & Local Search",
     desc: "Show up when people search for what you offer",
     outcome: "The right searches surface your business",
     icon: "◉",
     href: "/services/seo",
+  },
+  {
+    n: "05",
+    name: "Automation & Integrations",
+    desc: "Your tools talk to each other — no manual copy-paste",
+    outcome: "No more copying leads between three spreadsheets",
+    icon: "⇢",
+    href: "/services/automation",
   },
   {
     n: "06",
@@ -76,7 +76,7 @@ const SERVICES: Service[] = [
     n: "08",
     name: "Custom Software & APIs",
     desc: "Custom tools built for how you actually work",
-    outcome: "Browser-based tools shipped in slices you can try",
+    outcome: "Browser-based tools built in slices you can try",
     icon: "❖",
     href: "/#contact",
   },
@@ -225,7 +225,7 @@ export function ServicesHomeTeaser() {
         <Reveal>
           <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-[13px] text-[#8888a8]">
-              Every project is scoped to your actual problem.
+              Every project is built around your actual problem.
             </p>
             <Link
               href="/services"

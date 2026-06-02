@@ -9,7 +9,7 @@ import {
 export const siteBrandName = "VryntLab";
 
 /** Public paths under `/public` */
-export const siteLogoSrc = "/brand/whitefont.png";
+export const siteLogoSrc = "/brand/purple-logo.png";
 
 export const siteEmail = "hello@vryntlab.com";
 

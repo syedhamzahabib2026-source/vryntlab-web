@@ -402,8 +402,8 @@ export function FeaturedWork() {
               <Reveal>
                 <StatInfoCard
                   stat="1–2wk"
-                  label="Ships fast"
-                  sub="Most sites delivered in 1–2 weeks"
+                  label="Delivered fast"
+                  sub="Most projects live in 1–2 weeks"
                   gradient="linear-gradient(135deg, rgba(124,63,255,0.18) 0%, rgba(124,63,255,0.06) 60%, #0A0A14 100%)"
                 />
               </Reveal>
