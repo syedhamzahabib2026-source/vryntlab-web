@@ -1,46 +1,21 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { contentWell, focusRing } from "@/components/layout/layoutTokens";
 import { Reveal } from "@/components/motion/Reveal";
+import {
+  buildBlogPostBreadcrumbSchema,
+  buildBlogPostingSchema,
+  buildBlogPostMetadata,
+  getBlogPost,
+} from "@/lib/blog-posts";
 import { FaqAccordion } from "./FaqAccordion";
 
-export const metadata: Metadata = {
-  title: "What Is GEO? Generative Engine Optimization Explained | VryntLab",
-  description:
-    "GEO (Generative Engine Optimization) is how you get your business cited by AI tools like ChatGPT and Perplexity. Here's what it is and what small businesses should do about it.",
-  alternates: {
-    canonical: "https://vryntlab.com/blog/what-is-geo-generative-engine-optimization",
-  },
-  openGraph: {
-    title: "What Is GEO? Generative Engine Optimization Explained | VryntLab",
-    description:
-      "GEO (Generative Engine Optimization) is how you get your business cited by AI tools like ChatGPT and Perplexity. Here's what it is and what small businesses should do about it.",
-    url: "https://vryntlab.com/blog/what-is-geo-generative-engine-optimization",
-    type: "article",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "What Is GEO? Generative Engine Optimization Explained | VryntLab",
-    description:
-      "GEO (Generative Engine Optimization) is how you get your business cited by AI tools like ChatGPT and Perplexity. Here's what it is and what small businesses should do about it.",
-  },
-};
+const post = getBlogPost("what-is-geo-generative-engine-optimization")!;
+
+export const metadata = buildBlogPostMetadata(post);
 
 const schemas = [
-  {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: "What Is GEO? Generative Engine Optimization Explained",
-    author: { "@type": "Person", name: "VryntLab" },
-    publisher: {
-      "@type": "Organization",
-      name: "VryntLab",
-      url: "https://vryntlab.com",
-    },
-    datePublished: "2026-05-09",
-    url: "https://vryntlab.com/blog/what-is-geo-generative-engine-optimization",
-  },
+  buildBlogPostingSchema(post),
   {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -71,20 +46,7 @@ const schemas = [
       },
     ],
   },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://vryntlab.com" },
-      { "@type": "ListItem", position: 2, name: "Blog", item: "https://vryntlab.com/blog" },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: "What Is GEO",
-        item: "https://vryntlab.com/blog/what-is-geo-generative-engine-optimization",
-      },
-    ],
-  },
+  buildBlogPostBreadcrumbSchema(post),
 ];
 
 const primaryBtn =

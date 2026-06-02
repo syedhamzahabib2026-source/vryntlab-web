@@ -252,8 +252,8 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.18, ease }}
               className="mt-6 max-w-[44ch] text-[1rem] leading-[1.66] text-[#C8C8D8]/80 sm:text-[1.0625rem]"
             >
-              We fix what&apos;s broken, build what&apos;s missing, and ship it — with
-              a clear scope and price before work starts.
+              We fix what&apos;s broken, build what&apos;s missing, and ship it for
+              small businesses — with a clear scope and price before work starts.
             </motion.p>
 
             <motion.div

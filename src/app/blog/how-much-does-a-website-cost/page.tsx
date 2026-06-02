@@ -1,46 +1,21 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { contentWell, focusRing } from "@/components/layout/layoutTokens";
 import { Reveal } from "@/components/motion/Reveal";
+import {
+  buildBlogPostBreadcrumbSchema,
+  buildBlogPostingSchema,
+  buildBlogPostMetadata,
+  getBlogPost,
+} from "@/lib/blog-posts";
 import { FaqAccordion } from "./FaqAccordion";
 
-export const metadata: Metadata = {
-  title: "How Much Does a Small Business Website Cost in 2026? | VryntLab",
-  description:
-    "Honest breakdown of small business website costs in 2026. DIY vs agency vs freelancer, what affects price, and what you actually need.",
-  alternates: {
-    canonical: "https://vryntlab.com/blog/how-much-does-a-website-cost",
-  },
-  openGraph: {
-    title: "How Much Does a Small Business Website Cost in 2026? | VryntLab",
-    description:
-      "Honest breakdown of small business website costs in 2026. DIY vs agency vs freelancer, what affects price, and what you actually need.",
-    url: "https://vryntlab.com/blog/how-much-does-a-website-cost",
-    type: "article",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "How Much Does a Small Business Website Cost in 2026? | VryntLab",
-    description:
-      "Honest breakdown of small business website costs in 2026. DIY vs agency vs freelancer, what affects price, and what you actually need.",
-  },
-};
+const post = getBlogPost("how-much-does-a-website-cost")!;
+
+export const metadata = buildBlogPostMetadata(post);
 
 const schemas = [
-  {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: "How Much Does a Small Business Website Cost in 2026?",
-    author: { "@type": "Person", name: "VryntLab" },
-    publisher: {
-      "@type": "Organization",
-      name: "VryntLab",
-      url: "https://vryntlab.com",
-    },
-    datePublished: "2026-05-09",
-    url: "https://vryntlab.com/blog/how-much-does-a-website-cost",
-  },
+  buildBlogPostingSchema(post),
   {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -71,20 +46,7 @@ const schemas = [
       },
     ],
   },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://vryntlab.com" },
-      { "@type": "ListItem", position: 2, name: "Blog", item: "https://vryntlab.com/blog" },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: "How Much Does a Website Cost",
-        item: "https://vryntlab.com/blog/how-much-does-a-website-cost",
-      },
-    ],
-  },
+  buildBlogPostBreadcrumbSchema(post),
 ];
 
 const primaryBtn =

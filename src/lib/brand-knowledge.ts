@@ -9,7 +9,7 @@ export const brandSiteTitle =
 
 /** Meta / footer one-liner */
 export const brandMetaDescription =
-  "VryntLab builds websites, AI chatbots, booking systems and automations for small businesses. Fast delivery, clear pricing, no agency bloat. Get a free estimate.";
+  "VryntLab is a Chicago-based web agency building websites, AI chatbots, and automations for small businesses. Fast delivery, clear pricing. Get a free estimate.";
 
 /** Footer blurb (footer only; meta uses `brandMetaDescription`) */
 export const brandFooterTagline =
@@ -29,7 +29,7 @@ export const brandHero = {
 /** Homepage strip — full detail lives on `/services`. */
 export const brandHomeServicesTeaser = {
   lines: [
-    "We build and improve marketing sites and storefronts — fast loads, a clear story, and paths that convert.",
+    "We build and improve marketing sites with clear web design — fast loads, a straight story, and paths that convert.",
     "We wire automation, integrations, and on-site AI chatbots when they save real time and leads.",
     "We scope honestly: you get a written estimate before heavy work — not a six-week deck process.",
   ],
@@ -191,7 +191,7 @@ export const brandServicesSection = {
   eyebrow: "Services",
   title: "Where we usually step in",
   description:
-    "Most teams don’t care what stack we use—they care what gets fixed. Here’s how we usually help.",
+    "Most teams don’t care what stack we use—they care what gets fixed. Here’s how we usually help as a web design agency.",
   panelHeading: "This lane",
   deliverablesLabel: "What often ships",
   footerNote:
@@ -209,13 +209,13 @@ export const brandServiceGrid = [
   {
     title: "Website doesn’t explain what you sell",
     outcome:
-      "Clear story, stronger structure, and a straight path to contact or checkout.",
+      "Clear story and stronger structure—whether it’s a new build or a full website redesign.",
     href: "/services/web-design",
   },
   {
     title: "Shopify or storefront isn’t converting",
     outcome:
-      "Product pages, collections, and checkout tuned so trust shows up before the cart.",
+      "Your Shopify store tuned so product pages, collections, and checkout build trust before the cart.",
     href: "/services/shopify",
   },
   {
@@ -227,19 +227,19 @@ export const brandServiceGrid = [
   {
     title: "Same customer questions all day",
     outcome:
-      "An on-site assistant that answers the repeat stuff and hands off real leads cleanly.",
+      "AI chatbot for your website—development trained on your offer, answering repeat questions and handing off real leads cleanly.",
     href: "/services/ai-chatbot",
   },
   {
     title: "Data stuck in three different tools",
     outcome:
-      "Light automations so bookings, CRM, and email stay in sync without retyping.",
+      "Practical business automation so bookings, CRM, and email stay in sync without retyping.",
     href: "/services/automation",
   },
   {
     title: "Hard to find on Google or Maps",
     outcome:
-      "SEO and local presence work so the right searches surface your business.",
+      "SEO and Google Business Profile optimization so the right searches surface your business.",
     href: "/services/seo",
   },
   {
@@ -335,7 +335,7 @@ export const brandAbout = {
   eyebrow: "About",
   title: "Who we are",
   paragraphs: [
-    "VryntLab is a lean studio that builds websites, AI chatbots, and automations for businesses that want results — not a drawn-out agency process.",
+    "Based in Chicago, VryntLab works with small businesses across the US — websites, AI chatbots, and automations without a drawn-out agency process.",
 
     "You work directly with the people doing the work. No layers, no handoffs, no going quiet after launch.",
 

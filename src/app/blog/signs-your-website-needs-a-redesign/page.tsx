@@ -1,42 +1,21 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { contentWell, focusRing } from "@/components/layout/layoutTokens";
 import { Reveal } from "@/components/motion/Reveal";
+import {
+  buildBlogPostBreadcrumbSchema,
+  buildBlogPostingSchema,
+  buildBlogPostMetadata,
+  getBlogPost,
+} from "@/lib/blog-posts";
 import { FaqAccordion } from "./FaqAccordion";
 
-export const metadata: Metadata = {
-  title: "7 Signs Your Website Needs a Redesign | VryntLab",
-  description:
-    "How do you know when it's time to redesign your website? Here are 7 clear signs — and what to do about each one.",
-  alternates: {
-    canonical: "https://vryntlab.com/blog/signs-your-website-needs-a-redesign",
-  },
-  openGraph: {
-    title: "7 Signs Your Website Needs a Redesign | VryntLab",
-    description:
-      "How do you know when it's time to redesign your website? Here are 7 clear signs — and what to do about each one.",
-    url: "https://vryntlab.com/blog/signs-your-website-needs-a-redesign",
-    type: "article",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "7 Signs Your Website Needs a Redesign | VryntLab",
-    description:
-      "How do you know when it's time to redesign your website? Here are 7 clear signs — and what to do about each one.",
-  },
-};
+const post = getBlogPost("signs-your-website-needs-a-redesign")!;
+
+export const metadata = buildBlogPostMetadata(post);
 
 const schemas = [
-  {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: "7 Signs Your Website Needs a Redesign",
-    author: { "@type": "Person", name: "VryntLab" },
-    publisher: { "@type": "Organization", name: "VryntLab", url: "https://vryntlab.com" },
-    datePublished: "2026-05-09",
-    url: "https://vryntlab.com/blog/signs-your-website-needs-a-redesign",
-  },
+  buildBlogPostingSchema(post),
   {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -67,20 +46,7 @@ const schemas = [
       },
     ],
   },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://vryntlab.com" },
-      { "@type": "ListItem", position: 2, name: "Blog", item: "https://vryntlab.com/blog" },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: "Signs Your Website Needs a Redesign",
-        item: "https://vryntlab.com/blog/signs-your-website-needs-a-redesign",
-      },
-    ],
-  },
+  buildBlogPostBreadcrumbSchema(post),
 ];
 
 const primaryBtn =

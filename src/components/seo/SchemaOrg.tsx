@@ -22,7 +22,11 @@ const schemas = [
     email: "hello@vryntlab.com",
     telephone: "+18729856682",
     priceRange: "$$",
-    areaServed: "Worldwide",
+    areaServed: {
+      "@type": "City",
+      name: "Chicago",
+      sameAs: "https://en.wikipedia.org/wiki/Chicago",
+    },
     address: {
       "@type": "PostalAddress",
       addressLocality: "Chicago",

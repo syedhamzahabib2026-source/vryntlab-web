@@ -48,6 +48,8 @@ export type CaseStudy = {
   cardStat: string;
   /** Portfolio card — one-line outcome */
   cardOutcome: string;
+  /** SEO meta description (155 chars max recommended) */
+  metaDescription?: string;
 };
 
 /** URL segment for `/work/[slug]` — matches each study’s `id`. */
@@ -81,6 +83,8 @@ export const caseStudies: readonly CaseStudy[] = [
     cardStat: "Shopify · DTC e-commerce",
     cardOutcome:
       "Product clarity improved — benefits above the fold, checkout path simplified",
+    metaDescription:
+      "Shopify ecommerce redesign for Living Silica — product pages and checkout tuned for supplement shoppers. By VryntLab.",
     media: {
       images: projectStillPair("living-silica"),
     },
@@ -109,6 +113,8 @@ export const caseStudies: readonly CaseStudy[] = [
     cardStat: "Full build · Launched fast",
     cardOutcome:
       "Zero web presence to fully live — quote form, services, trust signals",
+    metaDescription:
+      "Website design for DK Express Logistics — a UK small business courier and freight site with quote forms and trust signals. By VryntLab.",
     media: {
       images: projectStillPair("dkexpress"),
     },

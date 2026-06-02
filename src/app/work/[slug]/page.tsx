@@ -22,22 +22,24 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   const study = getCaseStudyBySlug(slug);
   if (!study) return { title: "Work" };
+  const description =
+    study.metaDescription ?? study.problem.slice(0, 155);
   return {
     title: `${study.client} — ${study.shortTitle} | ${siteBrandName}`,
-    description: study.problem.slice(0, 155),
+    description,
     alternates: {
       canonical: `https://vryntlab.com/work/${slug}`,
     },
     openGraph: {
       title: `${study.client} — ${study.shortTitle}`,
-      description: study.problem.slice(0, 155),
+      description,
       url: `https://vryntlab.com/work/${slug}`,
       type: "article",
     },
     twitter: {
       card: "summary_large_image",
       title: `${study.client} — ${study.shortTitle} | ${siteBrandName}`,
-      description: study.problem.slice(0, 155),
+      description,
     },
   };
 }

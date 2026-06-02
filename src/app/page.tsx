@@ -13,7 +13,7 @@ import { brandSiteTitle, brandMetaDescription } from "@/lib/brand-knowledge";
 export const metadata: Metadata = {
   title: "Web Design Agency for Small Business | VryntLab",
   description:
-    "VryntLab builds fast websites, AI chatbots, and automations for small and mid-sized businesses. Clear scope, fair pricing, work that ships. Free estimate.",
+    "VryntLab is a Chicago-based web agency building fast websites, AI chatbots, and automations for small businesses. Clear scope, fair pricing, work that ships.",
   alternates: {
     canonical: "https://vryntlab.com",
   },

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { contentWell, focusRing } from "@/components/layout/layoutTokens";
 import { Reveal } from "@/components/motion/Reveal";
+import { blogPostPath, blogPosts } from "@/lib/blog-posts";
 
 export const metadata: Metadata = {
   title: "Blog — Web Design, SEO & AI Tips | VryntLab",
@@ -37,29 +38,13 @@ const schemas = [
   },
 ];
 
-const posts = [
-  {
-    category: "Pricing",
-    title: "How Much Does a Small Business Website Cost in 2026?",
-    desc: "Honest breakdown of DIY vs freelancer vs studio — and what you actually need.",
-    href: "/blog/how-much-does-a-website-cost",
-    date: "May 2026",
-  },
-  {
-    category: "Web Design",
-    title: "7 Signs Your Website Needs a Redesign",
-    desc: "How to know when it's time — and what to do about each one.",
-    href: "/blog/signs-your-website-needs-a-redesign",
-    date: "May 2026",
-  },
-  {
-    category: "SEO & GEO",
-    title: "What Is GEO? Generative Engine Optimization Explained",
-    desc: "How to get your business cited by ChatGPT, Perplexity, and Google AI.",
-    href: "/blog/what-is-geo-generative-engine-optimization",
-    date: "May 2026",
-  },
-] as const;
+const posts = blogPosts.map((post) => ({
+  category: post.category,
+  title: post.headline,
+  desc: post.listDescription,
+  href: blogPostPath(post.slug),
+  date: post.listDateLabel,
+}));
 
 export default function BlogIndexPage() {
   return (

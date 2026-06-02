@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { blogSitemapEntries } from "@/lib/blog-posts";
 
 const BASE_URL = "https://vryntlab.com";
 
@@ -41,12 +42,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
-      url: `${BASE_URL}/blog/how-much-does-a-website-cost`,
-      lastModified: new Date("2026-05-09"),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
       url: `${BASE_URL}/work/living-silica`,
       lastModified: new Date("2026-04-21"),
       changeFrequency: "yearly",
@@ -65,12 +60,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: `${BASE_URL}/blog/signs-your-website-needs-a-redesign`,
-      lastModified: new Date("2026-05-09"),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
       url: `${BASE_URL}/services/automation`,
       lastModified: new Date("2026-05-09"),
       changeFrequency: "monthly",
@@ -82,17 +71,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     },
-    {
-      url: `${BASE_URL}/blog/what-is-geo-generative-engine-optimization`,
-      lastModified: new Date("2026-05-09"),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${BASE_URL}/blog`,
-      lastModified: new Date("2026-05-09"),
-      changeFrequency: "weekly",
-      priority: 0.7,
-    },
+    ...blogSitemapEntries(),
   ];
 }

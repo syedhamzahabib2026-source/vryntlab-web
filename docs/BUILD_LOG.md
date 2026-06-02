@@ -1,5 +1,32 @@
 # Build log
 
+## 2026-06-02 — Blog frontmatter source + BlogPosting schema
+
+**What changed:**
+
+1. **`src/lib/blog-posts.ts`:** Single source for post slug, headline, description, dates, category, and index card copy. Helpers: `buildBlogPostMetadata` (title, description, canonical, OG `article` + `publishedTime`/`modifiedTime`, Twitter), `buildBlogPostingSchema` (`BlogPosting`, Organization author/publisher), `buildBlogPostBreadcrumbSchema`, `blogSitemapEntries`.
+2. **Post pages:** Metadata and `BlogPosting` JSON-LD driven from `blog-posts.ts`; FAQ + breadcrumb unchanged per page.
+3. **`/blog` index:** Card list maps from `blogPosts`.
+4. **`sitemap.ts`:** Blog index + all posts via `blogSitemapEntries()` (was already listed; now derived from same registry).
+
+**Files:** `src/lib/blog-posts.ts`, `src/app/blog/**/page.tsx`, `src/app/sitemap.ts`, `docs/BUILD_LOG.md`
+
+---
+
+## 2026-06-02 — Content SEO keywords + Chicago locality signals
+
+**What changed:**
+
+1. **Homepage:** Hero subtext mentions small businesses; services teaser line includes “web design”; homepage meta description and `brandMetaDescription` add Chicago; About copy (“Based in Chicago… small businesses across the US”).
+2. **Services (`brandServiceGrid` + section intro):** Natural keyword placement — web design agency, website redesign, Shopify store, AI chatbot for your website, business automation, Google Business Profile optimization.
+3. **Case studies:** Optional `metaDescription` on `CaseStudy`; Living Silica and DK Express use keyword-rich meta (Shopify / ecommerce redesign; website design / logistics / small business). `/work/[slug]` prefers `metaDescription` over `problem` slice.
+4. **Schema:** `ProfessionalService.areaServed` → Chicago `City` with `sameAs` (address locality was already Chicago, IL, US).
+5. **Blog index:** Meta title/description already matched spec — no edit.
+
+**Files:** `src/components/home/Hero.tsx`, `src/app/page.tsx`, `src/lib/brand-knowledge.ts`, `src/lib/case-studies.ts`, `src/app/work/[slug]/page.tsx`, `src/components/seo/SchemaOrg.tsx`, `docs/BUILD_LOG.md`
+
+---
+
 ## 2026-04-21 — Serif VL monogram favicons (cropped brand asset) + header logo column centering
 
 **What changed:**
