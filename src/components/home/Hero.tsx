@@ -1,16 +1,13 @@
 "use client";
 
-import { motion, AnimatePresence, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { useConversion } from "@/components/conversion/ConversionContext";
 import { brandIntentActionLabels } from "@/lib/brand-knowledge";
 import { ctaStartProject, ctaViewWork } from "@/lib/site";
 import { contentWell, focusRing } from "@/components/layout/layoutTokens";
 
 const ease = [0.16, 1, 0.3, 1] as const;
-
-const CYCLING_WORDS = ["Shopify Stores", "Websites", "AI Chatbots", "Automations", "Booking Systems"] as const;
 
 const primaryBtnClass =
   `inline-flex min-h-12 items-center gap-2 rounded-full bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF] px-8 text-[14px] font-semibold tracking-tight text-white shadow-[0_0_32px_-8px_rgba(124,63,255,0.5)] transition-[transform,box-shadow] duration-300 ease-[var(--ease-out-premium)] active:scale-[0.98] ${focusRing} [@media(hover:hover)]:hover:-translate-y-px [@media(hover:hover)]:hover:shadow-[0_0_44px_-6px_rgba(124,63,255,0.65)]`;
@@ -21,15 +18,6 @@ const secondaryBtnClass =
 export function Hero() {
   const { selectedIntent } = useConversion();
   const reduceMotion = useReducedMotion() ?? false;
-  const [wordIndex, setWordIndex] = useState(0);
-
-  useEffect(() => {
-    if (reduceMotion) return;
-    const id = setInterval(() => {
-      setWordIndex((i) => (i + 1) % CYCLING_WORDS.length);
-    }, 2200);
-    return () => clearInterval(id);
-  }, [reduceMotion]);
 
   const ctaLabel =
     selectedIntent != null
@@ -66,24 +54,13 @@ export function Hero() {
             initial={reduceMotion ? undefined : { opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.08, ease }}
-            className="mt-5 max-w-[16ch] text-[2.625rem] font-black leading-[1.04] tracking-[-0.032em] text-[#F0F0FF] sm:text-[3.5rem] md:text-[4.125rem] lg:text-[4.5rem] xl:text-[5.25rem]"
+            className="mt-5 text-[2.625rem] font-black leading-[1.04] tracking-[-0.032em] text-[#F0F0FF] sm:text-[3.5rem] md:text-[4.125rem] lg:text-[4.5rem] xl:text-[5.25rem]"
           >
-            We build
+            Your store,
             <br />
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={CYCLING_WORDS[wordIndex]}
-                initial={reduceMotion ? undefined : { opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={reduceMotion ? undefined : { opacity: 0, y: -12 }}
-                transition={{ duration: 0.3, ease }}
-                className="inline-block bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF] bg-clip-text text-transparent"
-              >
-                {CYCLING_WORDS[wordIndex]}
-              </motion.span>
-            </AnimatePresence>
-            <br />
-            that sell.
+            <span className="bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF] bg-clip-text text-transparent">
+              built to sell.
+            </span>
           </motion.h1>
 
           <motion.p
@@ -93,7 +70,7 @@ export function Hero() {
             className="mt-6 max-w-[44ch] text-[1rem] leading-[1.66] text-[#C8C8D8]/80 sm:text-[1.0625rem]"
           >
             Shopify stores, websites, and the automations behind them.
-            You get a clear plan and price before we start.
+            A clear plan and price before we start.
           </motion.p>
 
           <motion.div

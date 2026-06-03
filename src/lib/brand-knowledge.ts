@@ -133,18 +133,18 @@ export const brandIntentCopy = {
     label: "Automation & integrations",
     headline: "When the same information is typed into three different places",
     summary:
-      "Connect booking, CRM, email, spreadsheets, and support so data moves once—plus chatbots where they actually save time.",
+      "Connect booking, CRM, email, spreadsheets, and support so data moves once. Add chatbots where they save real time.",
     outcomes: [
       "Stop leads and bookings from falling between systems.",
       "Use the right level of automation for how busy you are and how much risk you can take.",
-      "Add chatbots for customers or staff when they cut repeat questions or capture leads—not for show.",
+      "Add chatbots for customers or staff when they cut repeat questions or capture leads. Not for show.",
     ],
   },
   custom: {
     label: "Custom product & APIs",
     headline: "When spreadsheets or off-the-shelf tools stop matching how you work",
     summary:
-      "Custom screens and workflows—built in steps you can review before everything is final.",
+      "Custom screens and workflows, built in steps you can review before everything is final.",
     outcomes: [
       "See working previews early, before you're locked in.",
       "Get a clear handoff: where things live and how to maintain them.",
@@ -153,9 +153,9 @@ export const brandIntentCopy = {
   },
   app: {
     label: "App development",
-    headline: "When you need a real app—not just a responsive site",
+    headline: "When you need a real app, not just a responsive site",
     summary:
-      "iOS, Android, or cross-platform—scoped milestones so you can try builds before you're locked in.",
+      "iOS, Android, or cross-platform. You see working builds before you're locked in.",
     outcomes: [
       "Clarify what has to work offline vs online before we chase features.",
       "Ship testable builds early, then tighten access, data, and release.",
@@ -166,7 +166,7 @@ export const brandIntentCopy = {
     label: "Backend / infrastructure",
     headline: "When APIs, data, or hosting can't keep up",
     summary:
-      "Services, jobs, queues, and environments—documented so you know what runs where.",
+      "Services, jobs, queues, and environments. Documented so you know what runs where.",
     outcomes: [
       "Map what's fragile today (latency, failures, manual deploys).",
       "Harden the path that matters before layering new features.",
@@ -177,11 +177,11 @@ export const brandIntentCopy = {
     label: "Other",
     headline: "When it doesn't fit a neat box",
     summary:
-      "Describe what you're trying to do—we'll reply with an honest read on fit and next steps.",
+      "Describe what you're trying to do. We'll reply with an honest read on fit and next steps.",
     outcomes: [
-      "Plain language is enough—links and rough notes help.",
-      "We may suggest a smaller scope or a different partner if that's fairer.",
-      "No forced category—use the note field freely.",
+      "Plain language is enough. Links and rough notes help.",
+      "We may suggest a simpler solution or a different partner if that's fairer.",
+      "No forced category. Use the note field freely.",
     ],
   },
 } as const;
@@ -194,7 +194,7 @@ export const brandServicesSection = {
   panelHeading: "This lane",
   deliverablesLabel: "What often ships",
   footerNote:
-    "We'll pass if we're not the right fit — better for everyone.",
+    "We'll pass if we're not the right fit. Better for everyone.",
 } as const;
 
 /** Problem-first service grid (replaces tab UI). */
@@ -250,7 +250,7 @@ export const brandServiceGrid = [
 ] as const;
 
 export const brandServiceGridFooter =
-  "Every project is scoped to your actual problem — these are the most common starting points.";
+  "Every project is built around your actual problem. These are the most common starting points.";
 
 export const brandServiceLanes = [
   {
@@ -286,21 +286,21 @@ export const brandServiceLanes = [
 ] as const;
 
 export const brandChatbotShowcase = {
-  eyebrow: "On-site assistant",
-  title: "The same AI chat we ship for clients — on your domain",
+  eyebrow: "AI Chatbot",
+  title: "A chatbot that answers for you, 24/7",
   description:
-    "Visitors get answers about services and pricing, and serious leads can route to your inbox or calendar without another form maze.",
+    "Your visitors get instant answers about your products, services, and pricing. The ready-to-buy ones reach you directly. No extra forms.",
   bullets: [
-    "Trained on your pages and offer — not a generic FAQ toy.",
-    "Captures intent in natural language; optional email handoff for humans.",
-    "Runs beside your site: one codebase, no third-party widget lock-in.",
+    "Trained on your business, not a generic FAQ bot.",
+    "Captures leads automatically and passes them to you when needed.",
+    "Works on any website. No monthly widget fees.",
   ] as const,
   demoHint:
-    "Example conversation below — scripted for the page, not connected to the live model.",
-  demoExampleCaption: "↑ Example conversation — this is what it looks like",
+    "Example conversation below, not connected to the live model.",
+  demoExampleCaption: "Example conversation",
   realChatHeadline: "Want to try the real thing?",
   realChatSub:
-    "Our AI is live on this page right now — ask it anything about VryntLab.",
+    "Our AI is live on this page right now. Ask it anything about VryntLab.",
   realChatButton: "Chat with our AI →",
 } as const;
 
@@ -334,11 +334,11 @@ export const brandAbout = {
   eyebrow: "About",
   title: "Who we are",
   paragraphs: [
-    "Based in Chicago, VryntLab works with small businesses across the US — websites, AI chatbots, and automations without a drawn-out agency process.",
+    "VryntLab is a small web studio. We build online stores, websites, and the tools that help you grow.",
 
-    "You work directly with the people doing the work. No layers, no handoffs, no going quiet after launch.",
+    "You work with the people actually building it. No account managers, no runaround.",
 
-    "We're direct about scope and fit before anything starts.",
+    "We're upfront about what we can do, what it costs, and when it's done.",
   ] as const,
 } as const;
 
@@ -376,7 +376,7 @@ export const brandDeliveryPreview = {
 /** Footer line under the delivery mock — switches with selected path */
 export const brandDeliveryFooter = {
   default:
-    "How we work: preview links you can open, milestones you can follow—no long quiet stretches.",
+    "How we work: preview links you can open, milestones you can follow. No long quiet stretches.",
   byIntent: {
     website:
       "We start with structure, then speed, then launch—no opaque rebuilds.",
@@ -395,7 +395,7 @@ export const brandDeliveryFooter = {
 
 export const brandQuickEstimate = {
   intro:
-    "Takes two minutes. We reply with clear next steps—plain language is fine.",
+    "Takes two minutes. We reply with clear next steps. Plain language is fine.",
   /** When no intent is selected yet — copy mirrors path selector language */
   pickLaneHint: "Pick a lane—everything below adapts to it.",
   /** Fallback when intent-specific adaptive copy isn't shown */

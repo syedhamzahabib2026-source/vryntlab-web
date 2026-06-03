@@ -196,10 +196,10 @@ export function ServicesHomeTeaser() {
               id="services-heading"
               className="mt-2 text-[1.875rem] font-bold tracking-[-0.025em] text-[#F0F0FF] sm:text-[2.25rem]"
             >
-              Where we step in
+              What we do
             </h2>
             <p className="mt-2.5 max-w-[52ch] text-[14px] text-[#C8C8D8]/70 sm:text-[15px]">
-              Most teams don&apos;t care what stack we use — they care what gets fixed.
+              Tell us what&apos;s not working. We&apos;ll tell you if we can help and what it costs.
             </p>
           </div>
         </Reveal>

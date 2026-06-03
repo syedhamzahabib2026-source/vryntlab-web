@@ -18,9 +18,9 @@ export function About() {
                 id="about-heading"
                 className="text-[2.5rem] font-black leading-[1.04] tracking-[-0.035em] text-[#F0F0FF] sm:text-[3rem] lg:text-[3.5rem]"
               >
-                Small&nbsp;team.<br />
-                Full&nbsp;stack.<br />
-                Done&nbsp;right.
+                A small team<br />
+                that does<br />
+                the whole thing.
               </h2>
               <p className="mt-4 text-[12px] font-semibold uppercase tracking-[0.2em] text-[#7C3FFF]/70">
                 About VryntLab
