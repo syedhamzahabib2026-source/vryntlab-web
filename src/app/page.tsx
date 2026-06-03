@@ -11,9 +11,8 @@ import { Stats } from "@/components/home/Stats";
 import { brandSiteTitle, brandMetaDescription } from "@/lib/brand-knowledge";
 
 export const metadata: Metadata = {
-  title: "Web Design Agency for Small Business | VryntLab",
-  description:
-    "VryntLab is a Chicago-based web agency building fast websites, AI chatbots, and automations for small businesses. Clear scope, fair pricing, work that ships.",
+  title: "Shopify Stores, Websites & Automation | VryntLab",
+  description: brandMetaDescription,
   alternates: {
     canonical: "https://vryntlab.com",
   },

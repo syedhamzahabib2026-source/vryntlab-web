@@ -34,10 +34,9 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://vryntlab.com"),
   title: siteTitle,
   description: siteDescription,
-  /** File-based icons in ./icon.png, ./apple-icon.png, ./favicon.ico — generated from public/brand/vl-logo.webp */
   icons: {
     icon: [
-      { url: "/brand/favicon.png", type: "image/png" },
+      { url: "/brand/favicon.png?v=2", type: "image/png" },
       { url: "/favicon.ico", sizes: "32x32" },
       { url: "/icon.png", type: "image/png", sizes: "512x512" },
     ],
