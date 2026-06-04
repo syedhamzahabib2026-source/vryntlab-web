@@ -6,8 +6,8 @@ import { motionEase } from "./Reveal";
 
 /** Tight stagger: readable sequence without a long cascade */
 export const staggerTiming = {
-  staggerChildren: 0.055,
-  delayChildren: 0.035,
+  staggerChildren: 0.1,
+  delayChildren: 0.05,
 } as const;
 
 /** Above-the-fold / mount: same motion language, no opacity blackout before paint */
@@ -31,11 +31,11 @@ export const staggerContainerImmediate = {
 };
 
 export const staggerItem = {
-  hidden: { opacity: 0, y: 18 },
+  hidden: { opacity: 0, y: 40 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.62, ease: motionEase },
+    transition: { duration: 0.8, ease: motionEase },
   },
 };
 

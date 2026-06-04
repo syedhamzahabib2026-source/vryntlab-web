@@ -1,449 +1,190 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { contentWell, focusRing, slabBleed, slabContent } from "@/components/layout/layoutTokens";
-import { Reveal } from "@/components/motion/Reveal";
-import { ScrollingWorkPreview } from "./ScrollingWorkPreview";
-import { caseStudies } from "@/lib/case-studies";
-import { brandWorkSection } from "@/lib/brand-knowledge";
+import { motion } from "motion/react";
+import { focusRing } from "@/components/layout/layoutTokens";
+import { caseStudies, caseStudyPosterUrl } from "@/lib/case-studies";
 
-function useDesktopFineHover(): boolean | null {
-  const [matches, setMatches] = useState<boolean | null>(null);
-  useLayoutEffect(() => {
-    const mq = window.matchMedia(
-      "(min-width: 1024px) and (hover: hover) and (pointer: fine)",
-    );
-    const sync = () => setMatches(mq.matches);
-    sync();
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
-  }, []);
-  return matches;
-}
+const ease = [0.16, 1, 0.3, 1] as const;
 
-const cardBase =
-  "group relative overflow-hidden rounded-2xl border border-[#1E1E35] bg-[#0A0A14] transition-[border-color,box-shadow,transform] duration-500 ease-[var(--ease-out-premium)] motion-reduce:transform-none [@media(hover:hover)]:hover:-translate-y-1 [@media(hover:hover)]:hover:border-violet-500/35 [@media(hover:hover)]:hover:shadow-[0_0_0_1px_rgba(124,63,255,0.18),0_0_50px_-14px_rgba(124,63,255,0.22)]";
-
-const primaryCta =
-  `inline-flex items-center gap-2 rounded-full border border-violet-500/25 bg-violet-500/[0.08] px-4 py-2.5 text-[12px] font-semibold text-[#F0F0FF] transition-[border-color,background-color] duration-300 active:scale-[0.99] ${focusRing} [@media(hover:hover)]:hover:border-violet-400/55 [@media(hover:hover)]:hover:bg-violet-500/[0.15]`;
-
-const secondaryCta =
-  `inline-flex items-center gap-1.5 text-[12px] font-medium text-[#C8C8D8]/60 underline decoration-white/15 underline-offset-4 transition-colors duration-300 ${focusRing} rounded-sm [@media(hover:hover)]:hover:text-[#00E5FF]/90 [@media(hover:hover)]:hover:decoration-[#00E5FF]/35`;
-
-function BrowserChrome({ urlColor }: { urlColor: string }) {
+function SectionLabel({ text }: { text: string }) {
   return (
-    <div className="flex shrink-0 items-center gap-2 border-b border-white/[0.10] bg-white/[0.04] px-3 py-2">
-      <div className="flex gap-1">
-        <span className="h-2 w-2 rounded-full bg-red-500/70" />
-        <span className="h-2 w-2 rounded-full bg-yellow-500/70" />
-        <span className="h-2 w-2 rounded-full bg-emerald-500/70" />
-      </div>
-      <div className={`h-1.5 flex-1 rounded-full ${urlColor} opacity-50`} />
+    <div className="flex items-center gap-2.5">
+      <span className="h-px w-4 shrink-0 bg-[#8888a8]" aria-hidden />
+      <span className="text-[13px] font-normal text-[#8888a8]">{text}</span>
     </div>
   );
 }
 
-function MockEcommerce() {
-  return (
-    <div className="flex min-h-[200px] flex-col bg-[#06060f]">
-      <BrowserChrome urlColor="bg-violet-400" />
-      {/* Nav */}
-      <div className="flex items-center justify-between border-b border-white/[0.10] px-3 py-2">
-        <div className="h-2 w-14 rounded bg-violet-400/60" />
-        <div className="flex gap-2">
-          <div className="h-1.5 w-7 rounded bg-white/[0.15]" />
-          <div className="h-1.5 w-7 rounded bg-white/[0.15]" />
-          <div className="h-1.5 w-7 rounded bg-white/[0.15]" />
-        </div>
-        <div className="h-5 w-14 rounded-full border border-violet-500/50 bg-violet-500/20" />
-      </div>
-      {/* Hero */}
-      <div className="flex gap-3 p-3">
-        <div className="flex-1 space-y-2 pt-1">
-          <div className="h-3 w-4/5 rounded bg-[#F0F0FF]/44" />
-          <div className="h-3 w-3/5 rounded bg-[#F0F0FF]/32" />
-          <div className="h-1.5 w-full rounded bg-white/[0.12]" />
-          <div className="h-1.5 w-11/12 rounded bg-white/[0.10]" />
-          <div className="h-1.5 w-4/5 rounded bg-white/[0.08]" />
-          <div className="mt-2.5 flex gap-2">
-            <div className="h-5 w-16 rounded-full bg-gradient-to-r from-violet-500/80 to-violet-400/60" />
-            <div className="h-5 w-14 rounded-full border border-white/[0.20]" />
-          </div>
-        </div>
-        <div className="h-[5.5rem] w-[3.5rem] shrink-0 rounded-xl bg-gradient-to-b from-violet-500/45 to-violet-900/35 ring-1 ring-white/[0.12]" />
-      </div>
-      {/* Product row */}
-      <div className="grid grid-cols-3 gap-2 border-t border-white/[0.08] px-3 py-3">
-        {(["from-violet-600/45 to-violet-900/30", "from-violet-400/36 to-violet-800/24", "from-violet-500/40 to-violet-700/28"] as const).map((g, i) => (
-          <div key={i} className="space-y-1.5">
-            <div className={`aspect-square rounded-lg bg-gradient-to-b ${g} ring-1 ring-white/[0.08]`} />
-            <div className="h-1.5 w-full rounded bg-white/[0.14]" />
-            <div className="h-1 w-2/3 rounded bg-violet-400/40" />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
+type WorkCardProps = {
+  study: (typeof caseStudies)[number];
+  priority?: boolean;
+  delay?: number;
+};
 
-function MockBooking() {
-  const days = [null, null, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-  return (
-    <div className="flex min-h-[200px] flex-col bg-[#06060f]">
-      <BrowserChrome urlColor="bg-cyan-400" />
-      {/* Nav */}
-      <div className="flex items-center justify-between border-b border-white/[0.10] px-3 py-2">
-        <div className="h-2 w-12 rounded bg-[#00E5FF]/60" />
-        <div className="flex gap-2">
-          <div className="h-1.5 w-7 rounded bg-white/[0.15]" />
-          <div className="h-1.5 w-7 rounded bg-white/[0.15]" />
-        </div>
-        <div className="h-5 w-16 rounded-full border border-[#00E5FF]/55 bg-[#00E5FF]/20" />
-      </div>
-      {/* Hero text */}
-      <div className="space-y-1.5 p-3 pb-2">
-        <div className="flex items-center gap-1">
-          {"★★★★★".split("").map((s, i) => (
-            <span key={i} className="text-[7px] leading-none text-[#00E5FF]/90">{s}</span>
-          ))}
-          <div className="ml-1 h-1.5 w-10 rounded bg-white/[0.12]" />
-        </div>
-        <div className="h-2.5 w-4/5 rounded bg-[#F0F0FF]/44" />
-        <div className="h-2 w-3/5 rounded bg-white/[0.20]" />
-      </div>
-      {/* Calendar */}
-      <div className="mx-3 rounded-lg border border-[#00E5FF]/28 bg-white/[0.04] p-2">
-        <div className="mb-2 flex items-center justify-between">
-          <div className="h-1.5 w-16 rounded bg-white/[0.20]" />
-          <div className="flex gap-1.5">
-            <div className="h-3 w-3 rounded bg-white/[0.14]" />
-            <div className="h-3 w-3 rounded bg-white/[0.14]" />
-          </div>
-        </div>
-        <div className="grid grid-cols-7 gap-[3px]">
-          {["S","M","T","W","T","F","S"].map((d, i) => (
-            <div key={i} className="h-1.5 rounded bg-white/[0.12] text-center text-[5px]" />
-          ))}
-          {days.map((d, i) => (
-            <div
-              key={i}
-              className={`h-3.5 rounded text-center text-[6px] leading-[14px] ${
-                d === null ? "" :
-                d === 9 ? "bg-[#00E5FF]/55 text-[#00E5FF]" :
-                d === 12 ? "bg-[#00E5FF]/36 text-[#00E5FF]/90" :
-                "bg-white/[0.08] text-white/50"
-              }`}
-            />
-          ))}
-        </div>
-      </div>
-      {/* Time slots */}
-      <div className="flex gap-1.5 px-3 py-2.5">
-        {["9 am", "11 am", "2 pm"].map((t) => (
-          <div key={t} className="flex items-center gap-1 rounded-full border border-[#00E5FF]/44 bg-[#00E5FF]/[0.14] px-2 py-1">
-            <span className="h-1 w-1 rounded-full bg-[#00E5FF]/90" />
-            <span className="text-[7px] font-medium text-[#00E5FF]/90">{t}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function MockSaaS() {
-  return (
-    <div className="flex min-h-[200px] flex-col bg-[#06060f]">
-      <BrowserChrome urlColor="bg-violet-400" />
-      {/* Nav */}
-      <div className="flex items-center justify-between border-b border-white/[0.10] px-3 py-2">
-        <div className="flex items-center gap-1.5">
-          <div className="h-3 w-3 rounded-sm bg-gradient-to-br from-violet-400/90 to-cyan-400/70" />
-          <div className="h-1.5 w-12 rounded bg-white/[0.24]" />
-        </div>
-        <div className="flex gap-2">
-          <div className="h-1.5 w-7 rounded bg-white/[0.15]" />
-          <div className="h-1.5 w-7 rounded bg-white/[0.15]" />
-          <div className="h-1.5 w-7 rounded bg-white/[0.15]" />
-        </div>
-        <div className="h-5 w-14 rounded-full bg-gradient-to-r from-violet-500/75 to-cyan-500/55" />
-      </div>
-      {/* Centered hero */}
-      <div className="flex flex-col items-center p-3 pb-2 text-center">
-        <div className="mb-2 h-4 w-20 rounded-full border border-violet-500/50 bg-violet-500/20" />
-        <div className="h-3 w-4/5 rounded bg-gradient-to-r from-violet-300/55 to-cyan-300/44" />
-        <div className="mt-1.5 h-3 w-3/5 rounded bg-gradient-to-r from-violet-300/44 to-cyan-300/32" />
-        <div className="mt-2 h-1.5 w-4/5 rounded bg-white/[0.12]" />
-        <div className="mt-1 h-1.5 w-2/3 rounded bg-white/[0.08]" />
-        <div className="mt-3 flex gap-2">
-          <div className="h-5 w-16 rounded-full bg-gradient-to-r from-violet-500/80 to-cyan-500/60" />
-          <div className="h-5 w-16 rounded-full border border-white/[0.20]" />
-        </div>
-      </div>
-      {/* Feature cards */}
-      <div className="grid grid-cols-3 gap-2 border-t border-white/[0.08] px-3 py-3">
-        {([
-          "from-violet-500/65 to-violet-400/40",
-          "from-cyan-500/60 to-cyan-400/30",
-          "from-violet-400/60 to-cyan-500/40",
-        ] as const).map((g, i) => (
-          <div key={i} className="space-y-1.5 rounded-lg border border-white/[0.10] bg-white/[0.04] p-2">
-            <div className={`h-4 w-4 rounded-md bg-gradient-to-br ${g}`} />
-            <div className="h-1.5 w-full rounded bg-white/[0.16]" />
-            <div className="h-1 w-4/5 rounded bg-white/[0.10]" />
-            <div className="h-1 w-3/5 rounded bg-white/[0.08]" />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-const ILLUSTRATIVE_CARDS = [
-  { label: "E-commerce · Fashion · NDA", Mock: MockEcommerce },
-  { label: "Local services · Booking · NDA", Mock: MockBooking },
-  { label: "SaaS · Landing page · NDA", Mock: MockSaaS },
-] as const;
-
-function HeroWorkCard() {
-  const study = caseStudies[0]!;
-  const cardRef = useRef<HTMLElement>(null);
-  const fineDesktop = useDesktopFineHover();
-  const [hovered, setHovered] = useState(false);
-  const [inView, setInView] = useState(false);
-
-  useEffect(() => {
-    const root = cardRef.current;
-    if (!root) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        const e = entries[0];
-        if (!e) return;
-        setInView(e.isIntersecting && e.intersectionRatio > 0.1);
-      },
-      { threshold: [0, 0.1, 0.2], rootMargin: "-6% 0px -8% 0px" },
-    );
-    io.observe(root);
-    return () => io.disconnect();
-  }, []);
-
-  const active = fineDesktop === true ? hovered : fineDesktop === false ? inView : false;
+function WorkCard({ study, priority = false, delay = 0 }: WorkCardProps) {
+  const posterSrc = caseStudyPosterUrl(study.media);
 
   return (
-    <article
-      ref={cardRef}
-      className={`${cardBase} min-h-[280px] sm:min-h-[480px] lg:min-h-[560px]`}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+    <motion.article
+      className="group relative"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.08 }}
+      transition={{ duration: 0.8, delay, ease }}
     >
-      {/* Full-bleed screenshot preview */}
-      <div className="absolute inset-0">
-        <ScrollingWorkPreview study={study} active={active} sizes="100vw" />
-      </div>
-
-      {/* Bottom overlay with content */}
-      <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-[#080810] via-[#080810]/90 to-transparent pt-20 px-6 pb-7 sm:px-8 sm:pb-8">
-        <span className="inline-flex rounded-full border border-violet-500/20 bg-violet-500/[0.07] px-2.5 py-0.5 text-[10px] font-medium tracking-tight text-[#C8C8D8]">
-          {study.typeLabel}
-        </span>
-        <h3 className="mt-3 text-[1.5rem] font-bold tracking-[-0.025em] text-[#F0F0FF] sm:text-[1.75rem]">
-          {study.client}
-        </h3>
-        <p className="mt-1.5 max-w-[52ch] text-[14px] leading-snug text-[#C8C8D8]/75">
-          {study.shortTitle}
-        </p>
-        <div className="mt-5 flex flex-wrap items-center gap-3">
-          <Link href={`/work/${study.id}`} className={primaryCta}>
-            View project →
-          </Link>
-          <a
-            href={study.liveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={secondaryCta}
+      {/* Top bar */}
+      <div className="flex items-center justify-between border-t border-[#1E1E35] px-0 py-5">
+        <Link
+          href={`/work/${study.id}`}
+          className={`flex items-center gap-2 text-[15px] font-normal text-[#8888a8] transition-colors duration-200 ${focusRing} rounded-sm [@media(hover:hover)]:hover:text-[#F0F0FF]`}
+          tabIndex={0}
+        >
+          View
+          <span
+            className="inline-block transition-transform duration-300 group-hover:translate-x-1"
+            aria-hidden
           >
-            Visit live site →
-            <span className="sr-only"> (opens in new tab)</span>
-          </a>
-        </div>
-      </div>
-    </article>
-  );
-}
-
-function SecondaryWorkCard() {
-  const study = caseStudies[1]!;
-  const cardRef = useRef<HTMLElement>(null);
-  const fineDesktop = useDesktopFineHover();
-  const [hovered, setHovered] = useState(false);
-  const [inView, setInView] = useState(false);
-
-  useEffect(() => {
-    const root = cardRef.current;
-    if (!root) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        const e = entries[0];
-        if (!e) return;
-        setInView(e.isIntersecting && e.intersectionRatio > 0.1);
-      },
-      { threshold: [0, 0.1, 0.2], rootMargin: "-6% 0px -8% 0px" },
-    );
-    io.observe(root);
-    return () => io.disconnect();
-  }, []);
-
-  const active = fineDesktop === true ? hovered : fineDesktop === false ? inView : false;
-
-  return (
-    <article
-      ref={cardRef}
-      className={`${cardBase} min-h-[220px] sm:min-h-[340px] lg:min-h-[380px]`}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      <div className="absolute inset-0">
-        <ScrollingWorkPreview study={study} active={active} sizes="50vw" />
-      </div>
-      <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-[#080810] via-[#080810]/90 to-transparent pt-16 px-5 pb-5 sm:px-6 sm:pb-6">
-        <span className="inline-flex rounded-full border border-violet-500/20 bg-violet-500/[0.07] px-2.5 py-0.5 text-[10px] font-medium tracking-tight text-[#C8C8D8]">
-          {study.typeLabel}
-        </span>
-        <h3 className="mt-2.5 text-[1.25rem] font-bold tracking-[-0.02em] text-[#F0F0FF]">
+            →
+          </span>
+        </Link>
+        <span className="text-[15px] font-normal text-[#F0F0FF]">
           {study.client}
-        </h3>
-        <p className="mt-1 text-[13px] leading-snug text-[#C8C8D8]/70">
-          {study.shortTitle}
-        </p>
-        <div className="mt-4 flex flex-wrap items-center gap-3">
-          <Link href={`/work/${study.id}`} className={primaryCta}>
-            View project →
-          </Link>
-          <a
-            href={study.liveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={secondaryCta}
-          >
-            Live site →
-            <span className="sr-only"> (opens in new tab)</span>
-          </a>
-        </div>
+        </span>
+        {/* Balance spacer */}
+        <span className="w-[52px]" aria-hidden />
       </div>
-    </article>
-  );
-}
 
-function StatInfoCard({
-  stat,
-  label,
-  sub,
-  gradient,
-}: {
-  stat: string;
-  label: string;
-  sub: string;
-  gradient: string;
-}) {
-  return (
-    <div
-      className={`${cardBase} flex flex-col justify-between p-5 sm:p-6`}
-      style={{ background: gradient }}
-    >
-      <p className="text-[2.25rem] font-black leading-none tracking-[-0.04em] text-[#F0F0FF] sm:text-[2.75rem]">
-        {stat}
-      </p>
-      <div>
-        <p className="text-[14px] font-semibold text-[#F0F0FF]">{label}</p>
-        <p className="mt-1 text-[12px] text-[#C8C8D8]/60">{sub}</p>
-      </div>
-    </div>
+      {/* Image — full bleed */}
+      <Link
+        href={`/work/${study.id}`}
+        className={`relative block overflow-hidden rounded-sm ${focusRing}`}
+        style={{ aspectRatio: "16 / 9" }}
+        tabIndex={-1}
+        aria-label={`View ${study.client} case study`}
+      >
+        <Image
+          src={posterSrc}
+          alt={study.coverAlt}
+          fill
+          className="object-cover transition-transform duration-700 ease-[var(--ease-out-premium)] will-change-transform group-hover:scale-[1.03]"
+          sizes="(max-width: 1290px) 100vw, 1290px"
+          priority={priority}
+        />
+        {/* Dark overlay */}
+        <div
+          className="absolute inset-0 bg-black/0 transition-[background-color] duration-500 group-hover:bg-black/30"
+          aria-hidden
+        />
+        {/* "View →" overlay label — fades in on hover */}
+        <div
+          className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-500 ease-[var(--ease-out-premium)] group-hover:opacity-100"
+          aria-hidden
+        >
+          <span className="rounded-full bg-white/10 px-5 py-2 text-[15px] font-medium text-white backdrop-blur-md ring-1 ring-white/15">
+            View →
+          </span>
+        </div>
+      </Link>
+    </motion.article>
   );
 }
 
 export function FeaturedWork() {
+  const [study1, study2] = [caseStudies[0]!, caseStudies[1]!];
+
   return (
-    <div className={slabBleed}>
-      <section
-        id="work"
-        aria-labelledby="work-heading"
-        className={`${slabContent} scroll-mt-[calc(4.5rem+0.25rem)] py-8 sm:scroll-mt-24 sm:py-10 md:scroll-mt-28`}
-      >
-        <div className={`${contentWell} flex flex-col gap-5 sm:gap-6`}>
-          {/* Section intro */}
-          <Reveal>
-            <div className="mb-2">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#7C3FFF]/90">
-                {brandWorkSection.eyebrow}
-              </p>
-              <h2
-                id="work-heading"
-                className="mt-2 text-[1.875rem] font-bold tracking-[-0.025em] text-[#F0F0FF] sm:text-[2.25rem]"
-              >
-                {brandWorkSection.title}
-              </h2>
-              <p className="mt-2 text-[14px] text-[#C8C8D8]/70 sm:text-[15px]">
-                {brandWorkSection.description}
-              </p>
-            </div>
-          </Reveal>
+    <section
+      id="work"
+      aria-labelledby="work-heading"
+      style={{
+        paddingTop: "100px",
+        background: "var(--surface)",
+      }}
+    >
+      <div className="mx-auto w-full max-w-[1290px] px-4 sm:px-8 lg:px-[30px]">
 
-          {/* Row 1: Hero card — full width */}
-          <Reveal>
-            <HeroWorkCard />
-          </Reveal>
+        {/* Section header — stagger in */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}
+        >
+          <motion.div
+            variants={{ hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease } } }}
+          >
+            <SectionLabel text="Selected Work" />
+          </motion.div>
 
-          {/* Row 2: DK Express + 2 stat cards */}
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6">
-            <Reveal>
-              <SecondaryWorkCard />
-            </Reveal>
-            <div className="grid grid-rows-2 gap-5 sm:gap-6">
-              <Reveal>
-                <StatInfoCard
-                  stat="1–2wk"
-                  label="Delivered fast"
-                  sub="Most projects live in 1–2 weeks"
-                  gradient="linear-gradient(135deg, rgba(124,63,255,0.18) 0%, rgba(124,63,255,0.06) 60%, #0A0A14 100%)"
-                />
-              </Reveal>
-              <Reveal>
-                <StatInfoCard
-                  stat="$0"
-                  label="Agency overhead"
-                  sub="You work directly with who's building it"
-                  gradient="linear-gradient(135deg, rgba(0,229,255,0.14) 0%, rgba(0,229,255,0.04) 60%, #0A0A14 100%)"
-                />
-              </Reveal>
-            </div>
-          </div>
-
-          {/* Row 3: Industry illustrative cards */}
-          <Reveal>
-            <div
-              aria-hidden="true"
-              className="grid grid-cols-1 gap-5 sm:grid-cols-3 sm:gap-6"
+          <div className="mt-6 overflow-hidden">
+            <motion.h2
+              id="work-heading"
+              variants={{ hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease } } }}
+              className="text-[3rem] font-medium leading-[1] tracking-[-0.04em] text-[#F0F0FF] sm:text-[4.5rem] lg:text-[6rem]"
             >
-              {ILLUSTRATIVE_CARDS.map(({ label, Mock }) => (
-                <div
-                  key={label}
-                  className="pointer-events-none select-none overflow-hidden rounded-2xl border border-[#1E1E35] bg-[#06060f] transition-[border-color,box-shadow] duration-500 ease-[var(--ease-out-premium)] [@media(hover:hover)]:hover:border-violet-500/30 [@media(hover:hover)]:hover:shadow-[0_0_0_1px_rgba(124,63,255,0.14),0_0_40px_-12px_rgba(124,63,255,0.18)]"
-                >
-                  <Mock />
-                  <div className="border-t border-[#1E1E35] px-4 py-3">
-                    <p className="text-[11px] font-medium tracking-tight text-[#C8C8D8]/75">
-                      {label}
-                    </p>
-                  </div>
-                </div>
-              ))}
+              Featured{" "}
+              <span className="text-[#C8C8D8]/30">Work</span>
+            </motion.h2>
+          </div>
+        </motion.div>
+
+        {/* Work cards */}
+        <div className="mt-10 flex flex-col">
+          <WorkCard study={study1} priority delay={0} />
+          <WorkCard study={study2} delay={0.05} />
+
+          {/* NDA placeholder */}
+          <motion.article
+            className="group relative"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.08 }}
+            transition={{ duration: 0.8, delay: 0.05, ease }}
+          >
+            <div className="flex items-center justify-between border-t border-[#1E1E35] px-0 py-5">
+              <span className="text-[15px] font-normal text-[#8888a8]/50">
+                NDA
+              </span>
+              <span className="text-[15px] font-normal text-[#F0F0FF]">
+                More on request
+              </span>
+              <span className="w-[52px]" aria-hidden />
             </div>
-            <p className="mt-4 text-center text-[12px] text-[#8888a8]">
-              More available on request — partner builds and NDA work not shown
-            </p>
-          </Reveal>
+            <div
+              className="relative overflow-hidden rounded-sm"
+              style={{ aspectRatio: "16 / 9" }}
+            >
+              <div
+                className="absolute inset-0 flex items-center justify-center"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(124,63,255,0.08) 0%, rgba(0,229,255,0.04) 100%)",
+                }}
+              >
+                <div
+                  className="absolute inset-0 opacity-[0.06]"
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px)",
+                    backgroundSize: "56px 56px",
+                  }}
+                  aria-hidden
+                />
+                <p className="relative text-[13px] font-normal text-[#8888a8]">
+                  Partner builds and NDA work available on request
+                </p>
+              </div>
+            </div>
+          </motion.article>
+
+          {/* Bottom border closure */}
+          <div className="border-t border-[#1E1E35] pt-0" />
         </div>
-      </section>
-    </div>
+
+        <div className="pb-[100px]" />
+      </div>
+    </section>
   );
 }

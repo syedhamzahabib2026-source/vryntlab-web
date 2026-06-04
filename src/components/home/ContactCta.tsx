@@ -1,60 +1,95 @@
 "use client";
 
+import { motion } from "motion/react";
 import { ContactForm } from "@/components/ui/ContactForm";
-import { brandContact } from "@/lib/brand-knowledge";
 import { siteEmail } from "@/lib/site";
-import { contentWell, focusRing, slabBleed, slabContent } from "@/components/layout/layoutTokens";
-import { Reveal } from "@/components/motion/Reveal";
+
+const ease = [0.16, 1, 0.3, 1] as const;
+
+const inViewItem = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease } },
+};
+
+function SectionLabel({ text }: { text: string }) {
+  return (
+    <div className="flex items-center gap-2.5">
+      <span className="h-px w-4 shrink-0 bg-[#8888a8]" aria-hidden />
+      <span className="text-[13px] font-normal text-[#8888a8]">{text}</span>
+    </div>
+  );
+}
 
 export function ContactCta() {
   return (
-    <div className={slabBleed}>
-      <section
-        id="contact"
-        aria-labelledby="contact-heading"
-        className={`${slabContent} scroll-mt-[calc(4.5rem+0.25rem)] py-8 sm:scroll-mt-24 sm:py-10 md:scroll-mt-28`}
-      >
-        <div className={contentWell}>
-          {/* Large centered headline */}
-          <Reveal>
-            <div className="mb-8 text-center sm:mb-10">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#7C3FFF]/90">
-                {brandContact.eyebrow}
-              </p>
-              <h2
-                id="contact-heading"
-                className="mt-3 text-[2rem] font-bold tracking-[-0.025em] text-[#F0F0FF] sm:text-[2.75rem] lg:text-[3.25rem]"
-              >
-                {brandContact.title}
-              </h2>
-              <p className="mx-auto mt-4 max-w-[50ch] text-[15px] leading-relaxed text-[#C8C8D8]/70">
-                {brandContact.lead[0]}
-              </p>
-            </div>
-          </Reveal>
+    <section
+      id="contact"
+      aria-labelledby="contact-heading"
+      style={{
+        paddingTop: "100px",
+        paddingBottom: "100px",
+        background: "var(--surface)",
+      }}
+    >
+      <div className="mx-auto w-full max-w-[1290px] px-4 sm:px-8 lg:px-[30px]">
 
-          {/* Form */}
-          <Reveal>
-            <div className="mx-auto max-w-lg">
-              <ContactForm />
-            </div>
-          </Reveal>
+        {/* Section label */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease }}
+        >
+          <SectionLabel text="Get in Touch" />
+        </motion.div>
 
-          {/* Email link */}
-          <Reveal>
-            <div className="mt-8 text-center">
-              <p className="mb-3 text-[13px] text-[#8888a8]">Prefer to write directly?</p>
+        {/* Two-col: headline+info left, form right */}
+        <div className="mt-10 grid grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-20">
+
+          {/* LEFT: headline + contact info — stagger in */}
+          <motion.div
+            className="flex flex-col justify-between gap-10"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+            variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } } }}
+          >
+            <motion.h2
+              id="contact-heading"
+              variants={inViewItem}
+              className="text-[2.25rem] font-medium leading-[1.1] tracking-[-0.035em] text-[#F0F0FF] sm:text-[3rem] lg:text-[3.5rem]"
+            >
+              Let&rsquo;s talk about
+              <br />
+              your next project.
+            </motion.h2>
+
+            <motion.div variants={inViewItem} className="flex flex-col gap-4">
+              <p className="text-[1.125rem] font-normal leading-[1.5] text-[#8888a8]">
+                Tell us what you&rsquo;re building. We&rsquo;ll reply with a
+                clear plan and price — no decks, no back-and-forth.
+              </p>
+
               <a
                 href={`mailto:${siteEmail}`}
-                className={`text-[1.25rem] font-bold tracking-tight text-[#F0F0FF] underline decoration-[#7C3FFF]/35 underline-offset-4 transition-[text-decoration-color,color] duration-300 ease-[var(--ease-out-premium)] ${focusRing} rounded-md sm:text-[1.5rem] [@media(hover:hover)]:hover:text-[#7C3FFF] [@media(hover:hover)]:hover:decoration-[#7C3FFF]/70`}
+                className="inline-flex w-fit items-center gap-2 text-[1.125rem] font-normal text-[#F0F0FF] underline decoration-white/20 underline-offset-4 transition-colors duration-200 [@media(hover:hover)]:hover:decoration-white/60"
               >
                 {siteEmail}
               </a>
-              <p className="mt-4 text-[12px] text-[#8888a8]">{brandContact.followUp}</p>
-            </div>
-          </Reveal>
+            </motion.div>
+          </motion.div>
+
+          {/* RIGHT: contact form */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.05 }}
+            transition={{ duration: 0.8, delay: 0.15, ease }}
+          >
+            <ContactForm />
+          </motion.div>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 }

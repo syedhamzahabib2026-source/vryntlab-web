@@ -1,5 +1,49 @@
 # Build log
 
+## 2026-06-03 — Scroll animations, hover effects, parallax (Merco-matched)
+
+**What changed:**
+
+- **`src/components/motion/Reveal.tsx`** — Updated `revealDefaults`: `y` 10 → 40, `duration` 0.58 → 0.8. All sitewide scroll reveals now use the more dramatic 40px slide-up matching Merco's entrance depth.
+- **`src/components/motion/StaggerGroup.tsx`** — Updated `staggerItem.y` 18 → 40, `staggerItem.duration` 0.62 → 0.8, `staggerTiming.staggerChildren` 0.055 → 0.1. Stagger sequences are now visibly sequenced rather than near-simultaneous.
+- **`src/components/layout/SiteHeader.tsx`** — Raised scroll threshold for nav background transition from 8 → 50px (glass blur now activates after actually scrolling past the hero). Added `hover:scale-[1.02]` to the "Say Hello" nav CTA.
+- **`src/components/home/Hero.tsx`** — Added scroll-driven parallax via `useScroll` + `useTransform`: hero content translates up at 15% of scroll speed (`[0,600] → [0,90]px`), creating depth as you scroll into the next section. Disabled under `prefers-reduced-motion`. Added `hover:scale-[1.02]` to primary CTA.
+- **`src/components/home/HomeIntro.tsx`** — Added `StaggerGroup`/`StaggerItem` entrance to the stats column (label + stats stagger in on scroll). Added `motion.h2` entrance to the paragraph (opacity: 0→1, y: 40→0) while keeping the separate IO-triggered muted→white color transition, so the text fades in gray then reveals white.  Added `Reveal` wrapper to the marquee section.
+- **`src/components/home/FeaturedWork.tsx`** — Added `motion.div` stagger to section label + heading. Each `WorkCard` now uses `motion.article` with `whileInView` entrance (opacity: 0→1, y: 40→0). Enhanced hover: image scale 1.025 → 1.03, overlay opacity 0 → 30%, added a centered "View →" pill label that fades in over the image on hover.
+- **`src/components/home/ServicesAccordion.tsx`** — Converted to `"use client"`. Added `motion.div` stagger for section heading. Each service row uses `motion.li` with `whileInView` entrance. Service row numbers now cross-fade from muted gray to gradient (violet→cyan) on hover using a layered opacity approach (avoids CSS gradient transition limitation).
+- **`src/components/home/ChatbotShowcase.tsx`** — Added `motion.div` section label entrance and stagger entrance for the entire left copy column (heading → description → bullets → button). Chat demo panel slides in with slight delay. Added `background: var(--surface)` to break the double-background-color run between ServicesAccordion and ContactCta. Added `hover:scale-[1.02]` to the CTA button.
+- **`src/components/home/ContactCta.tsx`** — Converted to `"use client"`. Added section label entrance, stagger on left column (heading + contact info), and delayed `whileInView` entrance for the form on the right.
+
+**Animation system:**
+- All scroll entrances: `transform: translateY(40px) → 0`, `opacity: 0 → 1`, `duration: 0.8s`, `ease: cubic-bezier(0.16, 1, 0.3, 1)` (our `--ease-out-premium`)
+- `viewport: { once: true }` on all — animations fire once only, never re-trigger on scroll up
+- Reduced-motion safe: `StaggerGroup`, `Reveal`, and `useReducedMotion` all skip animation
+
+**Files:** `src/components/motion/Reveal.tsx`, `src/components/motion/StaggerGroup.tsx`, `src/components/layout/SiteHeader.tsx`, `src/components/home/Hero.tsx`, `src/components/home/HomeIntro.tsx`, `src/components/home/FeaturedWork.tsx`, `src/components/home/ServicesAccordion.tsx`, `src/components/home/ChatbotShowcase.tsx`, `src/components/home/ContactCta.tsx`, `docs/BUILD_LOG.md`
+
+---
+
+## 2026-06-03 — Full homepage redesign (Merco-style)
+
+**What changed:**
+
+- **`src/lib/site.ts`** — Removed "Start" (`/services#path`) and "Process" (`/#process`) nav links; now five links: Work, Services, About, Blog, Contact.
+- **`src/components/layout/SiteHeader.tsx`** — Full rewrite to Merco nav pattern: logo left, dark-pill rounded nav links centered, gradient "Say Hello" → `/#contact` CTA right. Removed `useConversion` / Quick Estimate button from nav. Mobile drawer updated to match.
+- **`src/components/home/Hero.tsx`** — Full rewrite: single-column, 6rem desktop headline, two-tone text (`Your` muted gray / cycling word white / `built to sell.` gradient), section `pt-182px pb-100px` matching Merco's exact padding. Removed EcommercePreview mock.
+- **`src/components/home/HomeIntro.tsx`** *(new)* — Merco `intor-v1` section: stats column left (label + three stat items), 2.25rem paragraph right (starts muted, transitions to white on scroll via IntersectionObserver), text marquee below (`marquee-track` reuse). Replaces old About + Stats + MarqueeBar.
+- **`src/components/home/FeaturedWork.tsx`** — Rewrite to Merco work-card style: dark surface bg, "Featured Work" at 6rem two-tone heading, stacked full-bleed image cards each with top bar (View → left, project name center), 16:9 aspect ratio, subtle scale on hover. Two real portfolio cards + NDA placeholder.
+- **`src/components/home/ServicesAccordion.tsx`** *(new)* — Merco numbered service list: "What We Do Best" label + "Our Services" 6rem two-tone heading, six rows at 4.25rem titles with 16px gray number, short tagline, right-side description, `0.8px` border-bottom separator, `pt-80px pb-100px` per row, CSS group-hover: title turns gradient, arrow shifts right.
+- **`src/components/home/ChatbotShowcase.tsx`** — Restyled to match Merco section aesthetics (`pt/pb 100px`, same content-well, section label). All animation logic preserved.
+- **`src/components/home/ContactCta.tsx`** — Rewrite to Merco two-col contact layout: big headline left + description + email, ContactForm right.
+- **`src/components/layout/SiteFooter.tsx`** — Rewrite to Merco footer: logo + tagline top, divider, Pages/Legal/Social columns left, big CTA "Let's create something great together." + pill+circle button pair right, copyright + legal links bottom row.
+- **`src/app/page.tsx`** — Updated composition: Hero → HomeIntro → FeaturedWork → ServicesAccordion → ChatbotShowcase → ContactCta. Removed old section imports (About, Stats, MarqueeBar, Process, ServicesHomeTeaser).
+
+**Design reference:** https://merco-template.webflow.io/ — exact typography scale (96px / 68px / 36px), spacing (pt-182/100/140/100px sections), and layout patterns replicated with VryntLab content, violet-cyan palette, and logo.
+
+**Files:** `src/lib/site.ts`, `src/components/layout/SiteHeader.tsx`, `src/components/layout/SiteFooter.tsx`, `src/components/home/Hero.tsx`, `src/components/home/HomeIntro.tsx` *(new)*, `src/components/home/FeaturedWork.tsx`, `src/components/home/ServicesAccordion.tsx` *(new)*, `src/components/home/ChatbotShowcase.tsx`, `src/components/home/ContactCta.tsx`, `src/app/page.tsx`, `docs/BUILD_LOG.md`
+
+---
+
 ## 2026-06-02 — Legal / policy pages + footer legal links
 
 **What changed:**

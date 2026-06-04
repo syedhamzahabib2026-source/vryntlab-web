@@ -12,8 +12,8 @@ import {
 export const motionEase = [0.16, 1, 0.3, 1] as const;
 
 export const revealDefaults = {
-  duration: 0.58,
-  y: 10,
+  duration: 0.8,
+  y: 40,
 } as const;
 
 type RevealProps = {
