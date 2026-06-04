@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { focusRing } from "@/components/layout/layoutTokens";
-import { caseStudies, caseStudyPosterUrl } from "@/lib/case-studies";
+import { caseStudies } from "@/lib/case-studies";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -42,17 +42,7 @@ function WorkCard({ study, priority = false }: WorkCardProps) {
   const hero = study.media.images[0] ?? "";
   const tall = study.media.images[1] ?? "";
   const cardRef = useRef<HTMLElement>(null);
-  const [isHovered, setIsHovered] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
-  const [layerKey, setLayerKey] = useState(0);
-
-  // Scroll-linked scale: image starts slightly small, grows as card scrolls into view
-  const { scrollYProgress } = useScroll({
-    target: cardRef,
-    offset: ["start end", "end start"],
-  });
-  const imgScale = useTransform(scrollYProgress, [0, 0.5], [0.94, 1.02]);
-  const imgY = useTransform(scrollYProgress, [0, 0.5], [24, 0]);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -62,109 +52,85 @@ function WorkCard({ study, priority = false }: WorkCardProps) {
     return () => mq.removeEventListener("change", sync);
   }, []);
 
-  // Reset scroll animation when hover ends so next hover starts from top
-  useEffect(() => {
-    if (!isHovered) {
-      const id = window.setTimeout(() => setLayerKey((k) => k + 1), 0);
-      return () => window.clearTimeout(id);
-    }
-    return undefined;
-  }, [isHovered]);
-
-  const scrollOn = isHovered && !reduceMotion;
+  // Scroll-linked entry: card lifts in as it enters viewport
+  const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ["start end", "center center"],
+  });
+  const entryScale = useTransform(scrollYProgress, [0, 0.6], [0.96, 1.0]);
 
   return (
     <motion.article
       ref={cardRef}
-      className="group relative"
-      initial={{ opacity: 0, y: 24, scale: 0.985 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      className="group overflow-hidden rounded-2xl border border-[#1E1E35] bg-[#0c0c18]"
+      style={{ scale: entryScale }}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.08 }}
       transition={{ duration: 0.75, ease }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Top bar */}
-      <div className="flex items-center justify-between border-t border-[#1E1E35] px-0 py-5">
-        <Link
-          href={`/work/${study.id}`}
-          className={`flex items-center gap-2 text-[15px] font-normal text-[#8888a8] transition-colors duration-200 ${focusRing} rounded-sm [@media(hover:hover)]:hover:text-[#F0F0FF]`}
-          tabIndex={0}
-        >
-          View
-          <span
-            className="inline-block transition-transform duration-[200ms] group-hover:translate-x-1"
-            aria-hidden
-          >
-            →
-          </span>
-        </Link>
-        <span className="text-[15px] font-normal text-[#F0F0FF]">
-          {study.client}
-        </span>
-        <span className="w-[52px]" aria-hidden />
-      </div>
+      {/* Violet accent bar */}
+      <div className="h-[3px] bg-gradient-to-r from-[#7C3FFF] to-[#5533DD]" />
 
-      {/* Image — scroll-linked scale wrapper; hover triggers tall-screenshot scroll */}
+      {/* Card body: tall scrolling screenshot */}
       <Link
         href={`/work/${study.id}`}
-        className={`relative block overflow-hidden rounded-sm ${focusRing}`}
-        style={{ aspectRatio: "16 / 9" }}
-        tabIndex={-1}
+        className={`relative block overflow-hidden ${focusRing}`}
+        style={{ minHeight: "480px" }}
         aria-label={`View ${study.client} case study`}
       >
-        <motion.div
-          className="absolute inset-0"
-          style={{ scale: imgScale, y: imgY }}
-        >
-          {/* Static hero (visible when not hovering) */}
-          <div className="absolute inset-0 z-[1]">
+        {/* Auto-scrolling tall image (always running, top→bottom→top) */}
+        <div className="absolute inset-0 overflow-hidden [container-type:size]">
+          {reduceMotion ? (
             <Image
               src={hero}
               alt={study.coverAlt}
               fill
-              className={`object-cover transition-opacity duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none ${scrollOn ? "opacity-0" : "opacity-100"}`}
-              sizes="(max-width: 1290px) 100vw, 1290px"
+              className="object-cover object-top"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 640px"
               priority={priority}
             />
-          </div>
-
-          {/* Tall screenshot — scrolls top→bottom on hover (CSS animation via data-active) */}
-          {!reduceMotion && (
-            <div
-              className={`absolute inset-0 z-[0] overflow-hidden [container-type:size] transition-opacity duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${scrollOn ? "opacity-100" : "opacity-0"}`}
-              aria-hidden={!scrollOn}
-            >
-              <div
-                key={layerKey}
-                data-active={scrollOn ? "true" : "false"}
-                className="work-scroll-preview-track relative w-full will-change-transform"
-              >
-                <Image
-                  src={tall}
-                  alt={study.imageAlts[1] ?? study.coverAlt}
-                  width={1600}
-                  height={2600}
-                  className="h-auto w-full max-w-none object-cover object-top"
-                  sizes="(max-width: 1290px) 100vw, 1290px"
-                />
-              </div>
+          ) : (
+            <div className="work-scroll-auto relative w-full">
+              <Image
+                src={tall}
+                alt={study.imageAlts[1] ?? study.coverAlt}
+                width={1600}
+                height={2600}
+                className="h-auto w-full max-w-none"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 640px"
+                priority={priority}
+              />
             </div>
           )}
-        </motion.div>
+        </div>
 
-        {/* Dark overlay */}
+        {/* Bottom gradient + project info overlay */}
+        <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-[#060610]/95 via-[#060610]/65 to-transparent px-6 pb-6 pt-28">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#7C3FFF]">
+            {study.typeLabel}
+          </p>
+          <h3 className="mt-2 text-[1.375rem] font-medium leading-[1.15] tracking-[-0.03em] text-[#F0F0FF]">
+            {study.client}
+          </h3>
+          <p className="mt-1 line-clamp-2 text-[0.875rem] leading-[1.5] text-[#8888a8]">
+            {study.cardOutcome}
+          </p>
+        </div>
+
+        {/* Hover dark overlay */}
         <div
-          className="absolute inset-0 bg-black/0 transition-[background-color] duration-[250ms] group-hover:bg-black/30"
+          className="absolute inset-0 bg-black/0 transition-[background-color] duration-300 group-hover:bg-black/20"
           aria-hidden
         />
-        {/* "View →" overlay label */}
+
+        {/* "View case study" pill on hover */}
         <div
-          className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-[250ms] ease-[var(--ease-out-premium)] group-hover:opacity-100"
+          className="absolute inset-0 z-20 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100"
           aria-hidden
         >
-          <span className="rounded-full bg-white/10 px-5 py-2 text-[15px] font-medium text-white backdrop-blur-md ring-1 ring-white/15">
-            View →
+          <span className="rounded-full bg-white/10 px-5 py-2.5 text-[14px] font-medium text-white backdrop-blur-md ring-1 ring-white/15">
+            View case study →
           </span>
         </div>
       </Link>
@@ -172,59 +138,34 @@ function WorkCard({ study, priority = false }: WorkCardProps) {
   );
 }
 
-// NDA placeholder card with scroll-linked scale
 function NdaCard() {
-  const cardRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: cardRef,
-    offset: ["start end", "end start"],
-  });
-  const imgScale = useTransform(scrollYProgress, [0, 0.5], [0.94, 1.02]);
-  const imgY = useTransform(scrollYProgress, [0, 0.5], [24, 0]);
-
   return (
     <motion.article
-      ref={cardRef}
-      className="group relative"
-      initial={{ opacity: 0, y: 24, scale: 0.985 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, amount: 0.08 }}
+      className="overflow-hidden rounded-2xl border border-[#1E1E35] bg-[#0c0c18]"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 0.75, ease }}
     >
-      <div className="flex items-center justify-between border-t border-[#1E1E35] px-0 py-5">
-        <span className="text-[15px] font-normal text-[#8888a8]/50">NDA</span>
-        <span className="text-[15px] font-normal text-[#F0F0FF]">More on request</span>
-        <span className="w-[52px]" aria-hidden />
-      </div>
+      <div className="h-[3px] bg-[#1E1E35]" />
       <div
-        className="relative overflow-hidden rounded-sm"
-        style={{ aspectRatio: "16 / 9" }}
+        className="flex min-h-[160px] items-center justify-center px-8 py-10"
+        style={{
+          background:
+            "linear-gradient(135deg, rgba(124,63,255,0.05) 0%, rgba(0,229,255,0.02) 100%)",
+        }}
       >
-        <motion.div
-          className="absolute inset-0"
-          style={{ scale: imgScale, y: imgY }}
-        >
-          <div
-            className="absolute inset-0 flex items-center justify-center"
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(124,63,255,0.08) 0%, rgba(0,229,255,0.04) 100%)",
-            }}
-          >
-            <div
-              className="absolute inset-0 opacity-[0.06]"
-              style={{
-                backgroundImage:
-                  "linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px)",
-                backgroundSize: "56px 56px",
-              }}
-              aria-hidden
-            />
-            <p className="relative text-[13px] font-normal text-[#8888a8]">
-              Partner builds and NDA work available on request
-            </p>
-          </div>
-        </motion.div>
+        <div className="text-center">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8888a8]/50">
+            NDA
+          </p>
+          <p className="mt-2 text-[1.0625rem] font-medium text-[#F0F0FF]">
+            More on request
+          </p>
+          <p className="mt-1.5 text-[0.875rem] text-[#8888a8]">
+            Partner builds and NDA work available on request
+          </p>
+        </div>
       </div>
     </motion.article>
   );
@@ -242,7 +183,7 @@ export function FeaturedWork() {
     >
       <div className="mx-auto w-full max-w-[1290px] px-4 sm:px-8 lg:px-[30px]">
 
-        {/* Section header — stagger */}
+        {/* Section header */}
         <motion.div
           initial="hidden"
           whileInView="show"
@@ -265,14 +206,15 @@ export function FeaturedWork() {
           </div>
         </motion.div>
 
-        {/* Work cards */}
-        <div className="mt-10 flex flex-col">
+        {/* Two project cards side by side on desktop */}
+        <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:gap-7">
           <WorkCard study={study1} priority />
           <WorkCard study={study2} />
-          <NdaCard />
+        </div>
 
-          {/* Bottom border closure */}
-          <div className="border-t border-[#1E1E35] pt-0" />
+        {/* NDA card below, full width */}
+        <div className="mt-5 lg:mt-7">
+          <NdaCard />
         </div>
       </div>
     </section>

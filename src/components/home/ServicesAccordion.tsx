@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
-import { motion, useScroll, useTransform, useMotionValueEvent } from "motion/react";
+import { AnimatePresence, motion, useScroll, useTransform, useMotionValueEvent } from "motion/react";
 import { focusRing } from "@/components/layout/layoutTokens";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -75,14 +75,9 @@ const SERVICES = [
   },
 ] as const;
 
-// ─── Scroll progress constants ────────────────────────────────────────────────
-// 6 services each get 1/6 of the scroll range.
-// TW = one-sided transition window. Fade-out completes at the boundary;
-// fade-in begins at the boundary → zero overlap, never two layers above 0 opacity.
-const S = 1 / 6;
-const TW = 0.04;
-
 // ─── Desktop sticky gallery ────────────────────────────────────────────────────
+// Uses AnimatePresence mode="wait" so only ONE service is ever in the DOM.
+// This is the reliable fix — no stacking, no opacity overlap possible.
 
 function StickyServices() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -97,36 +92,8 @@ function StickyServices() {
     setActiveIdx(Math.min(5, Math.floor(v * 6)));
   });
 
-  // Opacity — sequential: each layer fully fades out before the next fades in
-  const op0 = useTransform(scrollYProgress, [0,      S - TW,       S            ], [1, 1, 0]);
-  const op1 = useTransform(scrollYProgress, [S,      S + TW,       2*S - TW, 2*S], [0, 1, 1, 0]);
-  const op2 = useTransform(scrollYProgress, [2*S,    2*S + TW,     3*S - TW, 3*S], [0, 1, 1, 0]);
-  const op3 = useTransform(scrollYProgress, [3*S,    3*S + TW,     4*S - TW, 4*S], [0, 1, 1, 0]);
-  const op4 = useTransform(scrollYProgress, [4*S,    4*S + TW,     5*S - TW, 5*S], [0, 1, 1, 0]);
-  const op5 = useTransform(scrollYProgress, [5*S,    5*S + TW,     1.0          ], [0, 1, 1]);
-
-  // Text Y — slides out up, next slides in from below; matched to opacity windows
-  const ty0 = useTransform(scrollYProgress, [S - TW,  S              ], [0,  -50]);
-  const ty1 = useTransform(scrollYProgress, [S,        S + TW, 2*S - TW, 2*S], [50, 0, 0, -50]);
-  const ty2 = useTransform(scrollYProgress, [2*S,    2*S + TW, 3*S - TW, 3*S], [50, 0, 0, -50]);
-  const ty3 = useTransform(scrollYProgress, [3*S,    3*S + TW, 4*S - TW, 4*S], [50, 0, 0, -50]);
-  const ty4 = useTransform(scrollYProgress, [4*S,    4*S + TW, 5*S - TW, 5*S], [50, 0, 0, -50]);
-  const ty5 = useTransform(scrollYProgress, [5*S,    5*S + TW               ], [50, 0]);
-
-  // Image scale — starts slightly zoomed, settles as scene holds
-  const sc0 = useTransform(scrollYProgress, [0,   S  ], [1.05, 1.0]);
-  const sc1 = useTransform(scrollYProgress, [S,   2*S], [1.05, 1.0]);
-  const sc2 = useTransform(scrollYProgress, [2*S, 3*S], [1.05, 1.0]);
-  const sc3 = useTransform(scrollYProgress, [3*S, 4*S], [1.05, 1.0]);
-  const sc4 = useTransform(scrollYProgress, [4*S, 5*S], [1.05, 1.0]);
-  const sc5 = useTransform(scrollYProgress, [5*S, 1.0], [1.05, 1.0]);
-
-  // Progress bar fills as you scroll through all 6 services
   const progressWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-
-  const opacities = [op0, op1, op2, op3, op4, op5];
-  const tyValues  = [ty0, ty1, ty2, ty3, ty4, ty5];
-  const scValues  = [sc0, sc1, sc2, sc3, sc4, sc5];
+  const svc = SERVICES[activeIdx]!;
 
   return (
     <section
@@ -136,26 +103,22 @@ function StickyServices() {
     >
       <div className="sticky top-0 flex h-screen overflow-hidden">
 
-        {/* ── Left: text panel ──────────────────────────────── */}
+        {/* ── Left: text panel — single slot, AnimatePresence guarantees no overlap ── */}
         <div
           className="relative w-[44%] shrink-0 overflow-hidden"
           style={{ background: "var(--surface)" }}
         >
-          {/* Service text layers — all stacked, sequential opacity; only activeIdx receives events */}
-          {SERVICES.map((svc, i) => (
+          <AnimatePresence mode="wait">
             <motion.div
-              key={svc.num}
+              key={activeIdx}
+              initial={{ opacity: 0, y: 22 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -22 }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
               className="absolute inset-0 flex items-center"
-              style={{
-                opacity: opacities[i],
-                pointerEvents: i === activeIdx ? "auto" : "none",
-              }}
             >
-              <motion.div
-                className="w-full px-8 lg:px-12 xl:px-16"
-                style={{ y: tyValues[i] }}
-              >
-                {i === 0 && (
+              <div className="w-full px-8 lg:px-12 xl:px-16">
+                {activeIdx === 0 && (
                   <div className="mb-6 flex items-center gap-2.5">
                     <span className="h-px w-4 shrink-0 bg-[#8888a8]" aria-hidden />
                     <span className="text-[13px] font-normal text-[#8888a8]">
@@ -183,13 +146,13 @@ function StickyServices() {
                   className={`mt-8 inline-flex items-center gap-2 text-[14px] font-normal text-[#C8C8D8]/55 transition-colors duration-200 ${focusRing} rounded-sm [@media(hover:hover)]:hover:text-[#F0F0FF]`}
                 >
                   Learn more
-                  <span aria-hidden className="inline-block transition-transform duration-200 [@media(hover:hover)]:group-hover:translate-x-1">
+                  <span aria-hidden className="inline-block transition-transform duration-200">
                     →
                   </span>
                 </Link>
-              </motion.div>
+              </div>
             </motion.div>
-          ))}
+          </AnimatePresence>
 
           {/* Progress line at the bottom */}
           <div className="absolute bottom-10 left-8 right-8 lg:left-12 lg:right-12 xl:left-16 xl:right-16">
@@ -202,7 +165,7 @@ function StickyServices() {
           </div>
         </div>
 
-        {/* ── Right: image panel ────────────────────────────── */}
+        {/* ── Right: image panel — single slot, crossfade via AnimatePresence ── */}
         <div className="relative flex-1 overflow-hidden">
 
           {/* Gradient edge where text panel meets image */}
@@ -212,12 +175,14 @@ function StickyServices() {
             style={{ background: "linear-gradient(to right, var(--surface), transparent)" }}
           />
 
-          {/* Image layers */}
-          {SERVICES.map((svc, i) => (
+          <AnimatePresence mode="wait">
             <motion.div
-              key={svc.num}
+              key={activeIdx}
+              initial={{ opacity: 0, scale: 1.04 }}
+              animate={{ opacity: 1, scale: 1.0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               className="absolute inset-0"
-              style={{ opacity: opacities[i], scale: scValues[i] }}
             >
               <Image
                 src={svc.imageSrc}
@@ -225,16 +190,15 @@ function StickyServices() {
                 fill
                 className="object-cover"
                 sizes="(min-width: 1024px) 56vw, 100vw"
-                priority={i === 0}
+                priority={activeIdx === 0}
               />
-              {/* Bottom vignette for visual depth */}
               <div
                 aria-hidden
                 className="pointer-events-none absolute inset-x-0 bottom-0 h-48"
                 style={{ background: "linear-gradient(to top, rgba(0,0,0,0.35), transparent)" }}
               />
             </motion.div>
-          ))}
+          </AnimatePresence>
         </div>
       </div>
     </section>

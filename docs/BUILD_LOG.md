@@ -1,5 +1,19 @@
 # Build log
 
+## 2026-06-04 — Services AnimatePresence rewrite + CTA hero image + Merco-style work cards
+
+**What changed:**
+
+- **`src/components/home/ServicesAccordion.tsx`** — Scrapped all 6-layer opacity/transform approach entirely. `StickyServices` now uses `AnimatePresence mode="wait"` for both the text panel and the image panel. Only ONE element exists in the DOM at a time — impossible for two services to overlap. Removed 12 `useTransform` calls; kept `progressWidth` and `useMotionValueEvent` for active index.
+- **`src/components/home/Hero.tsx`** — Added CTA image as right-column visual (desktop only). Two-column `flex-row` layout on `lg+`. Image has scroll-linked breathing scale (`ctaImgScale` 0.94→1.02) and `motion` float animation (y: 0→−10→0 over 5s infinite). Imported `next/image`. Added `ctaRef` + second `useScroll` target.
+- **`src/components/home/FeaturedWork.tsx`** — Complete redesign. `WorkCard` now uses Merco-style: violet 3px accent bar, 480px-tall card body with always-running auto-scroll `_2.webp` via `.work-scroll-auto` CSS class, project info overlay at bottom (typeLabel, client name, cardOutcome), hover dark overlay + "View case study →" pill. `NdaCard` simplified to match. Section layout: `sm:grid-cols-2` side-by-side cards, NDA card below. Removed `caseStudyPosterUrl` import.
+- **`src/app/globals.css`** — Added `.work-scroll-auto` class (`work-scroll-preview 16s ease-in-out infinite alternate`) for always-running portfolio card scroll. Reduced-motion override included.
+- **`public/images/cta.png`** — Added workspace photo for hero visual.
+
+**Files:** `src/components/home/{ServicesAccordion,Hero,FeaturedWork}.tsx`, `src/app/globals.css`, `public/images/cta.png`
+
+---
+
 ## 2026-06-04 — Bug fixes: Services opacity overlap + FeaturedWork scroll preview restored
 
 **What changed:**

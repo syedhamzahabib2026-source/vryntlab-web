@@ -303,6 +303,18 @@ dialog::backdrop {
   }
 }
 
+/** Portfolio cards — always-running slow auto-scroll (top → bottom → top). */
+.work-scroll-auto {
+  animation: work-scroll-preview 16s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-scroll-auto {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
 /** Project detail hero — same scroll as cards, slower and always running. */
 .work-hero-scroll-track {
   animation: work-scroll-preview 15s linear infinite;
