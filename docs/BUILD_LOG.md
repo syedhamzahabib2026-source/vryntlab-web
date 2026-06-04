@@ -1,5 +1,24 @@
 # Build log
 
+## 2026-06-04 — Revert FeaturedWork+ChatbotShowcase; new sticky Services gallery
+
+**What changed:**
+
+- **`src/components/home/FeaturedWork.tsx`** — Reverted to stacked cards (from commit `de2fbce`). Normal scroll section with `py-16 lg:py-[140px]` padding, two WorkCards with scroll-linked breathing scale (0.94→1.02), and NDA placeholder. No sticky gallery.
+- **`src/components/home/ChatbotShowcase.tsx`** — Reverted to auto-play animated chat demo (from commit `de2fbce`). IntersectionObserver drives `demoActive`; `AnimatedExampleChat` loops automatically on a timer. No scroll-driven messages or sticky section.
+- **`src/components/home/ServicesAccordion.tsx`** — Complete rewrite. On desktop (≥ lg): `600vh` sticky scroll gallery — `StickyServices` renders 6 absolutely-stacked service text layers (left, 44%) and 6 image layers (right, 56%) that crossfade via `useScroll + useTransform`. Each service has opacity/y text slide-in and image scale settle. Gradient progress bar at bottom of left panel fills as you scroll through. On mobile (< lg): `MobileServicesList` shows a stacked numbered list with small thumbnails.
+- **`public/images/services/`** — Created directory; downloaded 6 stock images from Unsplash: `ecommerce.jpg`, `web-design.jpg`, `chatbot.jpg`, `seo.jpg`, `automation.jpg`, `booking.jpg`.
+
+**Service scroll math (S = 1/6, OL = 0.05 overlap):**
+- Scene 0 (Ecommerce): starts visible, holds [0, S-OL], fades out [S-OL, S+OL]
+- Scene i (1-4): fades in [i·S-OL, i·S+OL], holds, fades out [(i+1)·S-OL, (i+1)·S+OL]
+- Scene 5 (Booking): fades in [5S-OL, 5S+OL], holds through 1.0
+- Image scale: starts 1.05, settles to 1.0 as each scene holds
+
+**Files:** `src/components/home/{FeaturedWork,ChatbotShowcase,ServicesAccordion}.tsx`, `public/images/services/*.jpg`
+
+---
+
 ## 2026-06-04 — Pinned scroll sections + animated gradient mesh
 
 **What changed:**
