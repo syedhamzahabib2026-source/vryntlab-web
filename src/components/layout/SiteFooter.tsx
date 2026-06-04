@@ -80,7 +80,7 @@ export function SiteFooter() {
                 alt={siteBrandName}
                 width={200}
                 height={80}
-                className="h-auto w-[120px] object-contain"
+                className="h-auto w-[145px] object-contain"
               />
             </Link>
           </motion.div>

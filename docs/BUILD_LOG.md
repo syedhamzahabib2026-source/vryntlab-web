@@ -1,5 +1,18 @@
 # Build log
 
+## 2026-06-04 — Hero polish: bg image, h1 spacing, scroll fade, logo sizing
+
+**What changed:**
+
+- **`src/components/home/Hero.tsx`** — CTA image moved from right column to full-bleed background (`absolute inset-0 object-cover opacity-20%`) with gradient overlay (`rgba(8,8,16,0.5→0.3→0.65→0.97)` top-to-bottom). Removed two-column layout; text is single-column again. h1 `<br />` replaced with `<span className="block">` wrapper on line 1 so line spacing is purely driven by `leading-[1.05]`, no JSX whitespace artifacts. Added `whitespace-nowrap` to the invisible cycling-word placeholder to lock it to one line. Scroll fade updated to `[0.3, 0.7]` range. Removed `ctaRef`/`ctaScrollY`/`ctaImgScale` (no longer needed).
+- **`src/components/layout/SiteHeader.tsx`** — Logo width: `w-[130px] sm:w-[140px]` → `w-[155px] sm:w-[170px]`.
+- **`src/components/layout/SiteFooter.tsx`** — Logo width: `w-[120px]` → `w-[145px]`.
+- Build: `npm run build` passes clean, 30 static/dynamic routes.
+
+**Files:** `src/components/home/Hero.tsx`, `src/components/layout/{SiteHeader,SiteFooter}.tsx`
+
+---
+
 ## 2026-06-04 — Services AnimatePresence rewrite + CTA hero image + Merco-style work cards
 
 **What changed:**

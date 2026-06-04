@@ -75,7 +75,7 @@ export function SiteHeader() {
               alt={siteBrandName}
               width={200}
               height={80}
-              className="h-auto w-[130px] object-contain sm:w-[140px]"
+              className="h-auto w-[155px] object-contain sm:w-[170px]"
               loading="eager"
               priority
             />
