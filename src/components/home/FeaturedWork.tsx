@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { focusRing } from "@/components/layout/layoutTokens";
 import { caseStudies, caseStudyPosterUrl } from "@/lib/case-studies";
@@ -39,8 +39,12 @@ type WorkCardProps = {
 };
 
 function WorkCard({ study, priority = false }: WorkCardProps) {
-  const posterSrc = caseStudyPosterUrl(study.media);
+  const hero = study.media.images[0] ?? "";
+  const tall = study.media.images[1] ?? "";
   const cardRef = useRef<HTMLElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const [reduceMotion, setReduceMotion] = useState(false);
+  const [layerKey, setLayerKey] = useState(0);
 
   // Scroll-linked scale: image starts slightly small, grows as card scrolls into view
   const { scrollYProgress } = useScroll({
@@ -50,6 +54,25 @@ function WorkCard({ study, priority = false }: WorkCardProps) {
   const imgScale = useTransform(scrollYProgress, [0, 0.5], [0.94, 1.02]);
   const imgY = useTransform(scrollYProgress, [0, 0.5], [24, 0]);
 
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReduceMotion(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  // Reset scroll animation when hover ends so next hover starts from top
+  useEffect(() => {
+    if (!isHovered) {
+      const id = window.setTimeout(() => setLayerKey((k) => k + 1), 0);
+      return () => window.clearTimeout(id);
+    }
+    return undefined;
+  }, [isHovered]);
+
+  const scrollOn = isHovered && !reduceMotion;
+
   return (
     <motion.article
       ref={cardRef}
@@ -58,6 +81,8 @@ function WorkCard({ study, priority = false }: WorkCardProps) {
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, amount: 0.08 }}
       transition={{ duration: 0.75, ease }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {/* Top bar */}
       <div className="flex items-center justify-between border-t border-[#1E1E35] px-0 py-5">
@@ -80,7 +105,7 @@ function WorkCard({ study, priority = false }: WorkCardProps) {
         <span className="w-[52px]" aria-hidden />
       </div>
 
-      {/* Image — scroll-linked scale inside overflow-hidden container */}
+      {/* Image — scroll-linked scale wrapper; hover triggers tall-screenshot scroll */}
       <Link
         href={`/work/${study.id}`}
         className={`relative block overflow-hidden rounded-sm ${focusRing}`}
@@ -92,15 +117,42 @@ function WorkCard({ study, priority = false }: WorkCardProps) {
           className="absolute inset-0"
           style={{ scale: imgScale, y: imgY }}
         >
-          <Image
-            src={posterSrc}
-            alt={study.coverAlt}
-            fill
-            className="object-cover transition-transform duration-[250ms] ease-[var(--ease-out-premium)] will-change-transform group-hover:scale-[1.03]"
-            sizes="(max-width: 1290px) 100vw, 1290px"
-            priority={priority}
-          />
+          {/* Static hero (visible when not hovering) */}
+          <div className="absolute inset-0 z-[1]">
+            <Image
+              src={hero}
+              alt={study.coverAlt}
+              fill
+              className={`object-cover transition-opacity duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none ${scrollOn ? "opacity-0" : "opacity-100"}`}
+              sizes="(max-width: 1290px) 100vw, 1290px"
+              priority={priority}
+            />
+          </div>
+
+          {/* Tall screenshot — scrolls top→bottom on hover (CSS animation via data-active) */}
+          {!reduceMotion && (
+            <div
+              className={`absolute inset-0 z-[0] overflow-hidden [container-type:size] transition-opacity duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${scrollOn ? "opacity-100" : "opacity-0"}`}
+              aria-hidden={!scrollOn}
+            >
+              <div
+                key={layerKey}
+                data-active={scrollOn ? "true" : "false"}
+                className="work-scroll-preview-track relative w-full will-change-transform"
+              >
+                <Image
+                  src={tall}
+                  alt={study.imageAlts[1] ?? study.coverAlt}
+                  width={1600}
+                  height={2600}
+                  className="h-auto w-full max-w-none object-cover object-top"
+                  sizes="(max-width: 1290px) 100vw, 1290px"
+                />
+              </div>
+            </div>
+          )}
         </motion.div>
+
         {/* Dark overlay */}
         <div
           className="absolute inset-0 bg-black/0 transition-[background-color] duration-[250ms] group-hover:bg-black/30"

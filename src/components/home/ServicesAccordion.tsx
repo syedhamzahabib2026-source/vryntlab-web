@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "motion/react";
+import { useRef, useState } from "react";
+import { motion, useScroll, useTransform, useMotionValueEvent } from "motion/react";
 import { focusRing } from "@/components/layout/layoutTokens";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -76,50 +76,57 @@ const SERVICES = [
 ] as const;
 
 // ─── Scroll progress constants ────────────────────────────────────────────────
-// 6 services each get 1/6 of the scroll range; OL = crossfade overlap window
+// 6 services each get 1/6 of the scroll range.
+// TW = one-sided transition window. Fade-out completes at the boundary;
+// fade-in begins at the boundary → zero overlap, never two layers above 0 opacity.
 const S = 1 / 6;
-const OL = 0.05;
+const TW = 0.04;
 
 // ─── Desktop sticky gallery ────────────────────────────────────────────────────
 
 function StickyServices() {
   const sectionRef = useRef<HTMLElement>(null);
+  const [activeIdx, setActiveIdx] = useState(0);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"],
   });
 
-  // Scene opacity — each layer fades in then fades out around its step boundary
-  const op0 = useTransform(scrollYProgress, [0, S - OL, S + OL], [1, 1, 0]);
-  const op1 = useTransform(scrollYProgress, [S - OL, S + OL, 2 * S - OL, 2 * S + OL], [0, 1, 1, 0]);
-  const op2 = useTransform(scrollYProgress, [2 * S - OL, 2 * S + OL, 3 * S - OL, 3 * S + OL], [0, 1, 1, 0]);
-  const op3 = useTransform(scrollYProgress, [3 * S - OL, 3 * S + OL, 4 * S - OL, 4 * S + OL], [0, 1, 1, 0]);
-  const op4 = useTransform(scrollYProgress, [4 * S - OL, 4 * S + OL, 5 * S - OL, 5 * S + OL], [0, 1, 1, 0]);
-  const op5 = useTransform(scrollYProgress, [5 * S - OL, 5 * S + OL, 1.0], [0, 1, 1]);
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    setActiveIdx(Math.min(5, Math.floor(v * 6)));
+  });
 
-  // Text Y — slides out up, next slides in from below
-  const ty0 = useTransform(scrollYProgress, [S - OL, S + OL], [0, -50]);
-  const ty1 = useTransform(scrollYProgress, [S - OL, S + OL, 2 * S - OL, 2 * S + OL], [50, 0, 0, -50]);
-  const ty2 = useTransform(scrollYProgress, [2 * S - OL, 2 * S + OL, 3 * S - OL, 3 * S + OL], [50, 0, 0, -50]);
-  const ty3 = useTransform(scrollYProgress, [3 * S - OL, 3 * S + OL, 4 * S - OL, 4 * S + OL], [50, 0, 0, -50]);
-  const ty4 = useTransform(scrollYProgress, [4 * S - OL, 4 * S + OL, 5 * S - OL, 5 * S + OL], [50, 0, 0, -50]);
-  const ty5 = useTransform(scrollYProgress, [5 * S - OL, 5 * S + OL], [50, 0]);
+  // Opacity — sequential: each layer fully fades out before the next fades in
+  const op0 = useTransform(scrollYProgress, [0,      S - TW,       S            ], [1, 1, 0]);
+  const op1 = useTransform(scrollYProgress, [S,      S + TW,       2*S - TW, 2*S], [0, 1, 1, 0]);
+  const op2 = useTransform(scrollYProgress, [2*S,    2*S + TW,     3*S - TW, 3*S], [0, 1, 1, 0]);
+  const op3 = useTransform(scrollYProgress, [3*S,    3*S + TW,     4*S - TW, 4*S], [0, 1, 1, 0]);
+  const op4 = useTransform(scrollYProgress, [4*S,    4*S + TW,     5*S - TW, 5*S], [0, 1, 1, 0]);
+  const op5 = useTransform(scrollYProgress, [5*S,    5*S + TW,     1.0          ], [0, 1, 1]);
+
+  // Text Y — slides out up, next slides in from below; matched to opacity windows
+  const ty0 = useTransform(scrollYProgress, [S - TW,  S              ], [0,  -50]);
+  const ty1 = useTransform(scrollYProgress, [S,        S + TW, 2*S - TW, 2*S], [50, 0, 0, -50]);
+  const ty2 = useTransform(scrollYProgress, [2*S,    2*S + TW, 3*S - TW, 3*S], [50, 0, 0, -50]);
+  const ty3 = useTransform(scrollYProgress, [3*S,    3*S + TW, 4*S - TW, 4*S], [50, 0, 0, -50]);
+  const ty4 = useTransform(scrollYProgress, [4*S,    4*S + TW, 5*S - TW, 5*S], [50, 0, 0, -50]);
+  const ty5 = useTransform(scrollYProgress, [5*S,    5*S + TW               ], [50, 0]);
 
   // Image scale — starts slightly zoomed, settles as scene holds
-  const sc0 = useTransform(scrollYProgress, [0, S], [1.05, 1.0]);
-  const sc1 = useTransform(scrollYProgress, [S, 2 * S], [1.05, 1.0]);
-  const sc2 = useTransform(scrollYProgress, [2 * S, 3 * S], [1.05, 1.0]);
-  const sc3 = useTransform(scrollYProgress, [3 * S, 4 * S], [1.05, 1.0]);
-  const sc4 = useTransform(scrollYProgress, [4 * S, 5 * S], [1.05, 1.0]);
-  const sc5 = useTransform(scrollYProgress, [5 * S, 1.0], [1.05, 1.0]);
+  const sc0 = useTransform(scrollYProgress, [0,   S  ], [1.05, 1.0]);
+  const sc1 = useTransform(scrollYProgress, [S,   2*S], [1.05, 1.0]);
+  const sc2 = useTransform(scrollYProgress, [2*S, 3*S], [1.05, 1.0]);
+  const sc3 = useTransform(scrollYProgress, [3*S, 4*S], [1.05, 1.0]);
+  const sc4 = useTransform(scrollYProgress, [4*S, 5*S], [1.05, 1.0]);
+  const sc5 = useTransform(scrollYProgress, [5*S, 1.0], [1.05, 1.0]);
 
   // Progress bar fills as you scroll through all 6 services
   const progressWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   const opacities = [op0, op1, op2, op3, op4, op5];
-  const tyValues = [ty0, ty1, ty2, ty3, ty4, ty5];
-  const scValues = [sc0, sc1, sc2, sc3, sc4, sc5];
+  const tyValues  = [ty0, ty1, ty2, ty3, ty4, ty5];
+  const scValues  = [sc0, sc1, sc2, sc3, sc4, sc5];
 
   return (
     <section
@@ -134,18 +141,20 @@ function StickyServices() {
           className="relative w-[44%] shrink-0 overflow-hidden"
           style={{ background: "var(--surface)" }}
         >
-          {/* Service text layers — all stacked, crossfade via opacity + y */}
+          {/* Service text layers — all stacked, sequential opacity; only activeIdx receives events */}
           {SERVICES.map((svc, i) => (
             <motion.div
               key={svc.num}
               className="absolute inset-0 flex items-center"
-              style={{ opacity: opacities[i] }}
+              style={{
+                opacity: opacities[i],
+                pointerEvents: i === activeIdx ? "auto" : "none",
+              }}
             >
               <motion.div
                 className="w-full px-8 lg:px-12 xl:px-16"
                 style={{ y: tyValues[i] }}
               >
-                {/* Section eyebrow — only on first scene */}
                 {i === 0 && (
                   <div className="mb-6 flex items-center gap-2.5">
                     <span className="h-px w-4 shrink-0 bg-[#8888a8]" aria-hidden />
@@ -155,24 +164,20 @@ function StickyServices() {
                   </div>
                 )}
 
-                {/* Service number pill with gradient */}
                 <div className="inline-flex items-center rounded-full bg-[#7C3FFF]/10 px-3 py-1.5 ring-1 ring-[#7C3FFF]/30">
                   <span className="bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF] bg-clip-text text-[12px] font-semibold tracking-[0.1em] text-transparent">
                     {svc.num}
                   </span>
                 </div>
 
-                {/* Title */}
                 <h3 className="mt-5 text-[1.75rem] font-medium leading-[1.1] tracking-[-0.04em] text-[#F0F0FF] lg:text-[2.25rem] xl:text-[2.75rem]">
                   {svc.title}
                 </h3>
 
-                {/* Description */}
                 <p className="mt-4 max-w-[34ch] text-[1.0625rem] leading-[1.65] text-[#8888a8]">
                   {svc.description}
                 </p>
 
-                {/* Link */}
                 <Link
                   href={svc.href}
                   className={`mt-8 inline-flex items-center gap-2 text-[14px] font-normal text-[#C8C8D8]/55 transition-colors duration-200 ${focusRing} rounded-sm [@media(hover:hover)]:hover:text-[#F0F0FF]`}

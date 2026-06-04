@@ -1,5 +1,16 @@
 # Build log
 
+## 2026-06-04 — Bug fixes: Services opacity overlap + FeaturedWork scroll preview restored
+
+**What changed:**
+
+- **`src/components/home/ServicesAccordion.tsx`** — Fixed text-layer overlap in `StickyServices`. Old code: simultaneous crossfade (OL=0.05 bidirectional) meant two layers at ~0.5 opacity at every transition. New code: sequential fade — each layer's fade-out completes at the boundary (S·i) before the next layer's fade-in begins. `TW=0.04` is a one-sided window. Added `useMotionValueEvent` to track `activeIdx`; only the active layer gets `pointerEvents: "auto"`, all others `"none"`.
+- **`src/components/home/FeaturedWork.tsx`** — Restored hover-triggered tall-screenshot scroll preview in `WorkCard`. On hover (desktop), the static `_1.webp` fades out and the tall `_2.webp` fades in with the `work-scroll-preview-track` CSS animation (already in globals.css). `layerKey` resets the animation on hover-out. Respects `prefers-reduced-motion`.
+
+**Files:** `src/components/home/{ServicesAccordion,FeaturedWork}.tsx`
+
+---
+
 ## 2026-06-04 — Revert FeaturedWork+ChatbotShowcase; new sticky Services gallery
 
 **What changed:**
