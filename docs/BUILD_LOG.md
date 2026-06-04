@@ -1,5 +1,23 @@
 # Build log
 
+## 2026-06-04 — Pinned scroll sections + animated gradient mesh
+
+**What changed:**
+
+- **`src/components/home/Hero.tsx`** — Added sticky scroll pinning on `lg+`. The outer section becomes a scroll runway (`lg:h-[180vh]`); inner container is `lg:sticky lg:top-0 lg:h-screen`. Hero content (`motion.div`) fades/lifts/scales out as the user scrolls away (`opacity 1→0`, `y 0→-60px`, `scale 1→0.97` over scroll progress `[0.4, 0.8]`). Mobile: normal padded flow with no pinning.
+- **`src/components/home/FeaturedWork.tsx`** — Full rewrite to CSS-breakpoint-split dual layout. `lg:hidden` section keeps the existing stacked card design for mobile. `hidden lg:block` renders `StickyGallery`: a 350vh outer section with a sticky `h-screen overflow-hidden` container holding 3 absolutely-positioned layers that crossfade via `useScroll` + `useTransform`. Images start at `scale: 1.03` and settle to 1.0 as each scene holds. Heading "Featured Work" fades out over first 20% of scroll progress. Projects appear in sequence: Living Silica (0→0.35), DK Express (0.25→0.70), "More on request" card (0.60→1.0).
+- **`src/components/home/ChatbotShowcase.tsx`** — Full rewrite to CSS-breakpoint-split dual layout. `lg:hidden` section keeps the auto-play `AnimatedExampleChat` for mobile. `hidden lg:block` renders a 250vh sticky section with scroll-driven chat messages: left copy column fades in at start (`[0, 0.08]`), then 4 chat messages appear in sequence (`[0.05→0.16]`, `[0.23→0.34]`, `[0.42→0.53]`, `[0.60→0.71]`), CTA button fades in last (`[0.72→0.84]`). `useMotionValueEvent` fires the launcher attention pulse when section is fully scrolled through.
+- **`src/app/globals.css`** — Added `hero-gradient-mesh` CSS class + `@keyframes hero-mesh-drift` animation: 3 overlapping radial gradient blobs that slowly drift (20s loop, respects `prefers-reduced-motion`). Used as a background texture layer in the Hero section alongside the existing dot grid.
+
+**Architecture:**
+- CSS breakpoint splitting (`block lg:hidden` / `hidden lg:block`) avoids SSR hydration mismatch — no JS needed for layout switching. Both layouts rendered in DOM; only one visible per breakpoint.
+- Mobile: all 3 sections fall back to normal stacked flow with existing entrance animations.
+- Desktop: `useScroll({ target, offset: ["start start", "end end"] })` tracks scroll progress through each tall section. Framer Motion WAAPI handles the actual animated values (opacity, y, scale); inline style attributes show base values.
+
+**Files:** `src/components/home/{Hero,FeaturedWork,ChatbotShowcase}.tsx`, `src/app/globals.css`, `docs/BUILD_LOG.md`
+
+---
+
 ## 2026-06-04 — Merco-matched scroll feel: motion overhaul
 
 **What changed:**

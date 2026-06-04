@@ -370,6 +370,25 @@ dialog::backdrop {
   }
 }
 
+/** Hero gradient mesh — slowly drifting color blobs layered behind dot grid */
+@keyframes hero-mesh-drift {
+  0%, 100% { transform: translate(0%, 0%) scale(1); }
+  33%       { transform: translate(2%, -1.5%) scale(1.02); }
+  66%       { transform: translate(-1.5%, 2%) scale(1.01); }
+}
+
+.hero-gradient-mesh {
+  background:
+    radial-gradient(ellipse 85% 55% at 12% 35%, rgba(124, 63, 255, 0.10) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 45% at 88% 15%, rgba(0, 229, 255, 0.07) 0%, transparent 50%),
+    radial-gradient(ellipse 55% 65% at 55% 85%, rgba(124, 63, 255, 0.05) 0%, transparent 48%);
+  animation: hero-mesh-drift 20s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-gradient-mesh { animation: none; }
+}
+
 /** Marquee scrolling ticker (MarqueeBar). */
 @keyframes marquee-scroll {
   0% {
