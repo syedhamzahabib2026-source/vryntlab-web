@@ -1,5 +1,29 @@
 # Build log
 
+## 2026-06-04 — Merco-matched scroll feel: motion overhaul
+
+**What changed:**
+
+- **`src/components/motion/Reveal.tsx`** — Updated ease `[0.16,1,0.3,1]` → `[0.22,1,0.36,1]`, duration 0.8 → 0.75, y 40 → 24, added `scale: 0.985 → 1` to initial/whileInView. All sitewide Reveal wrappers now match the new motion spec.
+- **`src/components/home/Hero.tsx`** — Converted staggered `animate` delays to parent/child `whileInView` stagger pattern (`staggerChildren: 0.09, delayChildren: 0.04`). Child initial: `{ opacity: 0, y: 24, scale: 0.985 }`, show: `{ duration: 0.75, ease: [0.22,1,0.36,1] }`. Updated padding to `py-16 lg:pt-[182px] lg:pb-[120px]`.
+- **`src/components/home/HomeIntro.tsx`** — Replaced `IntersectionObserver` color toggle with `useScroll` + `useTransform` continuous color shift (`[0.15,0.45]` → `#8a8a8a → #F0F0FF`). Replaced `StaggerGroup`/`Reveal` with direct motion stagger. Added two-tone "and" span. Updated padding to `py-16 lg:py-[140px]`.
+- **`src/components/home/FeaturedWork.tsx`** — Added scroll-linked image scale to `WorkCard` and `NdaCard`: `useScroll` with `offset: ["start end","end start"]`, `scale: [0.94→1.02]`, `y: [24→0]`. Inner `motion.div` wraps each image inside `overflow-hidden` container so scale is clipped (breathing zoom effect). Updated stagger to new values. Padding to `py-16 lg:py-[140px]`.
+- **`src/components/home/ServicesAccordion.tsx`** — Updated stagger to `parentVariant`/`childVariant`. Service rows list also staggered. Arrow travel changed to `translate-x-[6px]` (was 8px). Padding to `py-16 lg:py-[140px]`.
+- **`src/components/home/ChatbotShowcase.tsx`** — Updated stagger to new values. Two-tone heading: "A" and "that" dimmed with `text-white/40`. Padding to `py-16 lg:py-[140px]`.
+- **`src/components/home/ContactCta.tsx`** — Updated stagger to new values. Two-tone heading: "about" and "your" wrapped in `text-white/40`. Padding to `py-16 lg:py-[140px]`.
+- **`src/components/layout/SiteHeader.tsx`** — Replaced boolean scroll-state class toggle for bg/blur with `motion.header` + `useScroll`/`useTransform`: `backgroundColor` interpolates `rgba(8,8,16,0) → rgba(8,8,16,0.72)` and `backdropFilter` `blur(0px) saturate(100%) → blur(14px) saturate(150%)` over first 80px of scroll. Border/shadow still snap via `scrolled` state.
+- **`src/components/layout/SiteFooter.tsx`** — Added `"use client"`, motion stagger to logo/tagline, link columns, and CTA strip. Two-tone footer CTA: "something" dimmed with `text-white/40`.
+
+**Animation spec (uniform across all sections):**
+- Parent: `whileInView`, `viewport: { once: true, amount: 0.25 }`, `staggerChildren: 0.09`, `delayChildren: 0.04`
+- Child initial: `{ opacity: 0, y: 24, scale: 0.985 }` → show: `{ opacity: 1, y: 0, scale: 1, duration: 0.75, ease: [0.22,1,0.36,1] }`
+- Image scroll scale: `useScroll` target ref, `offset: ["start end","end start"]`, `scale: [0,0.5] → [0.94,1.02]`
+- Section spacing: `py-16 lg:py-[140px]` (mobile 64px, desktop 140px)
+
+**Files:** `src/components/motion/Reveal.tsx`, `src/components/home/{Hero,HomeIntro,FeaturedWork,ServicesAccordion,ChatbotShowcase,ContactCta}.tsx`, `src/components/layout/{SiteHeader,SiteFooter}.tsx`
+
+---
+
 ## 2026-06-03 — Scroll animations, hover effects, parallax (Merco-matched)
 
 **What changed:**

@@ -9,11 +9,11 @@ import {
 /**
  * Calm ease-out: settles without bounce. Tune here for sitewide scroll reveals.
  */
-export const motionEase = [0.16, 1, 0.3, 1] as const;
+export const motionEase = [0.22, 1, 0.36, 1] as const;
 
 export const revealDefaults = {
-  duration: 0.8,
-  y: 40,
+  duration: 0.75,
+  y: 24,
 } as const;
 
 type RevealProps = {
@@ -43,8 +43,8 @@ export function Reveal({
     <motion.div
       id={id}
       className={className}
-      initial={{ opacity: 0, y: revealDefaults.y }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: revealDefaults.y, scale: 0.985 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: "-36px 0px -32px 0px", amount: 0.16 }}
       transition={{
         duration: revealDefaults.duration,

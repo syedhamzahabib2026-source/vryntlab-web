@@ -3,7 +3,22 @@
 import Link from "next/link";
 import { motion } from "motion/react";
 
-const ease = [0.16, 1, 0.3, 1] as const;
+const ease = [0.22, 1, 0.36, 1] as const;
+
+const childVariant = {
+  hidden: { opacity: 0, y: 24, scale: 0.985 },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.75, ease },
+  },
+};
+
+const parentVariant = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.09, delayChildren: 0.04 } },
+};
 
 function SectionLabel({ text }: { text: string }) {
   return (
@@ -69,27 +84,25 @@ export function ServicesAccordion() {
   return (
     <section
       aria-labelledby="services-heading"
-      style={{ paddingTop: "100px" }}
+      className="py-16 lg:py-[140px]"
     >
       <div className="mx-auto w-full max-w-[1290px] px-4 sm:px-8 lg:px-[30px]">
 
-        {/* Label + heading — stagger in */}
+        {/* Label + heading — stagger */}
         <motion.div
           initial="hidden"
-          whileInView="visible"
+          whileInView="show"
           viewport={{ once: true, amount: 0.2 }}
-          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}
+          variants={parentVariant}
         >
-          <motion.div
-            variants={{ hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease } } }}
-          >
+          <motion.div variants={childVariant}>
             <SectionLabel text="What We Do Best" />
           </motion.div>
 
           <div className="mt-6 overflow-hidden">
             <motion.h2
               id="services-heading"
-              variants={{ hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease } } }}
+              variants={childVariant}
               className="text-[3rem] font-medium leading-[1] tracking-[-0.04em] text-[#F0F0FF] sm:text-[4.5rem] lg:text-[6rem]"
             >
               Our{" "}
@@ -98,16 +111,20 @@ export function ServicesAccordion() {
           </div>
         </motion.div>
 
-        {/* Numbered service list */}
-        <ul className="mt-12" role="list">
+        {/* Numbered service list — each row staggers in */}
+        <motion.ul
+          className="mt-12"
+          role="list"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.05 }}
+          variants={{
+            hidden: {},
+            show: { transition: { staggerChildren: 0.09, delayChildren: 0.04 } },
+          }}
+        >
           {SERVICES.map((svc) => (
-            <motion.li
-              key={svc.num}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.05 }}
-              transition={{ duration: 0.8, ease }}
-            >
+            <motion.li key={svc.num} variants={childVariant}>
               <Link
                 href={svc.href}
                 className="group block border-t border-[#1E1E35] py-[80px] transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-focus)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]"
@@ -116,23 +133,21 @@ export function ServicesAccordion() {
 
                   {/* LEFT: number + title + tagline */}
                   <div className="flex flex-col">
-                    {/* Number — cross-fades to gradient on hover */}
+                    {/* Number cross-fades to gradient on hover */}
                     <span className="relative inline-block self-start pb-[10px] pt-[10px]">
-                      <span className="text-[16px] font-normal text-[#8888a8] transition-opacity duration-300 group-hover:opacity-0">
+                      <span className="text-[16px] font-normal text-[#8888a8] transition-opacity duration-200 group-hover:opacity-0">
                         {svc.num}
                       </span>
                       <span
-                        className="absolute inset-0 flex items-center bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF] bg-clip-text text-[16px] font-normal text-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                        className="absolute inset-0 flex items-center bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF] bg-clip-text text-[16px] font-normal text-transparent opacity-0 transition-opacity duration-200 group-hover:opacity-100"
                         aria-hidden
                       >
                         {svc.num}
                       </span>
                     </span>
 
-                    {/* Title — turns gradient on hover */}
-                    <h3
-                      className="bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF] bg-clip-text text-[2.5rem] font-medium leading-[1.1] tracking-[-0.04em] text-[#F0F0FF] transition-colors duration-300 group-hover:text-transparent sm:text-[3.5rem] lg:text-[4.25rem]"
-                    >
+                    {/* Title turns gradient on hover */}
+                    <h3 className="bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF] bg-clip-text text-[2.5rem] font-medium leading-[1.1] tracking-[-0.04em] text-[#F0F0FF] transition-colors duration-200 group-hover:text-transparent sm:text-[3.5rem] lg:text-[4.25rem]">
                       {svc.title}
                     </h3>
 
@@ -147,9 +162,9 @@ export function ServicesAccordion() {
                     <p className="flex-1 text-[1.125rem] font-normal leading-[1.6] text-[#8888a8]">
                       {svc.description}
                     </p>
-                    {/* Arrow — shifts right on hover */}
+                    {/* Arrow shifts 6px right on hover */}
                     <span
-                      className="mt-1 shrink-0 text-[1.125rem] text-[#8888a8] transition-transform duration-300 group-hover:translate-x-2 group-hover:text-[#F0F0FF]"
+                      className="mt-1 shrink-0 text-[1.125rem] text-[#8888a8] transition-[transform,color] duration-200 group-hover:translate-x-[6px] group-hover:text-[#F0F0FF]"
                       aria-hidden
                     >
                       →
@@ -159,11 +174,10 @@ export function ServicesAccordion() {
               </Link>
             </motion.li>
           ))}
-        </ul>
+        </motion.ul>
 
         {/* Bottom border closure */}
         <div className="border-t border-[#1E1E35]" />
-        <div className="pb-[100px]" />
       </div>
     </section>
   );

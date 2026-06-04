@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { motion, useScroll, useTransform } from "motion/react";
 import { focusRing } from "@/components/layout/layoutTokens";
 import { navLinks, siteBrandName, siteLogoSrc } from "@/lib/site";
 
@@ -13,6 +14,20 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
+  // Continuous scroll-linked bg + blur — only active on home page
+  const { scrollY } = useScroll();
+  const headerBg = useTransform(
+    scrollY,
+    [0, 80],
+    ["rgba(8,8,16,0)", "rgba(8,8,16,0.72)"],
+  );
+  const headerFilter = useTransform(
+    scrollY,
+    [0, 80],
+    ["blur(0px) saturate(100%)", "blur(14px) saturate(150%)"],
+  );
+
+  // Keep scrolled state for border + shadow (those still snap at threshold)
   useEffect(() => {
     function onScroll() {
       setScrolled(window.scrollY > 50);
@@ -24,10 +39,6 @@ export function SiteHeader() {
 
   const heroAtTop = isHome && !scrolled;
 
-  const shellClass = heroAtTop
-    ? "border-b border-transparent bg-transparent shadow-none backdrop-blur-none"
-    : "border-b border-[var(--border)] bg-[color-mix(in_srgb,var(--background)_55%,transparent)] shadow-[0_8px_32px_-16px_rgba(0,0,0,0.5)] backdrop-blur-xl backdrop-saturate-150";
-
   const navLinkClass =
     `rounded-md px-3 py-2 text-[15px] font-normal text-[#C8C8D8]/80 transition-colors duration-200 ease-[var(--ease-out-premium)] ${focusRing} [@media(hover:hover)]:hover:text-[#F0F0FF]`;
 
@@ -35,8 +46,20 @@ export function SiteHeader() {
     `flex min-h-11 items-center rounded-lg px-3 py-2 text-[16px] font-normal text-[#C8C8D8] transition-colors duration-200 ${focusRing} [@media(hover:hover)]:hover:bg-white/[0.05] [@media(hover:hover)]:hover:text-[#F0F0FF]`;
 
   return (
-    <header
-      className={`sticky top-0 z-50 w-full motion-safe:transition-[background-color,box-shadow,border-color,backdrop-filter] motion-safe:duration-300 motion-safe:ease-[var(--ease-out-premium)] motion-reduce:transition-none ${shellClass}`}
+    <motion.header
+      className={`sticky top-0 z-50 w-full transition-[border-color,box-shadow] duration-300 ease-[var(--ease-out-premium)] motion-reduce:transition-none ${
+        heroAtTop
+          ? "border-b border-transparent shadow-none"
+          : "border-b border-[var(--border)] shadow-[0_8px_32px_-16px_rgba(0,0,0,0.5)]"
+      }`}
+      style={
+        isHome
+          ? { backgroundColor: headerBg, backdropFilter: headerFilter }
+          : {
+              backgroundColor: "rgba(8,8,16,0.72)",
+              backdropFilter: "blur(14px) saturate(150%)",
+            }
+      }
     >
       <div className="mx-auto w-full max-w-[1290px] px-4 sm:px-8 lg:px-[30px]">
         <div className="flex h-20 items-center justify-between gap-6">
@@ -58,7 +81,7 @@ export function SiteHeader() {
             />
           </Link>
 
-          {/* Center nav — desktop, Merco-style pill */}
+          {/* Center nav — desktop pill */}
           <nav
             className="hidden items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-2 py-1.5 lg:flex lg:gap-0.5"
             aria-label="Primary"
@@ -74,7 +97,7 @@ export function SiteHeader() {
           <div className="flex items-center gap-3">
             <Link
               href="/#contact"
-              className={`hidden shrink-0 items-center gap-2 rounded-full bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF] px-5 py-2.5 text-[15px] font-medium text-white shadow-[0_0_24px_-6px_rgba(124,63,255,0.45)] transition-[transform,box-shadow] duration-300 ease-[var(--ease-out-premium)] active:scale-[0.98] lg:inline-flex ${focusRing} [@media(hover:hover)]:hover:scale-[1.02] [@media(hover:hover)]:hover:-translate-y-px [@media(hover:hover)]:hover:shadow-[0_0_36px_-4px_rgba(124,63,255,0.65)]`}
+              className={`hidden shrink-0 items-center gap-2 rounded-full bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF] px-5 py-2.5 text-[15px] font-medium text-white shadow-[0_0_24px_-6px_rgba(124,63,255,0.45)] transition-[transform,box-shadow] duration-[180ms] ease-[var(--ease-out-premium)] active:scale-[0.98] lg:inline-flex ${focusRing} [@media(hover:hover)]:hover:scale-[1.02] [@media(hover:hover)]:hover:-translate-y-px [@media(hover:hover)]:hover:shadow-[0_0_36px_-4px_rgba(124,63,255,0.65)]`}
             >
               Say Hello
             </Link>
@@ -119,6 +142,6 @@ export function SiteHeader() {
           </nav>
         )}
       </div>
-    </header>
+    </motion.header>
   );
 }

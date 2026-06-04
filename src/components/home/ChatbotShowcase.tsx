@@ -15,6 +15,23 @@ import { focusRing } from "@/components/layout/layoutTokens";
 import { siteLogoSrc } from "@/lib/site";
 import "@/components/chat/chat-widget.css";
 
+const ease = [0.22, 1, 0.36, 1] as const;
+
+const childVariant = {
+  hidden: { opacity: 0, y: 24, scale: 0.985 },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.75, ease },
+  },
+};
+
+const parentVariant = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.09, delayChildren: 0.04 } },
+};
+
 type ExampleTurn =
   | { role: "user"; time: string; text: string }
   | { role: "assistant"; time: string; text: string };
@@ -260,12 +277,6 @@ function AnimatedExampleChat({ active }: { active: boolean }) {
   );
 }
 
-const ease = [0.16, 1, 0.3, 1] as const;
-const inViewItem = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease } },
-};
-
 export function ChatbotShowcase() {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const [demoActive, setDemoActive] = useState(false);
@@ -304,82 +315,77 @@ export function ChatbotShowcase() {
       id="chat-showcase"
       ref={sectionRef}
       aria-labelledby="chat-showcase-heading"
-      style={{ paddingTop: "100px", paddingBottom: "100px", background: "var(--surface)" }}
+      className="py-16 lg:py-[140px]"
+      style={{ background: "var(--surface)" }}
     >
       <div className="mx-auto w-full max-w-[1290px] px-4 sm:px-8 lg:px-[30px]">
 
-        {/* Section label */}
+        {/* Section label + heading + content — full stagger */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, ease }}
-          className="flex items-center gap-2.5"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.15 }}
+          variants={parentVariant}
         >
-          <span className="h-px w-4 shrink-0 bg-[#8888a8]" aria-hidden />
-          <span className="text-[13px] font-normal text-[#8888a8]">AI Chatbot</span>
-        </motion.div>
+          {/* Eyebrow */}
+          <motion.div variants={childVariant} className="flex items-center gap-2.5">
+            <span className="h-px w-4 shrink-0 bg-[#8888a8]" aria-hidden />
+            <span className="text-[13px] font-normal text-[#8888a8]">AI Chatbot</span>
+          </motion.div>
 
-        <div className="mt-10 grid grid-cols-1 items-center gap-16 lg:grid-cols-2 lg:gap-20">
+          <div className="mt-10 grid grid-cols-1 items-center gap-16 lg:grid-cols-2 lg:gap-20">
 
-          {/* LEFT: copy — stagger in */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.1 }}
-            variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } } }}
-          >
-            <motion.h2
-              id="chat-showcase-heading"
-              variants={inViewItem}
-              className="text-[2rem] font-medium leading-[1.15] tracking-[-0.03em] text-[#F0F0FF] sm:text-[2.5rem] lg:text-[3rem]"
-            >
-              {brandChatbotShowcase.title}
-            </motion.h2>
-            <motion.p
-              variants={inViewItem}
-              className="mt-6 text-[1.125rem] font-normal leading-[1.6] text-[#8888a8]"
-            >
-              {brandChatbotShowcase.description}
-            </motion.p>
-
-            <motion.ul
-              variants={inViewItem}
-              className="mt-8 space-y-3"
-              role="list"
-            >
-              {brandChatbotShowcase.bullets.map((line) => (
-                <li key={line} className="flex items-start gap-3 text-[1.125rem] font-normal leading-[1.5] text-[#8888a8]">
-                  <span className="mt-[9px] h-1 w-1 shrink-0 rounded-full bg-[var(--accent)]" aria-hidden />
-                  {line}
-                </li>
-              ))}
-            </motion.ul>
-
-            <motion.div variants={inViewItem} className="mt-10">
-              <button
-                type="button"
-                onClick={openLiveChatWidget}
-                className={`inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF] px-7 py-3.5 text-[16px] font-medium text-white shadow-[0_0_28px_-8px_rgba(124,63,255,0.5)] transition-[transform,box-shadow] duration-300 active:scale-[0.98] ${focusRing} [@media(hover:hover)]:hover:scale-[1.02] [@media(hover:hover)]:hover:-translate-y-px [@media(hover:hover)]:hover:shadow-[0_0_40px_-4px_rgba(124,63,255,0.7)]`}
+            {/* LEFT: copy */}
+            <div className="flex flex-col gap-0">
+              <motion.h2
+                id="chat-showcase-heading"
+                variants={childVariant}
+                className="text-[2rem] font-medium leading-[1.15] tracking-[-0.03em] text-[#F0F0FF] sm:text-[2.5rem] lg:text-[3rem]"
               >
-                {brandChatbotShowcase.realChatButton}
-                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/20 text-[14px]" aria-hidden>
-                  →
-                </span>
-              </button>
-            </motion.div>
-          </motion.div>
+                <span className="text-white/40">A</span> chatbot{" "}
+                <span className="text-white/40">that</span> answers{" "}
+                for you, 24/7
+              </motion.h2>
+              <motion.p
+                variants={childVariant}
+                className="mt-6 text-[1.125rem] font-normal leading-[1.6] text-[#8888a8]"
+              >
+                {brandChatbotShowcase.description}
+              </motion.p>
 
-          {/* RIGHT: animated chat demo — slides in from right */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.8, delay: 0.15, ease }}
-          >
-            <AnimatedExampleChat active={demoActive} />
-          </motion.div>
-        </div>
+              <motion.ul
+                variants={childVariant}
+                className="mt-8 space-y-3"
+                role="list"
+              >
+                {brandChatbotShowcase.bullets.map((line) => (
+                  <li key={line} className="flex items-start gap-3 text-[1.125rem] font-normal leading-[1.5] text-[#8888a8]">
+                    <span className="mt-[9px] h-1 w-1 shrink-0 rounded-full bg-[var(--accent)]" aria-hidden />
+                    {line}
+                  </li>
+                ))}
+              </motion.ul>
+
+              <motion.div variants={childVariant} className="mt-10">
+                <button
+                  type="button"
+                  onClick={openLiveChatWidget}
+                  className={`inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF] px-7 py-3.5 text-[16px] font-medium text-white shadow-[0_0_28px_-8px_rgba(124,63,255,0.5)] transition-[transform,box-shadow] duration-[180ms] active:scale-[0.98] ${focusRing} [@media(hover:hover)]:hover:scale-[1.02] [@media(hover:hover)]:hover:-translate-y-px [@media(hover:hover)]:hover:shadow-[0_0_40px_-4px_rgba(124,63,255,0.7)]`}
+                >
+                  {brandChatbotShowcase.realChatButton}
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/20 text-[14px]" aria-hidden>
+                    →
+                  </span>
+                </button>
+              </motion.div>
+            </div>
+
+            {/* RIGHT: animated chat demo */}
+            <motion.div variants={childVariant}>
+              <AnimatedExampleChat active={demoActive} />
+            </motion.div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

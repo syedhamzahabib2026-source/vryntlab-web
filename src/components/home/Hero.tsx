@@ -11,7 +11,7 @@ import {
 import { useEffect, useState } from "react";
 import { focusRing } from "@/components/layout/layoutTokens";
 
-const ease = [0.16, 1, 0.3, 1] as const;
+const ease = [0.22, 1, 0.36, 1] as const;
 
 const CYCLING_WORDS = [
   "Shopify Store",
@@ -20,11 +20,25 @@ const CYCLING_WORDS = [
   "Bookings",
 ] as const;
 
+const childVariant = {
+  hidden: { opacity: 0, y: 24, scale: 0.985 },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.75, ease },
+  },
+};
+
+const parentVariant = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.09, delayChildren: 0.04 } },
+};
+
 export function Hero() {
   const reduceMotion = useReducedMotion() ?? false;
   const [wordIndex, setWordIndex] = useState(0);
 
-  // Parallax — hardware-composited CSS transform, safe on all devices
   const { scrollY } = useScroll();
   const parallaxY = useTransform(scrollY, [0, 600], [0, 90]);
 
@@ -41,8 +55,7 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative w-full overflow-hidden"
-      style={{ paddingTop: "182px", paddingBottom: "100px" }}
+      className="relative w-full overflow-hidden py-16 lg:pb-[120px] lg:pt-[182px]"
       aria-labelledby="hero-heading"
     >
       {/* Dot grid */}
@@ -60,84 +73,86 @@ export function Hero() {
         style={{ background: "rgba(0,229,255,0.05)" }}
       />
 
-      {/* Content — parallaxes up at 15% scroll speed on desktop */}
+      {/* Parallax wrapper */}
       <motion.div
         className="relative mx-auto w-full max-w-[1290px] px-4 sm:px-8 lg:px-[30px]"
         style={parallaxStyle}
       >
-        <motion.h1
-          id="hero-heading"
-          initial={reduceMotion ? undefined : { opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.06, ease }}
-          className="text-[3rem] font-medium leading-[1] tracking-[-0.04em] text-[#F0F0FF] sm:text-[4.5rem] lg:text-[6rem]"
-        >
-          {/* "Your" muted */}
-          <span className="text-[#C8C8D8]/40">Your </span>
-
-          {/* Cycling word — invisible spacer keeps width fixed */}
-          <span className="relative inline-block">
-            <span className="invisible select-none" aria-hidden>
-              {CYCLING_WORDS[0]},
-            </span>
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={CYCLING_WORDS[wordIndex]}
-                initial={reduceMotion ? undefined : { opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={reduceMotion ? undefined : { opacity: 0, y: -14 }}
-                transition={{ duration: 0.28, ease }}
-                className="absolute left-0 top-0 whitespace-nowrap text-[#F0F0FF]"
-                aria-live="polite"
-              >
-                {CYCLING_WORDS[wordIndex]},
-              </motion.span>
-            </AnimatePresence>
-          </span>
-          <br />
-          {/* Gradient accent line */}
-          <span className="bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF] bg-clip-text text-transparent">
-            built to sell.
-          </span>
-        </motion.h1>
-
-        <motion.p
-          initial={reduceMotion ? undefined : { opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.18, ease }}
-          className="mt-8 max-w-[46ch] text-[1.125rem] leading-[1.55] text-[#C8C8D8]/60 sm:text-[1.25rem]"
-        >
-          Shopify stores, websites, and the automations behind them.
-          A clear plan and price before we start.
-        </motion.p>
-
+        {/* Stagger entrance */}
         <motion.div
-          initial={reduceMotion ? undefined : { opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, delay: 0.28, ease }}
-          className="mt-10 flex items-center gap-4"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.25 }}
+          variants={parentVariant}
         >
-          {/* Primary CTA */}
-          <Link
-            href="/#contact"
-            className={`inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF] px-7 py-3.5 text-[16px] font-medium text-white shadow-[0_0_32px_-8px_rgba(124,63,255,0.55)] transition-[transform,box-shadow] duration-300 ease-[var(--ease-out-premium)] active:scale-[0.98] ${focusRing} [@media(hover:hover)]:hover:scale-[1.02] [@media(hover:hover)]:hover:-translate-y-px [@media(hover:hover)]:hover:shadow-[0_0_44px_-4px_rgba(124,63,255,0.75)]`}
+          <motion.h1
+            id="hero-heading"
+            variants={childVariant}
+            className="text-[3rem] font-medium leading-[1] tracking-[-0.04em] text-[#F0F0FF] sm:text-[4.5rem] lg:text-[6rem]"
           >
-            Say Hello
-            <span
-              aria-hidden
-              className="flex h-7 w-7 items-center justify-center rounded-full bg-white/20 text-[14px]"
-            >
-              →
-            </span>
-          </Link>
+            {/* "Your" muted */}
+            <span className="text-[#C8C8D8]/40">Your </span>
 
-          {/* Ghost secondary */}
-          <Link
-            href="/#work"
-            className={`inline-flex items-center gap-2 text-[16px] font-normal text-[#C8C8D8]/60 underline decoration-white/20 underline-offset-4 transition-colors duration-200 ${focusRing} rounded-sm [@media(hover:hover)]:hover:text-[#F0F0FF] [@media(hover:hover)]:hover:decoration-white/45`}
+            {/* Cycling word — invisible spacer keeps width fixed */}
+            <span className="relative inline-block">
+              <span className="invisible select-none" aria-hidden>
+                {CYCLING_WORDS[0]},
+              </span>
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={CYCLING_WORDS[wordIndex]}
+                  initial={reduceMotion ? undefined : { opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={reduceMotion ? undefined : { opacity: 0, y: -14 }}
+                  transition={{ duration: 0.28, ease }}
+                  className="absolute left-0 top-0 whitespace-nowrap text-[#F0F0FF]"
+                  aria-live="polite"
+                >
+                  {CYCLING_WORDS[wordIndex]},
+                </motion.span>
+              </AnimatePresence>
+            </span>
+            <br />
+            {/* Gradient accent */}
+            <span className="bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF] bg-clip-text text-transparent">
+              built to sell.
+            </span>
+          </motion.h1>
+
+          <motion.p
+            variants={childVariant}
+            className="mt-8 max-w-[46ch] text-[1.125rem] leading-[1.55] text-[#C8C8D8]/60 sm:text-[1.25rem]"
           >
-            View Work
-          </Link>
+            Shopify stores, websites, and the automations behind them.
+            A clear plan and price before we start.
+          </motion.p>
+
+          <motion.div
+            variants={childVariant}
+            className="mt-10 flex items-center gap-4"
+          >
+            {/* Primary CTA */}
+            <Link
+              href="/#contact"
+              className={`inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF] px-7 py-3.5 text-[16px] font-medium text-white shadow-[0_0_32px_-8px_rgba(124,63,255,0.55)] transition-[transform,box-shadow] duration-[180ms] ease-[var(--ease-out-premium)] active:scale-[0.98] ${focusRing} [@media(hover:hover)]:hover:scale-[1.02] [@media(hover:hover)]:hover:shadow-[0_0_44px_-4px_rgba(124,63,255,0.75)]`}
+            >
+              Say Hello
+              <span
+                aria-hidden
+                className="flex h-7 w-7 items-center justify-center rounded-full bg-white/20 text-[14px]"
+              >
+                →
+              </span>
+            </Link>
+
+            {/* Ghost secondary */}
+            <Link
+              href="/#work"
+              className={`inline-flex items-center gap-2 text-[16px] font-normal text-[#C8C8D8]/60 underline decoration-white/20 underline-offset-4 transition-colors duration-200 ${focusRing} rounded-sm [@media(hover:hover)]:hover:text-[#F0F0FF] [@media(hover:hover)]:hover:decoration-white/45`}
+            >
+              View Work
+            </Link>
+          </motion.div>
         </motion.div>
       </motion.div>
     </section>
