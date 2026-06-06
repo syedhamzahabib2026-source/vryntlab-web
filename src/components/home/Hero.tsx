@@ -38,7 +38,7 @@ export function Hero() {
 
   const { scrollYProgress } = useScroll({
     target: heroRef,
-    offset: ["start start", "end end"],
+    offset: ["start start", "end start"],
   });
 
   // Content fades, lifts, scales out as user scrolls past the hero

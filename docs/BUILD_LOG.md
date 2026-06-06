@@ -1,5 +1,19 @@
 # Build log
 
+## 2026-06-06 — Logo sizing + mobile scroll animations
+
+**What changed:**
+
+- **`src/components/layout/SiteHeader.tsx`** — Logo width bumped: `w-[155px] sm:w-[170px]` → `w-[125px] sm:w-[155px] lg:w-[175px]`. 175px at desktop (within the 160–180px target), 125px on mobile (≥120px floor).
+- **`src/components/layout/SiteFooter.tsx`** — Footer logo width bumped: `w-[145px]` → `w-[125px] sm:w-[150px] lg:w-[165px]` for proportional sizing at all breakpoints.
+- **`src/components/home/Hero.tsx`** — Fixed hero scroll fade-out on mobile. Changed `useScroll` offset from `["start start", "end end"]` to `["start start", "end start"]`. The `end end` offset requires the section bottom to align with the viewport bottom, which never happens on mobile (section shorter than viewport), so `scrollYProgress` was stuck at 0. The `end start` offset tracks until the section fully scrolls off the top — works at all screen sizes.
+- **`src/components/home/ServicesGrid.tsx`** — Replaced single `Reveal` wrapping the whole service grid with `motion.ul` + `motion.li` stagger variants. Each card now enters independently with a staggered fade-in + slide-up on both mobile and desktop, instead of the whole grid animating as one block.
+- Build: `npm run build` passes clean, 30 static/dynamic routes.
+
+**Files:** `src/components/layout/{SiteHeader,SiteFooter}.tsx`, `src/components/home/{Hero,ServicesGrid}.tsx`
+
+---
+
 ## 2026-06-04 — Hero polish: bg image, h1 spacing, scroll fade, logo sizing
 
 **What changed:**
