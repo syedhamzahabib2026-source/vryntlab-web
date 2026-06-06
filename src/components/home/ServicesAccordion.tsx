@@ -8,16 +8,6 @@ import { focusRing } from "@/components/layout/layoutTokens";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-const childVariant = {
-  hidden: { opacity: 0, y: 24, scale: 0.985 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.75, ease } },
-};
-
-const parentVariant = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.09, delayChildren: 0.04 } },
-};
-
 const SERVICES = [
   {
     num: "01",
@@ -75,9 +65,19 @@ const SERVICES = [
   },
 ] as const;
 
-// ─── Desktop sticky gallery ────────────────────────────────────────────────────
-// Uses AnimatePresence mode="wait" so only ONE service is ever in the DOM.
-// This is the reliable fix — no stacking, no opacity overlap possible.
+// ─── Sticky scroll gallery — works on ALL screen sizes ────────────────────────
+//
+// Mobile (flex-col):  image top 40% → text bottom 60%
+// Desktop (flex-row): text left 44% → image right flex-1
+//
+// AnimatePresence mode="wait" is identical on both — one service at a time,
+// crossfade triggered by scroll progress. Same useScroll/useMotionValueEvent
+// math on all screen sizes.
+//
+// Section height: 500vh mobile / 600vh desktop (shorter on small screens so
+// scrolling through all 6 services doesn't feel endless).
+// Sticky inner: 100dvh mobile (dynamic viewport height handles address bar) /
+// 100vh desktop.
 
 function StickyServices() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -99,13 +99,55 @@ function StickyServices() {
     <section
       ref={sectionRef}
       aria-label="Our Services"
-      style={{ height: "600vh" }}
+      className="h-[500vh] lg:h-[600vh]"
     >
-      <div className="sticky top-0 flex h-screen overflow-hidden">
+      {/* Sticky panel — flex-col on mobile, flex-row on desktop */}
+      <div className="sticky top-0 flex h-[100dvh] flex-col overflow-hidden lg:h-screen lg:flex-row">
 
-        {/* ── Left: text panel — single slot, AnimatePresence guarantees no overlap ── */}
+        {/* ── Image panel ────────────────────────────────────────────────────
+            DOM first → naturally at the TOP in flex-col (mobile).
+            On desktop we push it RIGHT with lg:order-last.                 */}
+        <div className="relative h-[40%] w-full shrink-0 overflow-hidden lg:order-last lg:h-full lg:flex-1">
+
+          {/* Left-edge gradient — desktop only (blends into text panel) */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-y-0 left-0 z-[1] hidden w-20 lg:block"
+            style={{ background: "linear-gradient(to right, var(--surface), transparent)" }}
+          />
+
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeIdx}
+              initial={{ opacity: 0, scale: 1.04 }}
+              animate={{ opacity: 1, scale: 1.0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.45, ease }}
+              className="absolute inset-0"
+            >
+              <Image
+                src={svc.imageSrc}
+                alt={svc.imageAlt}
+                fill
+                className="object-cover"
+                sizes="(min-width: 1024px) 56vw, 100vw"
+                priority={activeIdx === 0}
+              />
+              {/* Bottom-fade into text panel on mobile; subtle vignette on desktop */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-20 lg:h-48"
+                style={{ background: "linear-gradient(to top, rgba(0,0,0,0.45), transparent)" }}
+              />
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* ── Text panel ─────────────────────────────────────────────────────
+            DOM second → naturally at the BOTTOM in flex-col (mobile).
+            On desktop we push it LEFT with lg:order-first.                 */}
         <div
-          className="relative w-[44%] shrink-0 overflow-hidden"
+          className="relative h-[60%] w-full shrink-0 overflow-hidden lg:order-first lg:h-full lg:w-[44%]"
           style={{ background: "var(--surface)" }}
         >
           <AnimatePresence mode="wait">
@@ -114,12 +156,12 @@ function StickyServices() {
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -22 }}
-              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.35, ease }}
               className="absolute inset-0 flex items-center"
             >
-              <div className="w-full px-8 lg:px-12 xl:px-16">
+              <div className="w-full px-6 sm:px-8 lg:px-12 xl:px-16">
                 {activeIdx === 0 && (
-                  <div className="mb-6 flex items-center gap-2.5">
+                  <div className="mb-4 flex items-center gap-2.5 lg:mb-6">
                     <span className="h-px w-4 shrink-0 bg-[#8888a8]" aria-hidden />
                     <span className="text-[13px] font-normal text-[#8888a8]">
                       What We Do Best
@@ -133,17 +175,17 @@ function StickyServices() {
                   </span>
                 </div>
 
-                <h3 className="mt-5 text-[1.75rem] font-medium leading-[1.1] tracking-[-0.04em] text-[#F0F0FF] lg:text-[2.25rem] xl:text-[2.75rem]">
+                <h3 className="mt-4 text-[1.5rem] font-medium leading-[1.1] tracking-[-0.04em] text-[#F0F0FF] sm:text-[1.75rem] lg:mt-5 lg:text-[2.25rem] xl:text-[2.75rem]">
                   {svc.title}
                 </h3>
 
-                <p className="mt-4 max-w-[34ch] text-[1.0625rem] leading-[1.65] text-[#8888a8]">
+                <p className="mt-3 max-w-[34ch] text-[0.9375rem] leading-[1.65] text-[#8888a8] lg:mt-4 lg:text-[1.0625rem]">
                   {svc.description}
                 </p>
 
                 <Link
                   href={svc.href}
-                  className={`mt-8 inline-flex items-center gap-2 text-[14px] font-normal text-[#C8C8D8]/55 transition-colors duration-200 ${focusRing} rounded-sm [@media(hover:hover)]:hover:text-[#F0F0FF]`}
+                  className={`mt-5 inline-flex items-center gap-2 text-[14px] font-normal text-[#C8C8D8]/55 transition-colors duration-200 ${focusRing} rounded-sm lg:mt-8 [@media(hover:hover)]:hover:text-[#F0F0FF]`}
                 >
                   Learn more
                   <span aria-hidden className="inline-block transition-transform duration-200">
@@ -154,8 +196,8 @@ function StickyServices() {
             </motion.div>
           </AnimatePresence>
 
-          {/* Progress line at the bottom */}
-          <div className="absolute bottom-10 left-8 right-8 lg:left-12 lg:right-12 xl:left-16 xl:right-16">
+          {/* Progress bar pinned to bottom of text panel */}
+          <div className="absolute bottom-6 left-6 right-6 sm:bottom-8 sm:left-8 sm:right-8 lg:bottom-10 lg:left-12 lg:right-12 xl:left-16 xl:right-16">
             <div className="h-px w-full bg-[#1E1E35]">
               <motion.div
                 className="h-full bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF]"
@@ -164,48 +206,21 @@ function StickyServices() {
             </div>
           </div>
         </div>
-
-        {/* ── Right: image panel — single slot, crossfade via AnimatePresence ── */}
-        <div className="relative flex-1 overflow-hidden">
-
-          {/* Gradient edge where text panel meets image */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-y-0 left-0 z-[1] w-20"
-            style={{ background: "linear-gradient(to right, var(--surface), transparent)" }}
-          />
-
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeIdx}
-              initial={{ opacity: 0, scale: 1.04 }}
-              animate={{ opacity: 1, scale: 1.0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute inset-0"
-            >
-              <Image
-                src={svc.imageSrc}
-                alt={svc.imageAlt}
-                fill
-                className="object-cover"
-                sizes="(min-width: 1024px) 56vw, 100vw"
-                priority={activeIdx === 0}
-              />
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-x-0 bottom-0 h-48"
-                style={{ background: "linear-gradient(to top, rgba(0,0,0,0.35), transparent)" }}
-              />
-            </motion.div>
-          </AnimatePresence>
-        </div>
       </div>
     </section>
   );
 }
 
-// ─── Mobile stacked list ───────────────────────────────────────────────────────
+// ─── Mobile stacked list — commented-out backup; do not render ────────────────
+/*
+const childVariant = {
+  hidden: { opacity: 0, y: 24, scale: 0.985 },
+  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.75, ease } },
+};
+const parentVariant = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.09, delayChildren: 0.04 } },
+};
 
 function MobileServicesList() {
   return (
@@ -214,8 +229,6 @@ function MobileServicesList() {
       className="py-16"
     >
       <div className="mx-auto w-full max-w-[1290px] px-4 sm:px-8">
-
-        {/* Header */}
         <motion.div
           initial="hidden"
           whileInView="show"
@@ -236,8 +249,6 @@ function MobileServicesList() {
             </motion.h2>
           </div>
         </motion.div>
-
-        {/* Service rows */}
         <div className="mt-10">
           {SERVICES.map((svc) => (
             <motion.div
@@ -251,7 +262,6 @@ function MobileServicesList() {
                 href={svc.href}
                 className={`group flex items-center gap-5 border-t border-[#1E1E35] py-6 ${focusRing} rounded-sm`}
               >
-                {/* Thumbnail */}
                 <div className="relative h-[56px] w-[84px] shrink-0 overflow-hidden rounded-lg">
                   <Image
                     src={svc.imageSrc}
@@ -261,8 +271,6 @@ function MobileServicesList() {
                     sizes="84px"
                   />
                 </div>
-
-                {/* Text */}
                 <div className="flex-1 min-w-0">
                   <span className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#8888a8]">
                     {svc.num}
@@ -271,8 +279,6 @@ function MobileServicesList() {
                     {svc.title}
                   </p>
                 </div>
-
-                {/* Arrow */}
                 <span
                   className="shrink-0 text-[#8888a8] transition-transform duration-200 group-hover:translate-x-1"
                   aria-hidden
@@ -288,21 +294,10 @@ function MobileServicesList() {
     </section>
   );
 }
+*/
 
 // ─── Exported section ──────────────────────────────────────────────────────────
 
 export function ServicesAccordion() {
-  return (
-    <>
-      {/* Mobile: stacked list (< lg) */}
-      <div className="block lg:hidden">
-        <MobileServicesList />
-      </div>
-
-      {/* Desktop: sticky scroll gallery (≥ lg) */}
-      <div className="hidden lg:block">
-        <StickyServices />
-      </div>
-    </>
-  );
+  return <StickyServices />;
 }

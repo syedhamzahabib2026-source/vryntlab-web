@@ -1,5 +1,25 @@
 # Build log
 
+## 2026-06-06 — Sticky services gallery enabled on mobile
+
+**What changed:**
+
+- **`src/components/home/ServicesAccordion.tsx`** — Removed the `block lg:hidden` / `hidden lg:block` split. `StickyServices` now renders on all screen sizes. Key changes:
+  - Section height: `h-[500vh] lg:h-[600vh]` (shorter on mobile so scrolling 6 services doesn't feel endless)
+  - Sticky inner: `h-[100dvh] lg:h-screen` — `100dvh` on mobile handles dynamic viewport height (address bar resize)
+  - Layout: `flex-col` on mobile → image panel first in DOM = top 40% of viewport, text panel second = bottom 60%; `flex-row` on desktop → text left 44%, image right, using `lg:order-first`/`lg:order-last` to reorder without changing DOM order
+  - Text panel: tightened padding and spacing (`px-6`, smaller `mt-` values) so content fits the 60% height on small screens; responsive type sizes (`text-[1.5rem] sm:text-[1.75rem] lg:text-[2.25rem]`)
+  - Left-edge gradient (desktop-only blend): `hidden lg:block`
+  - Progress bar: `bottom-6 left-6 right-6` on mobile, `lg:bottom-10` etc. on desktop
+  - `AnimatePresence mode="wait"` and `useScroll`/`useMotionValueEvent` logic unchanged — identical on all screen sizes
+  - `MobileServicesList` kept as a commented-out block for easy rollback
+- **`FeaturedWork.tsx`** — No changes needed: scroll-linked `entryScale` and auto-scrolling `work-scroll-auto` screenshots are already unrestricted (no `lg:` gate).
+- Build: `npm run build` passes clean, 30 static/dynamic routes.
+
+**Files:** `src/components/home/ServicesAccordion.tsx`
+
+---
+
 ## 2026-06-06 — Logo sizing + mobile scroll animations
 
 **What changed:**
