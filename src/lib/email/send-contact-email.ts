@@ -24,27 +24,16 @@ Submitted from:
 VryntLab contact form`;
 }
 
-/**
- * Sends the contact notification to the configured inbox via Resend.
- * Uses public branding in From; actual delivery address comes from env.
- */
-function resolveFromAddress(): string | undefined {
-  const primary = process.env.CONTACT_FROM_EMAIL?.trim();
-  const devOverride = process.env.CONTACT_FROM_EMAIL_DEV?.trim();
-  if (process.env.NODE_ENV === "development" && devOverride) {
-    return devOverride;
-  }
-  return primary;
-}
-
 export async function sendContactEmail(
   input: ContactEmailInput,
 ): Promise<{ id: string | undefined }> {
   const apiKey = process.env.RESEND_API_KEY;
   const to = process.env.CONTACT_TO_EMAIL;
-  const fromAddress = resolveFromAddress();
+  // Fall back to Resend's shared sender so unverified custom domains never block delivery.
+  const fromAddress =
+    process.env.CONTACT_FROM_EMAIL?.trim() || "onboarding@resend.dev";
 
-  if (!apiKey?.trim() || !to?.trim() || !fromAddress?.trim()) {
+  if (!apiKey?.trim() || !to?.trim()) {
     throw new Error("Email is not configured");
   }
 

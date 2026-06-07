@@ -65,7 +65,7 @@ export default function PrivacyPolicyPage() {
               <div>
                 <h3 className="text-[0.9375rem] font-semibold text-[#C8C8D8]">AI Chat Widget</h3>
                 <p className="mt-2 text-[0.9375rem] leading-relaxed text-zinc-400">
-                  Conversations in our chat widget live in your browser's memory for the duration of
+                  Conversations in our chat widget live in your browser&apos;s memory for the duration of
                   the session.{" "}
                   <strong className="font-semibold text-[#C8C8D8]">
                     We do not store conversation transcripts.
@@ -86,12 +86,12 @@ export default function PrivacyPolicyPage() {
               <div>
                 <h3 className="text-[0.9375rem] font-semibold text-[#C8C8D8]">Session Storage</h3>
                 <p className="mt-2 text-[0.9375rem] leading-relaxed text-zinc-400">
-                  We use the browser's{" "}
+                  We use the browser&apos;s{" "}
                   <code className="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-[0.875rem] text-zinc-300">
                     sessionStorage
                   </code>{" "}
                   API — not cookies — to temporarily hold a conversation ID for the chat widget and
-                  your selected service intent (for example, "website" or "automation"). This data is{" "}
+                  your selected service intent (for example, &quot;website&quot; or &quot;automation&quot;). This data is{" "}
                   <strong className="font-semibold text-[#C8C8D8]">
                     automatically cleared when you close the browser tab
                   </strong>
@@ -101,7 +101,7 @@ export default function PrivacyPolicyPage() {
 
               <div>
                 <h3 className="text-[0.9375rem] font-semibold text-[#C8C8D8]">
-                  What We Don't Collect
+                  What We Don&apos;t Collect
                 </h3>
                 <ul className="mt-2 list-disc space-y-1.5 pl-5 text-[0.9375rem] leading-relaxed text-zinc-400">
                   <li>

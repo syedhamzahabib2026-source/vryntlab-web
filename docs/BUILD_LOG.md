@@ -1,5 +1,24 @@
 # Build log
 
+## 2026-06-06 — Restore Supabase keep-alive cron + fix contact form delivery
+
+**What changed:**
+
+- **`src/app/api/cron/keepalive/route.ts`** — Created. GET handler checks `Authorization: Bearer $CRON_SECRET`, queries `leads` table via `createSupabaseLeadWriteClient()`, returns `{ ok, pinged }` or 401/500. Runtime: `nodejs` (supabase-js requires Node APIs).
+- **`vercel.json`** — Created in `trellisify-project/`. Registers the keepalive cron at `0 9 */3 * *` (every 3 days at 09:00 UTC). Previously only existed in the legacy `vryntlab-ai/` project — was never firing on `vryntlab.com`.
+- **`src/lib/email/send-contact-email.ts`** — Simplified FROM resolution: falls back to `onboarding@resend.dev` when `CONTACT_FROM_EMAIL` is unset or empty. Removed the dev-only `CONTACT_FROM_EMAIL_DEV` override. This ensures delivery never fails due to an unverified custom sender domain.
+- **`.env.example`** — Added `CRON_SECRET=` entry with instructions. Updated `CONTACT_TO_EMAIL` default to `hello@vryntlab.com`, `CONTACT_FROM_EMAIL` default to `onboarding@resend.dev`.
+- **`.env.local`** — Updated TO → `hello@vryntlab.com`, FROM → `onboarding@resend.dev`. Removed `CONTACT_FROM_EMAIL_DEV`.
+
+**Env vars to set in Vercel dashboard (vryntlab-1):**
+- `CRON_SECRET` — any strong random secret; Vercel sends it as `Authorization: Bearer <value>` on each cron invocation.
+- `CONTACT_TO_EMAIL=hello@vryntlab.com`
+- `CONTACT_FROM_EMAIL=onboarding@resend.dev` (or a Resend-verified custom domain)
+
+**Files:** `src/app/api/cron/keepalive/route.ts`, `vercel.json`, `src/lib/email/send-contact-email.ts`, `.env.example`
+
+---
+
 ## 2026-06-06 — Sticky services gallery enabled on mobile
 
 **What changed:**

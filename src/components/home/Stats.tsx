@@ -36,7 +36,6 @@ function CountUp({
   useEffect(() => {
     if (!started) return;
     if (target === 0) {
-      setCount(0);
       return;
     }
     const duration = 1400;
