@@ -8,7 +8,7 @@
  */
 
 /** ~lowest-cost reasonable default for multi-turn chat on OpenRouter (override with OPENROUTER_MODEL). */
-export const DEFAULT_OPENROUTER_CHAT_MODEL = "google/gemini-2.0-flash-001";
+export const DEFAULT_OPENROUTER_CHAT_MODEL = "google/gemini-2.5-flash";
 
 /**
  * Small structured JSON extract; short max_tokens. Keeps extraction cost sub-cent per save.
