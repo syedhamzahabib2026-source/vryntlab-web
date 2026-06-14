@@ -15,7 +15,7 @@ export const DEFAULT_DEMO: DemoConfig = {
   hours: "Mon–Sat 9am–6pm",
   location: "Your City",
   pricingNote: "Pricing varies by treatment — I can book you a quick consult to confirm.",
-  bookingLink: "https://vryntlab.com/contact",
+  bookingLink: "https://vryntlab.com/#contact",
 };
 
 export const DEMO_CONFIGS: Record<string, DemoConfig> = {
@@ -35,7 +35,7 @@ export const DEMO_CONFIGS: Record<string, DemoConfig> = {
     hours: "Tue–Wed 10am–7pm, Thu–Fri 9am–5pm, Sat 9am–2pm",
     location: "Wheaton, IL",
     pricingNote: "Pricing varies by treatment — I can book you a quick consult to confirm.",
-    bookingLink: "https://vryntlab.com/contact",
+    bookingLink: "https://vryntlab.com/#contact",
   },
   "mandala-aesthetics": {
     businessName: "Mandala Aesthetics & Wellness",
@@ -43,7 +43,7 @@ export const DEMO_CONFIGS: Record<string, DemoConfig> = {
     hours: "Tue–Wed 10am–7pm, Fri 10am–4pm, Sat 10am–2pm",
     location: "Geneva, IL",
     pricingNote: "Pricing varies by treatment — I can book you a quick consult to confirm.",
-    bookingLink: "https://vryntlab.com/contact",
+    bookingLink: "https://vryntlab.com/#contact",
   },
   "db-aesthetics": {
     businessName: "Danielle Brandonisio Aesthetics",
@@ -51,7 +51,7 @@ export const DEMO_CONFIGS: Record<string, DemoConfig> = {
     hours: "By appointment, Mon–Sat",
     location: "Geneva, IL",
     pricingNote: "Pricing varies by treatment — I can book you a quick consult to confirm.",
-    bookingLink: "https://vryntlab.com/contact",
+    bookingLink: "https://vryntlab.com/#contact",
   },
   "pur-bliss": {
     businessName: "Pur Bliss Med Spa",
@@ -59,7 +59,7 @@ export const DEMO_CONFIGS: Record<string, DemoConfig> = {
     hours: "By appointment, Mon–Sat",
     location: "St. Charles, IL",
     pricingNote: "Pricing varies by treatment — I can book you a quick consult to confirm.",
-    bookingLink: "https://vryntlab.com/contact",
+    bookingLink: "https://vryntlab.com/#contact",
   },
   "huni-medspa": {
     businessName: "HUNi MedSpa",
@@ -67,7 +67,7 @@ export const DEMO_CONFIGS: Record<string, DemoConfig> = {
     hours: "By appointment, Mon–Sat",
     location: "Naperville, IL",
     pricingNote: "Pricing varies by treatment — I can book you a quick consult to confirm.",
-    bookingLink: "https://vryntlab.com/contact",
+    bookingLink: "https://vryntlab.com/#contact",
   },
 };
 

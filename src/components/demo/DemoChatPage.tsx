@@ -503,7 +503,7 @@ export function DemoChatPage({
         transition={{ duration: 0.4, delay: 0.5 }}
       >
         <a
-          href="https://vryntlab.com/contact"
+          href="https://vryntlab.com/#contact"
           target="_blank"
           rel="noopener noreferrer"
           className="demo-footer-link"
