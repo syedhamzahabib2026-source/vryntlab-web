@@ -29,6 +29,46 @@ export const DEMO_CONFIGS: Record<string, DemoConfig> = {
   //   bookingLink: "https://calendly.com/glow-aesthetics",
   //   brandColor: "#C8A2C8",
   // },
+  "libre-aesthetics": {
+    businessName: "Libré Aesthetics",
+    services: ["Botox", "Dermal Fillers", "Lip Filler", "Microneedling", "HydraFacial"],
+    hours: "Tue–Wed 10am–7pm, Thu–Fri 9am–5pm, Sat 9am–2pm",
+    location: "Wheaton, IL",
+    pricingNote: "Pricing varies by treatment — I can book you a quick consult to confirm.",
+    bookingLink: "https://vryntlab.com/contact",
+  },
+  "mandala-aesthetics": {
+    businessName: "Mandala Aesthetics & Wellness",
+    services: ["Botox", "Dermal Fillers", "Facials", "Microneedling", "Skincare"],
+    hours: "Tue–Wed 10am–7pm, Fri 10am–4pm, Sat 10am–2pm",
+    location: "Geneva, IL",
+    pricingNote: "Pricing varies by treatment — I can book you a quick consult to confirm.",
+    bookingLink: "https://vryntlab.com/contact",
+  },
+  "db-aesthetics": {
+    businessName: "Danielle Brandonisio Aesthetics",
+    services: ["Botox", "Dermal Fillers", "Lip Filler", "Facials", "Microneedling"],
+    hours: "By appointment, Mon–Sat",
+    location: "Geneva, IL",
+    pricingNote: "Pricing varies by treatment — I can book you a quick consult to confirm.",
+    bookingLink: "https://vryntlab.com/contact",
+  },
+  "pur-bliss": {
+    businessName: "Pur Bliss Med Spa",
+    services: ["Botox", "Dermal Fillers", "Laser Hair Removal", "Facials", "Microneedling"],
+    hours: "By appointment, Mon–Sat",
+    location: "St. Charles, IL",
+    pricingNote: "Pricing varies by treatment — I can book you a quick consult to confirm.",
+    bookingLink: "https://vryntlab.com/contact",
+  },
+  "huni-medspa": {
+    businessName: "HUNi MedSpa",
+    services: ["Botox", "Dermal Fillers", "Laser Hair Removal", "Facials", "Microneedling"],
+    hours: "By appointment, Mon–Sat",
+    location: "Naperville, IL",
+    pricingNote: "Pricing varies by treatment — I can book you a quick consult to confirm.",
+    bookingLink: "https://vryntlab.com/contact",
+  },
 };
 
 export function getDemoConfig(slug?: string): DemoConfig {
