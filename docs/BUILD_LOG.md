@@ -1,5 +1,24 @@
 # Build log
 
+## 2026-06-14 — Config-driven med-spa demo chatbot at /demo
+
+**What changed:**
+
+- **`src/lib/demoConfigs.ts`** — New file. `DemoConfig` type + `DEFAULT_DEMO` (Radiance Med Spa) + `DEMO_CONFIGS` record (empty, add entries per prospect). Helper functions `getDemoConfig(slug?)` and `getDemoSource(slug, config)` for slug → config resolution and source tagging.
+- **`src/app/api/demo-chat/route.ts`** — New API route. SSE streaming via `client.chat.completions.create({ stream: true })`. After stream closes: runs lead extraction gate → `extractLeadFromTranscript` → `saveLead` to existing `leads` table with `source = demo-{slug|businessName}`. Reuses `createOpenRouterClient`, `OPENROUTER_API_KEY`, `createSupabaseLeadWriteClient`, `checkRateLimit`, `getClientIp`. Runtime: `nodejs`.
+- **`src/app/demo/page.tsx`** — `/demo` route, renders `DemoChatPage` with `DEFAULT_DEMO`. `robots: { index: false }`.
+- **`src/app/demo/[slug]/page.tsx`** — `/demo/[slug]` route, resolves config via `getDemoConfig(slug)`, falls back to `DEFAULT_DEMO` for unknown slugs. Async params (Next.js 16).
+- **`src/components/demo/DemoChatPage.tsx`** — Client component. Real SSE streaming with char-by-char display + blinking cursor. Conversation history sent on every call (no re-asking). Contextual quick-reply chips (service → booking → closing stages). Avatar from businessName initial + optional `brandColor`. Motion 12 micro-animations (card enter, per-bubble slide-in, chip fade, whileHover/whileTap). VryntLab credit in page footer only — never in bot messages.
+- **`src/components/demo/demo-chat.css`** — Demo-specific styles. Uses site design tokens (`--accent`, `--background`, `--surface`, `--border`, etc.). `--demo-accent` overrides per-config `brandColor`. Frosted-glass header, streaming cursor blink, typing dots, chip pill styles.
+
+**No new env vars required** — reuses `OPENROUTER_API_KEY`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, and all existing lead-notification vars. Demo works without Supabase (graceful skip).
+
+**Adding a personalized spa config:** add one entry to `DEMO_CONFIGS` in `src/lib/demoConfigs.ts`, push, and share `vryntlab.com/demo/{slug}`.
+
+**Files:** `src/lib/demoConfigs.ts`, `src/app/api/demo-chat/route.ts`, `src/app/demo/page.tsx`, `src/app/demo/[slug]/page.tsx`, `src/components/demo/DemoChatPage.tsx`, `src/components/demo/demo-chat.css`
+
+---
+
 ## 2026-06-06 — Restore Supabase keep-alive cron + fix contact form delivery
 
 **What changed:**
