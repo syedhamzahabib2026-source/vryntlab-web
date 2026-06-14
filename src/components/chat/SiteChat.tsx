@@ -12,7 +12,6 @@ import { VryntLabChatbot } from "./VryntLabChatbot";
 export function SiteChat() {
   const pathname = usePathname();
   const { selectedIntent, estimateOpen } = useConversion();
-
   const siteContext = useMemo((): ChatSiteContextPayload => {
     return {
       ...(selectedIntent != null ? { intentId: selectedIntent } : {}),
@@ -21,5 +20,6 @@ export function SiteChat() {
     };
   }, [estimateOpen, pathname, selectedIntent]);
 
+  if (pathname?.startsWith("/demo")) return null;
   return <VryntLabChatbot siteContext={siteContext} />;
 }
