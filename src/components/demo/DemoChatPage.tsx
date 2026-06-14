@@ -222,7 +222,7 @@ export function DemoChatPage({
     const el = scrollRef.current;
     if (!el) return;
     el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
-  }, [messages, streamingText, streaming]);
+  }, [messages, streaming]);
 
   const chips = getChips(config, messages);
 

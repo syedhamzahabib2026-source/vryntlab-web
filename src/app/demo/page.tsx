@@ -1,6 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { DemoChatPage } from "@/components/demo/DemoChatPage";
 import { DEFAULT_DEMO } from "@/lib/demoConfigs";
+
+export const viewport: Viewport = {
+  interactiveWidget: "resizes-content",
+};
 
 export const metadata: Metadata = {
   title: "AI Booking Assistant Demo | VryntLab",
