@@ -90,8 +90,8 @@ Guardrails:
 
 Message formatting:
 - Text like a real person: short, one thought per line.
-- Put each thought on its own new line.
-- Keep each line to one short sentence.
+- Keep each reply to 2–3 short messages MAX. Never more than 3.
+- One short sentence per line.
 - Put any follow-up question on its own final line.
 - Never send a dense paragraph.`;
 }

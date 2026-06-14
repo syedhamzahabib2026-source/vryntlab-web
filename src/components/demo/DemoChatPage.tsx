@@ -269,48 +269,27 @@ export function DemoChatPage({
           throw new Error(data.error ?? `Request failed (${res.status})`);
         }
 
+        // Buffer off-screen — typing dots show throughout, no streaming text displayed
         let accumulated = "";
-        let streamCommitted = 0; // segments already committed to messages during streaming
-
         for await (const event of readSSE(res)) {
           if (event.error) throw new Error(event.error);
-          if (event.text) {
-            accumulated += event.text;
-
-            // Live split: only the last (still-growing) segment stays in the streaming bubble.
-            // Every completed segment (before the trailing \n) is committed immediately —
-            // the full combined text is never rendered as one bubble.
-            const endsWithNewline = /\n$/.test(accumulated);
-            const liveParts = accumulated.split(/\n+/).map((s) => s.trim()).filter(Boolean);
-            const doneCount = endsWithNewline ? liveParts.length : Math.max(0, liveParts.length - 1);
-            const growingSegment = endsWithNewline ? "" : (liveParts[liveParts.length - 1] ?? "");
-
-            for (let i = streamCommitted; i < doneCount; i++) {
-              setMessages((prev) => [
-                ...prev,
-                { role: "assistant", content: liveParts[i]!, id: newId() },
-              ]);
-            }
-            streamCommitted = doneCount;
-            setStreamingText(growingSegment);
-          }
-          if (event.done) {
-            if (event.leadSaved) setLeadAlreadySaved(true);
-          }
+          if (event.text) accumulated += event.text;
+          if (event.done && event.leadSaved) setLeadAlreadySaved(true);
         }
 
-        // Commit any remaining parts after stream ends.
-        // These weren't committed live (e.g. model sent no trailing \n, or burst without newlines).
-        const allParts = accumulated.split(/\n+/).map((s) => s.trim()).filter(Boolean);
-        const remaining = allParts.slice(streamCommitted);
+        // Split, hard-cap at 3 bubbles, merge overflow into last
+        let parts = accumulated.split(/\n+/).map((s) => s.trim()).filter(Boolean);
+        if (parts.length > 3) {
+          parts = [...parts.slice(0, 2), parts.slice(2).join(" ")];
+        }
 
-        setStreamingText(""); // clear streaming bubble
-
-        for (let i = 0; i < remaining.length; i++) {
-          if (i > 0) await sleep(420 + Math.random() * 160); // ~420–580ms between post-stream bubbles
+        // Reveal one at a time with a short typing pause between bubbles
+        const BUBBLE_PAUSE = 380; // ~300–450ms, tune here
+        for (let i = 0; i < parts.length; i++) {
+          if (i > 0) await sleep(BUBBLE_PAUSE);
           setMessages((prev) => [
             ...prev,
-            { role: "assistant", content: remaining[i]!, id: newId() },
+            { role: "assistant", content: parts[i]!, id: newId() },
           ]);
         }
       } catch (err) {

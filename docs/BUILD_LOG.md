@@ -1,5 +1,14 @@
 # Build log
 
+## 2026-06-14 — Demo bubble cap + buffered sequential reveal
+
+**What changed:**
+
+- **`src/components/demo/DemoChatPage.tsx`** — Replaced live-split streaming with buffered approach. Response is accumulated off-screen (user sees only typing dots throughout); after stream closes, output is split on `/\n+/`, trimmed, filtered, then hard-capped at 3 bubbles (segments 3+ merged into last with a space join). Bubbles reveal one at a time with 380ms typing pause between each. Removes `streamCommitted`, `liveParts`, and mid-stream `setStreamingText` calls — simpler and no flash risk.
+- **`src/app/api/demo-chat/route.ts`** — Updated system prompt formatting block: added "Keep each reply to 2–3 short messages MAX. Never more than 3." and consolidated to single-sentence-per-line rule.
+
+---
+
 ## 2026-06-14 — Config-driven med-spa demo chatbot at /demo
 
 **What changed:**
