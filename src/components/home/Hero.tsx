@@ -152,8 +152,8 @@ export function Hero() {
                 variants={childVariant}
                 className="mt-8 max-w-[46ch] text-[1.125rem] leading-[1.55] text-[#C8C8D8]/60 sm:text-[1.25rem]"
               >
-                Shopify stores, websites, and the automations behind them.
-                A clear plan and price before we start.
+                Shopify stores, websites, and the automations that run them.
+                A clear price before we start.
               </motion.p>
 
               <motion.div

@@ -163,7 +163,7 @@ function NdaCard() {
             More on request
           </p>
           <p className="mt-1.5 text-[0.875rem] text-[#8888a8]">
-            Partner builds and NDA work available on request
+            NDA and partner work shown privately.
           </p>
         </div>
       </div>
