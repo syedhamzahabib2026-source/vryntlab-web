@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { focusRing } from "@/components/layout/layoutTokens";
 import { brandIntentActionLabels } from "@/lib/brand-knowledge";
@@ -14,6 +15,7 @@ import { useConversion } from "./ConversionContext";
  * covers the form it points to.
  */
 export function StickyMobileCta() {
+  const pathname = usePathname();
   const { openEstimate, selectedIntent } = useConversion();
   const [contactInView, setContactInView] = useState(false);
   const estimateLabel =
@@ -31,6 +33,10 @@ export function StickyMobileCta() {
     io.observe(target);
     return () => io.disconnect();
   }, []);
+
+  // Demo pages show only the demo chat; the bar would cover its composer
+  // (same guard as SiteChat)
+  if (pathname?.startsWith("/demo")) return null;
 
   return (
     <div

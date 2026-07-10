@@ -296,6 +296,7 @@ export function DemoChatPage({
         if (err instanceof DOMException && err.name === "AbortError") return;
         setError(err instanceof Error ? err.message : "Something went wrong");
         setMessages((prev) => prev.slice(0, -1)); // roll back user message
+        setInput(trimmed); // restore the text so retry does not mean retyping
       } finally {
         setStreaming(false);
         setStreamingText("");

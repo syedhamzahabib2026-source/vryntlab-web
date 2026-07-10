@@ -726,3 +726,19 @@ All four pages: server components, `noindex`/`nofollow` robots metadata, no `"us
 **Verified**
 
 - `npx tsc --noEmit` clean, `eslint` clean, `npm run build` succeeds (33/33 pages).
+
+## 2026-07-10: Mobile UX audit #2, top 4 demo fixes
+
+**What changed**
+
+- **StickyMobileCta:** returns null on `/demo` routes (same guard as SiteChat). The fixed bar was covering the demo chat composer on mobile and rode above the keyboard with `interactiveWidget: resizes-content`. (Audit #2 item 11)
+- **demo-chat.css:** below 640px the composer textarea is 1rem (prevents iOS focus zoom, item 12) and quick-reply chips get `min-height: 2.75rem` with larger padding (44px touch floor, item 13); send button raised 2.5rem to 2.75rem at all sizes (item 13).
+- **DemoChatPage:** on a failed send, the rolled-back message text is restored into the input so retry does not require retyping (item 15).
+
+**Why**
+
+- Second mobile UX audit (2026-07-10) flagged the /demo pages as untouched by the Phase 1-3 hardening; these four were the prioritized top of that list. Applies to /demo and all five med spa demo slugs.
+
+**Verified**
+
+- `npx tsc --noEmit` clean, `eslint` clean, `npm run build` succeeds (33/33 pages).

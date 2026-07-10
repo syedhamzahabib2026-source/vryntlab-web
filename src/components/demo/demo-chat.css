@@ -302,8 +302,8 @@
 /* ── Send button ── */
 .demo-send {
   flex-shrink: 0;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.75rem;
+  height: 2.75rem;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--demo-accent), color-mix(in srgb, var(--demo-accent) 60%, var(--accent-2)));
   color: #fff;
@@ -332,6 +332,18 @@
 
 @keyframes demo-spin {
   to { transform: rotate(360deg); }
+}
+
+/* Mobile: 16px input prevents iOS focus zoom; 44px chips meet the touch floor */
+@media (max-width: 640px) {
+  .demo-input {
+    font-size: 1rem;
+  }
+
+  .demo-chip {
+    min-height: 2.75rem;
+    padding: 0.5rem 1rem;
+  }
 }
 
 /* ── Error ── */
