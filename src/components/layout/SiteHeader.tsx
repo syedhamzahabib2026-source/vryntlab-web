@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { focusRing } from "@/components/layout/layoutTokens";
 import { navLinks, siteBrandName, siteLogoSrc } from "@/lib/site";
@@ -13,6 +13,7 @@ export function SiteHeader() {
   const isHome = pathname === "/";
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
 
   // Continuous scroll-linked bg + blur — only active on home page
   const { scrollY } = useScroll();
@@ -37,6 +38,29 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Drawer dismissal: Escape, tap outside the header, or page scroll
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    const onPointerDown = (e: PointerEvent) => {
+      const el = headerRef.current;
+      if (el && e.target instanceof Node && !el.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    const onScroll = () => setOpen(false);
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("pointerdown", onPointerDown);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("pointerdown", onPointerDown);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [open]);
+
   const heroAtTop = isHome && !scrolled;
 
   const navLinkClass =
@@ -47,6 +71,7 @@ export function SiteHeader() {
 
   return (
     <motion.header
+      ref={headerRef}
       className={`sticky top-0 z-50 w-full transition-[border-color,box-shadow] duration-300 ease-[var(--ease-out-premium)] motion-reduce:transition-none ${
         heroAtTop
           ? "border-b border-transparent shadow-none"
@@ -104,7 +129,7 @@ export function SiteHeader() {
 
             <button
               type="button"
-              className={`flex min-h-10 min-w-10 items-center justify-center rounded-lg px-2 text-[14px] font-medium text-[#C8C8D8]/80 transition-[background-color,color] duration-200 active:bg-white/[0.06] ${focusRing} [@media(hover:hover)]:hover:bg-white/[0.06] [@media(hover:hover)]:hover:text-[#F0F0FF] lg:hidden`}
+              className={`flex min-h-11 min-w-11 items-center justify-center rounded-lg px-2 text-[14px] font-medium text-[#C8C8D8]/80 transition-[background-color,color] duration-200 active:bg-white/[0.06] ${focusRing} [@media(hover:hover)]:hover:bg-white/[0.06] [@media(hover:hover)]:hover:text-[#F0F0FF] lg:hidden`}
               aria-expanded={open}
               aria-controls="mobile-nav"
               aria-label={open ? "Close navigation" : "Open navigation"}

@@ -66,7 +66,7 @@ export function Hero() {
       {/* 1. CTA workspace photo — full-bleed at low opacity, sits behind everything */}
       <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
         <Image
-          src="/images/cta.png"
+          src="/images/cta.webp"
           alt=""
           fill
           className="object-cover opacity-[0.20]"
@@ -85,21 +85,21 @@ export function Hero() {
       {/* 2. Dot grid + animated mesh — on top of the photo */}
       <div aria-hidden className="hero-dot-grid pointer-events-none absolute inset-0" />
       <div aria-hidden className="hero-gradient-mesh pointer-events-none absolute inset-0" />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -left-32 top-0 h-[50rem] w-[50rem] rounded-full blur-[180px]"
-        style={{ background: "rgba(124,63,255,0.07)" }}
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -right-24 top-0 h-[36rem] w-[36rem] rounded-full blur-[140px]"
-        style={{ background: "rgba(0,229,255,0.05)" }}
-      />
+      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div
+          className="absolute -left-32 top-0 h-[50rem] w-[50rem] rounded-full blur-[180px]"
+          style={{ background: "rgba(124,63,255,0.07)" }}
+        />
+        <div
+          className="absolute -right-24 top-0 h-[36rem] w-[36rem] rounded-full blur-[140px]"
+          style={{ background: "rgba(0,229,255,0.05)" }}
+        />
+      </div>
 
       {/* ── Scroll runway ─────────────────────────────────────────────────── */}
       <div className="lg:h-[180vh]">
         {/* Sticky panel: pins at viewport top on desktop */}
-        <div className="flex items-center py-16 pt-[140px] lg:sticky lg:top-0 lg:h-screen lg:py-0">
+        <div className="flex items-center py-16 pt-20 lg:sticky lg:top-0 lg:h-screen lg:py-0">
           {/* Content — fades/lifts out on desktop as scroll progresses */}
           <motion.div
             className="relative mx-auto w-full max-w-[1290px] px-4 sm:px-8 lg:px-[30px]"
@@ -120,14 +120,15 @@ export function Hero() {
               <motion.h1
                 id="hero-heading"
                 variants={childVariant}
-                className="text-[3rem] font-medium leading-[1.05] tracking-[-0.04em] text-[#F0F0FF] sm:text-[4.5rem] lg:text-[6rem]"
+                className="text-[2.5rem] font-medium leading-[1.05] tracking-[-0.04em] text-[#F0F0FF] sm:text-[4.5rem] lg:text-[6rem]"
               >
                 <span className="block">
-                  <span className="text-[#C8C8D8]/40">Your </span>
+                  <span className="text-[#C8C8D8]/60">Your </span>
                   <span className="relative inline-block">
                     <span className="invisible select-none whitespace-nowrap" aria-hidden>
                       {CYCLING_WORDS[0]},
                     </span>
+                    <span className="sr-only">Shopify store,</span>
                     <AnimatePresence mode="wait">
                       <motion.span
                         key={CYCLING_WORDS[wordIndex]}
@@ -136,7 +137,7 @@ export function Hero() {
                         exit={reduceMotion ? undefined : { opacity: 0, y: -14 }}
                         transition={{ duration: 0.28, ease }}
                         className="absolute left-0 top-0 whitespace-nowrap text-[#F0F0FF]"
-                        aria-live="polite"
+                        aria-hidden
                       >
                         {CYCLING_WORDS[wordIndex]},
                       </motion.span>
@@ -175,7 +176,7 @@ export function Hero() {
 
                 <Link
                   href="/#work"
-                  className={`inline-flex items-center gap-2 text-[16px] font-normal text-[#C8C8D8]/60 underline decoration-white/20 underline-offset-4 transition-colors duration-200 ${focusRing} rounded-sm [@media(hover:hover)]:hover:text-[#F0F0FF] [@media(hover:hover)]:hover:decoration-white/45`}
+                  className={`inline-flex min-h-11 items-center gap-2 text-[16px] font-normal text-[#C8C8D8]/60 underline decoration-white/20 underline-offset-4 transition-colors duration-200 ${focusRing} rounded-sm [@media(hover:hover)]:hover:text-[#F0F0FF] [@media(hover:hover)]:hover:decoration-white/45`}
                 >
                   View Work
                 </Link>

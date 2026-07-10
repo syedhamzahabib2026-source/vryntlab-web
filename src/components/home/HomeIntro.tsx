@@ -109,7 +109,7 @@ export function HomeIntro() {
               className="text-[1.75rem] font-medium leading-[1.25] tracking-[-0.02em] sm:text-[2rem] lg:text-[2.25rem]"
             >
               We&rsquo;re a small studio that builds Shopify stores, websites,{" "}
-              <span className="text-white/40">and</span> the automations behind them.
+              <span className="text-white/60">and</span> the automations behind them.
               You work directly with the people doing it.
               You see the number first.
             </motion.h2>

@@ -37,10 +37,10 @@ const socialLinks = [
 ] as const;
 
 const footerLinkClass =
-  `block py-0.5 text-[15px] font-normal text-[#8888a8] transition-colors duration-200 ${focusRing} rounded-sm [@media(hover:hover)]:hover:text-[#F0F0FF]`;
+  `flex min-h-11 items-center text-[15px] font-normal text-[#8888a8] transition-colors duration-200 ${focusRing} rounded-sm [@media(hover:hover)]:hover:text-[#F0F0FF]`;
 
 const legalLinkClass =
-  `${focusRing} text-[12px] font-normal text-[#6B6B85] transition-colors duration-200 rounded-sm [@media(hover:hover)]:hover:text-[#8888a8]`;
+  `${focusRing} inline-flex min-h-11 items-center text-[12px] font-normal text-[#6B6B85] transition-colors duration-200 rounded-sm [@media(hover:hover)]:hover:text-[#8888a8]`;
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
@@ -111,7 +111,7 @@ export function SiteFooter() {
             {/* Pages */}
             <motion.div variants={childVariant}>
               <p className="mb-4 text-[13px] font-normal text-[#8888a8]">Pages</p>
-              <ul className="space-y-1" role="list">
+              <ul className="space-y-0" role="list">
                 {navLinks.map((link) => (
                   <li key={link.href}>
                     <Link href={link.href} className={footerLinkClass}>
@@ -125,7 +125,7 @@ export function SiteFooter() {
             {/* Legal */}
             <motion.div variants={childVariant}>
               <p className="mb-4 text-[13px] font-normal text-[#8888a8]">Legal</p>
-              <ul className="space-y-1" role="list">
+              <ul className="space-y-0" role="list">
                 {legalLinks.map((link) => (
                   <li key={link.href}>
                     <Link href={link.href} className={footerLinkClass}>
@@ -139,7 +139,7 @@ export function SiteFooter() {
             {/* Social */}
             <motion.div variants={childVariant}>
               <p className="mb-4 text-[13px] font-normal text-[#8888a8]">Social</p>
-              <ul className="space-y-1" role="list">
+              <ul className="space-y-0" role="list">
                 {socialLinks.map((link) => {
                   const external = link.href.startsWith("http");
                   return (
@@ -173,7 +173,7 @@ export function SiteFooter() {
               className="text-[2rem] font-medium leading-[1.15] tracking-[-0.03em] text-[#F0F0FF] sm:text-[2.5rem] lg:text-[3rem]"
             >
               Let&rsquo;s create{" "}
-              <span className="text-white/40">something</span>{" "}
+              <span className="text-white/60">something</span>{" "}
               great together.
             </motion.p>
 
@@ -211,7 +211,7 @@ export function SiteFooter() {
                 {siteEmail}
               </a>
             </div>
-            <div className="flex flex-wrap gap-x-4 gap-y-1.5">
+            <div className="flex flex-wrap gap-x-6 gap-y-0">
               {legalLinks.map((link) => (
                 <Link key={link.href} href={link.href} className={legalLinkClass}>
                   {link.label}

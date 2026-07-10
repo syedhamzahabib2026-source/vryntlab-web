@@ -13,10 +13,10 @@ import { estimateIntentOptions, getIntentById } from "@/lib/intent";
 import { useConversion } from "./ConversionContext";
 
 const inputClass =
-  "min-h-11 w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3.5 py-3 text-[15px] leading-relaxed text-[var(--foreground)] placeholder:text-zinc-400 shadow-[var(--shadow-xs)] outline-none transition-[border-color,box-shadow] duration-300 ease-[var(--ease-out-premium)] focus-visible:border-[var(--accent)]/50 focus-visible:shadow-[0_0_0_3px_var(--ring-focus)] dark:placeholder:text-zinc-500";
+  "min-h-11 w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3.5 py-3 text-[16px] leading-relaxed sm:text-[15px] text-[var(--foreground)] placeholder:text-zinc-400 shadow-[var(--shadow-xs)] outline-none transition-[border-color,box-shadow] duration-300 ease-[var(--ease-out-premium)] focus-visible:border-[var(--accent)]/50 focus-visible:shadow-[0_0_0_3px_var(--ring-focus)] dark:placeholder:text-zinc-500";
 
 const labelClass =
-  "mb-1.5 block text-[10px] font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-500";
+  "mb-1.5 block text-[11px] font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-500";
 
 const chipClass = (active: boolean) =>
   `flex w-full items-center justify-start rounded-full border px-3.5 py-2.5 text-left text-[12px] font-semibold leading-snug tracking-tight transition-[background-color,border-color,box-shadow,transform] duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 ${focusRing} active:scale-[0.98] sm:min-h-0 sm:py-2 sm:text-[13px] ${
@@ -131,7 +131,7 @@ export function QuickEstimateSheet() {
       ref={dialogRef}
       aria-labelledby={titleId}
       onClose={onDialogClose}
-      className="fixed left-1/2 top-1/2 z-[200] max-h-[90dvh] w-[min(100%,26rem)] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl border border-[var(--border-strong)] bg-[var(--surface)] p-0 text-[var(--foreground)] shadow-[var(--shadow-md)] dark:border-zinc-700/90 sm:w-[min(100%,28rem)]"
+      className="fixed left-1/2 top-1/2 z-[200] max-h-[90dvh] w-[min(calc(100%-2rem),26rem)] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl border border-[var(--border-strong)] bg-[var(--surface)] p-0 text-[var(--foreground)] shadow-[var(--shadow-md)] dark:border-zinc-700/90 sm:w-[min(100%,28rem)]"
     >
       <div className="flex max-h-[90dvh] min-h-0 flex-col overflow-hidden">
         <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-5 sm:p-6">
@@ -145,7 +145,7 @@ export function QuickEstimateSheet() {
           <button
             type="button"
             onClick={() => dialogRef.current?.close()}
-            className={`rounded-lg px-2 py-1 text-[13px] font-medium text-zinc-500 transition-colors ${focusRing} [@media(hover:hover)]:hover:text-zinc-900 dark:[@media(hover:hover)]:hover:text-zinc-200`}
+            className={`inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg px-2 text-[13px] font-medium text-zinc-500 transition-colors ${focusRing} [@media(hover:hover)]:hover:text-zinc-900 dark:[@media(hover:hover)]:hover:text-zinc-200`}
           >
             Close
           </button>
@@ -192,7 +192,6 @@ export function QuickEstimateSheet() {
           <form
             className="mt-6 flex flex-col gap-5"
             onSubmit={handleSubmit}
-            noValidate
             aria-label={`Quick estimate for ${siteBrandName}`}
           >
             <div

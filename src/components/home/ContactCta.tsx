@@ -62,9 +62,9 @@ export function ContactCta() {
                 className="text-[2.25rem] font-medium leading-[1.1] tracking-[-0.035em] text-[#F0F0FF] sm:text-[3rem] lg:text-[3.5rem]"
               >
                 Let&rsquo;s talk{" "}
-                <span className="text-white/40">about</span>
+                <span className="text-white/60">about</span>
                 <br />
-                <span className="text-white/40">your</span> next project.
+                <span className="text-white/60">your</span> next project.
               </motion.h2>
 
               <motion.div variants={childVariant} className="flex flex-col gap-4">

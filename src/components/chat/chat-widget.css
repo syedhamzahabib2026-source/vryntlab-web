@@ -171,8 +171,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   font-size: 1.35rem;
   line-height: 1;
@@ -276,6 +276,11 @@
 @media (max-width: 640px) {
   .chat-widget-composer {
     padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
+  }
+
+  /* 16px floor prevents iOS Safari from zooming the page on focus */
+  .chat-widget-composer textarea {
+    font-size: 1rem;
   }
 }
 

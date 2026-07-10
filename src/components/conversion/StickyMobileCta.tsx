@@ -1,26 +1,43 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { focusRing } from "@/components/layout/layoutTokens";
 import { brandIntentActionLabels } from "@/lib/brand-knowledge";
 import { ctaViewWork } from "@/lib/site";
 import { useConversion } from "./ConversionContext";
 
 /**
- * Fixed entry points on small viewports — hover-free, thumb-reachable.
+ * Fixed entry points on small viewports: hover-free, thumb-reachable.
  * Hidden from `lg` where header + in-page CTAs carry the flow.
+ * Slides away while the contact section is on screen so it never
+ * covers the form it points to.
  */
 export function StickyMobileCta() {
   const { openEstimate, selectedIntent } = useConversion();
+  const [contactInView, setContactInView] = useState(false);
   const estimateLabel =
     selectedIntent != null
       ? brandIntentActionLabels[selectedIntent].estimatePrimary
       : "Quick estimate";
 
+  useEffect(() => {
+    const target = document.getElementById("contact");
+    if (!target) return;
+    const io = new IntersectionObserver(
+      (entries) => setContactInView(entries[0]?.isIntersecting ?? false),
+      { threshold: 0.2 },
+    );
+    io.observe(target);
+    return () => io.disconnect();
+  }, []);
+
   return (
     <div
-      className="pointer-events-none fixed inset-x-0 bottom-0 z-[90] lg:hidden"
-      aria-hidden={false}
+      className={`pointer-events-none fixed inset-x-0 bottom-0 z-[90] transition-[transform,visibility] duration-300 ease-[var(--ease-out-premium)] motion-reduce:transition-none lg:hidden ${
+        contactInView ? "invisible translate-y-full" : ""
+      }`}
+      aria-hidden={contactInView}
     >
       <div
         className="pointer-events-auto mx-auto flex max-w-lg gap-2 border-t border-[color-mix(in_srgb,var(--border)_55%,transparent)] bg-[color-mix(in_oklab,var(--surface)_82%,var(--background))] px-3 py-2.5 pb-[max(0.6rem,env(safe-area-inset-bottom))] shadow-[0_-8px_32px_-28px_rgba(0,0,0,0.08)] backdrop-blur-lg backdrop-saturate-125 dark:border-white/[0.06] dark:bg-[color-mix(in_oklab,var(--surface)_76%,var(--background))] dark:shadow-[0_-10px_36px_-32px_rgba(0,0,0,0.4)] sm:px-4 sm:py-3"

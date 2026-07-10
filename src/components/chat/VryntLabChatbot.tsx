@@ -160,6 +160,8 @@ export function VryntLabChatbot({
 
   useEffect(() => {
     if (!open) return;
+    // Skip autofocus on touch devices: it would raise the keyboard over the panel
+    if (window.matchMedia("(pointer: coarse)").matches) return;
     const id = window.setTimeout(() => inputRef.current?.focus(), 80);
     return () => window.clearTimeout(id);
   }, [open]);

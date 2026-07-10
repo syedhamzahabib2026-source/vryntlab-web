@@ -683,3 +683,46 @@ All four pages: server components, `noindex`/`nofollow` robots metadata, no `"us
 - Intent object in one module (`lib/intent.ts`) driving UI + form prefill + analytics later.
 - Dual interaction mode for media: `matchMedia` gate + separate observers for hover vs in-view autoplay.
 - Quick estimate as thin wrapper over the same contact API (structured message prefix).
+
+## 2026-07-09 — Mobile UX audit, Phase 1 (foundation fixes)
+
+**What changed**
+
+- **Container:** New `PageFrame` (`src/components/layout/PageFrame.tsx`) replaces the global `max-w-7xl px-4 …` wrapper in `layout.tsx`. Homepage renders bare (sections own `max-w-[1290px]` containers, hero and services gallery now true full-bleed); all other routes keep the exact previous wrapper. Fixes double horizontal padding (mobile content width 311px → 343px at 375px viewport).
+- **Hero (`Hero.tsx`):** decorative blur orbs wrapped in an `overflow-hidden` layer (removed ~96px of horizontal page scroll caused by the `-right-24` orb); mobile H1 3rem → 2.5rem so the nowrap cycling word ("Shopify Store,") fits at 320–390px; mobile top padding `pt-[140px]` → `pt-20`; background now `/images/cta.webp`.
+- **Image weight:** `brand/purple-logo.png` 2,014KB → 4KB (400w); `images/cta.png` (1,768KB) replaced by `images/cta.webp` (34KB, q68); `services/seo.jpg` 1,083KB → 82KB (q75 mozjpeg); `projects/living-silica/living-silica_2.webp` 1,860KB → 323KB (1200w); `projects/dkexpress/dkexpress_2.webp` 902KB → 183KB (1200w). Total ~7.6MB → ~626KB.
+
+**Why**
+
+- Mobile UX audit (2026-07-09) items #1/#2 (double container), #6 (H1 overflow at 375px), #7 (orb horizontal scroll), #8 (hero dead space), #28/#13 (image weight). Desktop also gains full-bleed hero/gallery and the designed 1290px content well.
+
+**Verified**
+
+- `npx tsc --noEmit` clean, `npm run build` succeeds, all routes present. Phases 2 (touch/form/interaction) and 3 (services gallery scrub) pending.
+
+## 2026-07-09: Mobile UX audit, Phases 2 and 3 (touch/forms/interaction + services gallery)
+
+**Phase 2, touch and interaction**
+
+- **SiteHeader:** hamburger 40px to 44px (`min-h-11 min-w-11`); drawer now closes on Escape, tap outside the header, and page scroll (new `headerRef` + window listeners while open).
+- **Forms:** QuickEstimateSheet inputs 16px below `sm` (prevents iOS focus zoom), dialog width `min(calc(100%-2rem),26rem)` so it no longer touches screen edges, Close button raised to a 44px hit area; field labels 10px to 11px in both forms; removed `noValidate` from ContactForm and QuickEstimateSheet so required/email fields validate natively before hitting the API.
+- **Chat widget:** composer textarea 1rem below 640px (iOS zoom fix); header icon button 36px to 44px; autofocus on open skipped for coarse pointers so the keyboard does not cover the fresh panel.
+- **Tap targets:** hero "View Work", services "Learn more", footer page links, and footer legal links all get 44px min heights; legal link cluster gap widened.
+- **StickyMobileCta:** slides away (with visibility flip, motion-reduce safe) while `#contact` is in view, so it never covers the contact form.
+- **Contrast:** dimmed heading words raised from 30-40% to 55-60% opacity in Hero, HomeIntro, FeaturedWork, ChatbotShowcase, ContactCta, SiteFooter (large-text 3:1 now passes).
+- **Hero a11y:** cycling word no longer `aria-live` (was re-announcing every 2.4s); animated span is `aria-hidden` with a static `sr-only` "Shopify store," so the H1 reads correctly.
+- **ChatbotShowcase:** scripted demo respects `prefers-reduced-motion` by rendering the full transcript statically (derived at render, no timers).
+- **globals.css:** base `scroll-padding-top` 4.5rem to 5rem to match the 80px header.
+
+**Phase 3, services gallery and work cards**
+
+- **ServicesAccordion:** runway 500vh to 400vh below `lg` (less scroll fatigue); sticky panel gets `pt-20` below `lg` so the image is not under the sticky header; both `AnimatePresence` blocks drop `mode="wait"` for a true crossfade (no blank panel on fast flicks); progress bar `bottom-24` below `lg` so the fixed CTA bar cannot cover it; added `sr-only` h2 (`#services-heading`) to fix the heading hierarchy.
+- **FeaturedWork:** cards render the static cover image below 640px as well as under reduced motion (the auto-scroll travel was ~25px on mobile, invisible but costly); persistent "View case study" label shown on non-hover devices.
+
+**Why**
+
+- Mobile UX audit (2026-07-09) items #3, #4, #5, #9, #10, #12, #14, #15, #16, #17, #18, #19, #20, #21, #22a, #22b, #23, #24, #25, #26, #27.
+
+**Verified**
+
+- `npx tsc --noEmit` clean, `eslint` clean, `npm run build` succeeds (33/33 pages).

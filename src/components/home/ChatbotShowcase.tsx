@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { chatWidgetDefaults } from "@/lib/config/brand";
 import { brandChatbotShowcase } from "@/lib/brand-knowledge";
 import { focusRing } from "@/components/layout/layoutTokens";
@@ -100,6 +100,7 @@ const bubbleMotion = {
 };
 
 function AnimatedExampleChat({ active }: { active: boolean }) {
+  const reduceMotion = useReducedMotion() ?? false;
   const [lines, setLines] = useState<ChatLine[]>([]);
   const [typingBeforeBot, setTypingBeforeBot] = useState(false);
   const [transcriptFade, setTranscriptFade] = useState(false);
@@ -121,6 +122,8 @@ function AnimatedExampleChat({ active }: { active: boolean }) {
   }, [lines, typingBeforeBot, active]);
 
   useEffect(() => {
+    // Reduced motion renders a static transcript; no scripted loop to run
+    if (reduceMotion) return;
     if (!active) {
       genRef.current += 1;
       clearTimers();
@@ -183,7 +186,17 @@ function AnimatedExampleChat({ active }: { active: boolean }) {
       genRef.current += 1;
       clearTimers();
     };
-  }, [active, clearTimers]);
+  }, [active, clearTimers, reduceMotion]);
+
+  // Reduced motion: full transcript, derived at render, no timers or fades
+  const displayLines: ChatLine[] = reduceMotion
+    ? EXAMPLE_THREAD.map((turn, i) => ({
+        key: `static-${i}`,
+        role: turn.role,
+        time: turn.time,
+        text: turn.text,
+      }))
+    : lines;
 
   return (
     <div
@@ -215,7 +228,7 @@ function AnimatedExampleChat({ active }: { active: boolean }) {
         className={`h-[340px] space-y-4 overflow-x-hidden overflow-y-auto overscroll-contain px-5 py-5 transition-opacity duration-500 ease-out motion-reduce:transition-none ${transcriptFade ? "opacity-0" : "opacity-100"}`}
       >
         <AnimatePresence initial={false} mode="popLayout">
-          {lines.map((row) =>
+          {displayLines.map((row) =>
             row.role === "user" ? (
               <motion.div key={row.key} layout {...bubbleMotion} className="flex flex-col items-end gap-1">
                 <div className="flex items-end gap-2">
@@ -342,8 +355,8 @@ export function ChatbotShowcase() {
                 variants={childVariant}
                 className="text-[2rem] font-medium leading-[1.15] tracking-[-0.03em] text-[#F0F0FF] sm:text-[2.5rem] lg:text-[3rem]"
               >
-                <span className="text-white/40">A</span> chatbot{" "}
-                <span className="text-white/40">that</span> answers{" "}
+                <span className="text-white/60">A</span> chatbot{" "}
+                <span className="text-white/60">that</span> answers{" "}
                 for you, 24/7
               </motion.h2>
               <motion.p

@@ -98,11 +98,15 @@ function StickyServices() {
   return (
     <section
       ref={sectionRef}
-      aria-label="Our Services"
-      className="h-[500vh] lg:h-[600vh]"
+      aria-labelledby="services-heading"
+      className="h-[400vh] lg:h-[600vh]"
     >
-      {/* Sticky panel — flex-col on mobile, flex-row on desktop */}
-      <div className="sticky top-0 flex h-[100dvh] flex-col overflow-hidden lg:h-screen lg:flex-row">
+      <h2 id="services-heading" className="sr-only">
+        Our services
+      </h2>
+      {/* Sticky panel — flex-col on mobile, flex-row on desktop.
+          pt-20 below lg keeps the image clear of the sticky header. */}
+      <div className="sticky top-0 flex h-[100dvh] flex-col overflow-hidden pt-20 lg:h-screen lg:flex-row lg:pt-0">
 
         {/* ── Image panel ────────────────────────────────────────────────────
             DOM first → naturally at the TOP in flex-col (mobile).
@@ -116,7 +120,7 @@ function StickyServices() {
             style={{ background: "linear-gradient(to right, var(--surface), transparent)" }}
           />
 
-          <AnimatePresence mode="wait">
+          <AnimatePresence>
             <motion.div
               key={activeIdx}
               initial={{ opacity: 0, scale: 1.04 }}
@@ -150,7 +154,7 @@ function StickyServices() {
           className="relative h-[60%] w-full shrink-0 overflow-hidden lg:order-first lg:h-full lg:w-[44%]"
           style={{ background: "var(--surface)" }}
         >
-          <AnimatePresence mode="wait">
+          <AnimatePresence>
             <motion.div
               key={activeIdx}
               initial={{ opacity: 0, y: 22 }}
@@ -185,7 +189,7 @@ function StickyServices() {
 
                 <Link
                   href={svc.href}
-                  className={`mt-5 inline-flex items-center gap-2 text-[14px] font-normal text-[#C8C8D8]/55 transition-colors duration-200 ${focusRing} rounded-sm lg:mt-8 [@media(hover:hover)]:hover:text-[#F0F0FF]`}
+                  className={`mt-5 inline-flex min-h-11 items-center gap-2 text-[14px] font-normal text-[#C8C8D8]/55 transition-colors duration-200 ${focusRing} rounded-sm lg:mt-8 [@media(hover:hover)]:hover:text-[#F0F0FF]`}
                 >
                   Learn more
                   <span aria-hidden className="inline-block transition-transform duration-200">
@@ -197,7 +201,8 @@ function StickyServices() {
           </AnimatePresence>
 
           {/* Progress bar pinned to bottom of text panel */}
-          <div className="absolute bottom-6 left-6 right-6 sm:bottom-8 sm:left-8 sm:right-8 lg:bottom-10 lg:left-12 lg:right-12 xl:left-16 xl:right-16">
+          {/* bottom-24 below lg clears the fixed mobile CTA bar */}
+          <div className="absolute bottom-24 left-6 right-6 sm:left-8 sm:right-8 lg:bottom-10 lg:left-12 lg:right-12 xl:left-16 xl:right-16">
             <div className="h-px w-full bg-[#1E1E35]">
               <motion.div
                 className="h-full bg-gradient-to-r from-[#7C3FFF] to-[#00E5FF]"

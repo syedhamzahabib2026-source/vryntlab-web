@@ -4,8 +4,8 @@ import { ConversionProvider } from "@/components/conversion/ConversionContext";
 import { QuickEstimateSheet } from "@/components/conversion/QuickEstimateSheet";
 import { StickyMobileCta } from "@/components/conversion/StickyMobileCta";
 import { SiteChat } from "@/components/chat/SiteChat";
+import { PageFrame } from "@/components/layout/PageFrame";
 import { ScrollProgress } from "@/components/layout/ScrollProgress";
-import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { siteBrandName, siteDescription, siteTitle } from "@/lib/site";
 import { SchemaOrg } from "@/components/seo/SchemaOrg";
@@ -80,10 +80,7 @@ export default function RootLayout({
         <ConversionProvider>
           <ScrollProgress />
           <SiteHeader />
-          <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 pb-[max(5.75rem,env(safe-area-inset-bottom,0px))] pt-0 sm:px-8 md:px-10 lg:px-16 lg:pb-[max(4rem,env(safe-area-inset-bottom,0px))]">
-            <main className="flex flex-1 flex-col pt-4 sm:pt-5">{children}</main>
-            <SiteFooter />
-          </div>
+          <PageFrame>{children}</PageFrame>
           <QuickEstimateSheet />
           <StickyMobileCta />
           <SiteChat />

@@ -9,7 +9,7 @@ const inputClass =
   "min-h-12 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3.5 text-[16px] leading-relaxed text-zinc-950 placeholder:text-zinc-400 shadow-[var(--shadow-xs)] outline-none transition-[border-color,box-shadow,background-color] duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 sm:text-[15px] [@media(hover:hover)]:hover:border-zinc-300/90 focus-visible:border-zinc-400 focus-visible:shadow-[0_0_0_3px_var(--ring-focus)] dark:border-zinc-700 dark:bg-[var(--surface)] dark:text-zinc-50 dark:placeholder:text-zinc-500 dark:[@media(hover:hover)]:hover:border-zinc-600 dark:focus-visible:border-zinc-500";
 
 const labelClass =
-  "mb-2 block text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-500";
+  "mb-2 block text-[11px] font-semibold uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-500";
 
 const primaryBtnClass = `inline-flex min-h-12 w-full items-center justify-center rounded-full bg-[var(--surface-ink)] px-8 text-[13px] font-semibold tracking-tight text-white shadow-[var(--shadow-md)] transition-[background-color,box-shadow,transform] duration-300 ease-[var(--ease-out-premium)] motion-reduce:duration-150 active:scale-[0.98] ${focusRing} enabled:[@media(hover:hover)]:hover:shadow-[var(--shadow-glow)] disabled:cursor-not-allowed disabled:opacity-60 dark:bg-white dark:text-zinc-950 dark:enabled:[@media(hover:hover)]:hover:bg-zinc-200 sm:w-auto sm:px-10`;
 
@@ -97,7 +97,6 @@ export function ContactForm({ className = "" }: ContactFormProps) {
     <form
       onSubmit={handleSubmit}
       className={`relative flex w-full max-w-md flex-col gap-6 text-left sm:gap-7 lg:max-w-none ${className}`.trim()}
-      noValidate
       aria-label={`Message ${siteBrandName}`}
       aria-busy={loading}
     >

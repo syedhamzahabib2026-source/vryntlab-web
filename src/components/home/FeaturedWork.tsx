@@ -42,14 +42,21 @@ function WorkCard({ study, priority = false }: WorkCardProps) {
   const hero = study.media.images[0] ?? "";
   const tall = study.media.images[1] ?? "";
   const cardRef = useRef<HTMLElement>(null);
-  const [reduceMotion, setReduceMotion] = useState(false);
+  const [staticPreview, setStaticPreview] = useState(false);
 
+  // Static cover on reduced motion AND on small screens, where the card
+  // window barely exceeds the image height and the auto-scroll is invisible
   useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => setReduceMotion(mq.matches);
+    const mqReduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const mqSmall = window.matchMedia("(max-width: 639px)");
+    const sync = () => setStaticPreview(mqReduce.matches || mqSmall.matches);
     sync();
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
+    mqReduce.addEventListener("change", sync);
+    mqSmall.addEventListener("change", sync);
+    return () => {
+      mqReduce.removeEventListener("change", sync);
+      mqSmall.removeEventListener("change", sync);
+    };
   }, []);
 
   // Scroll-linked entry: card lifts in as it enters viewport
@@ -81,7 +88,7 @@ function WorkCard({ study, priority = false }: WorkCardProps) {
       >
         {/* Auto-scrolling tall image (always running, top→bottom→top) */}
         <div className="absolute inset-0 overflow-hidden [container-type:size]">
-          {reduceMotion ? (
+          {staticPreview ? (
             <Image
               src={hero}
               alt={study.coverAlt}
@@ -116,6 +123,10 @@ function WorkCard({ study, priority = false }: WorkCardProps) {
           <p className="mt-1 line-clamp-2 text-[0.875rem] leading-[1.5] text-[#8888a8]">
             {study.cardOutcome}
           </p>
+          {/* Persistent affordance for touch; hover devices get the center pill */}
+          <span className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-medium text-[#C8C8D8]/85 [@media(hover:hover)]:hidden">
+            View case study <span aria-hidden>→</span>
+          </span>
         </div>
 
         {/* Hover dark overlay */}
@@ -201,7 +212,7 @@ export function FeaturedWork() {
               className="text-[3rem] font-medium leading-[1] tracking-[-0.04em] text-[#F0F0FF] sm:text-[4.5rem] lg:text-[6rem]"
             >
               Featured{" "}
-              <span className="text-[#C8C8D8]/30">Work</span>
+              <span className="text-[#C8C8D8]/55">Work</span>
             </motion.h2>
           </div>
         </motion.div>
