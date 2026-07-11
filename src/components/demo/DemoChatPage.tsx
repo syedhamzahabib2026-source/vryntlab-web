@@ -403,8 +403,10 @@ export function DemoChatPage({
         </div>
 
         {/* Quick-reply chips */}
+        {/* Chips stay mounted while streaming (disabled) so the messages
+            area does not jump in height on every turn */}
         <AnimatePresence>
-          {chips.length > 0 && !streaming && (
+          {chips.length > 0 && (
             <motion.div
               key="chips"
               initial={{ opacity: 0, y: 4 }}
@@ -419,8 +421,9 @@ export function DemoChatPage({
                   type="button"
                   className="demo-chip"
                   onClick={() => void send(chip)}
-                  whileHover={{ scale: 1.04 }}
-                  whileTap={{ scale: 0.96 }}
+                  disabled={streaming}
+                  whileHover={streaming ? undefined : { scale: 1.04 }}
+                  whileTap={streaming ? undefined : { scale: 0.96 }}
                 >
                   {chip}
                 </motion.button>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { LayoutGroup, motion, useReducedMotion } from "motion/react";
 import { useConversion } from "@/components/conversion/ConversionContext";
 import { contentWell, focusRing } from "@/components/layout/layoutTokens";
@@ -44,7 +44,7 @@ function PathIntentTriad({ intentId }: { intentId: PathIntentId }) {
   return (
     <div className="mt-4 grid gap-3 rounded-xl border border-[var(--border)] bg-[color-mix(in_oklab,var(--surface-soft)_55%,var(--surface))] p-3.5 sm:grid-cols-3 sm:gap-3 sm:p-4 dark:border-zinc-700/80 dark:bg-zinc-900/45">
       <div className="min-w-0 sm:border-r sm:border-[var(--border)] sm:pr-3 dark:sm:border-zinc-700/80">
-        <p className="text-[9px] font-semibold uppercase tracking-[0.14em] text-zinc-500 dark:text-zinc-500">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500 dark:text-zinc-500">
           {triad.frictionLabel}
         </p>
         <p className="mt-1.5 text-[13px] font-medium leading-snug text-[var(--foreground)] sm:text-[13px]">
@@ -52,7 +52,7 @@ function PathIntentTriad({ intentId }: { intentId: PathIntentId }) {
         </p>
       </div>
       <div className="min-w-0 sm:border-r sm:border-[var(--border)] sm:pr-3 dark:sm:border-zinc-700/80">
-        <p className="text-[9px] font-semibold uppercase tracking-[0.14em] text-zinc-500 dark:text-zinc-500">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500 dark:text-zinc-500">
           {triad.fixLabel}
         </p>
         <p className="mt-1.5 text-[13px] font-medium leading-snug text-[var(--foreground)] sm:text-[13px]">
@@ -60,7 +60,7 @@ function PathIntentTriad({ intentId }: { intentId: PathIntentId }) {
         </p>
       </div>
       <div className="min-w-0">
-        <p className="text-[9px] font-semibold uppercase tracking-[0.14em] text-zinc-500 dark:text-zinc-500">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500 dark:text-zinc-500">
           {triad.outcomeLabel}
         </p>
         <p className="mt-1.5 text-[13px] font-medium leading-snug text-[var(--foreground)] sm:text-[13px]">
@@ -75,8 +75,18 @@ export function NeedPathSelector() {
   const reduceMotion = useReducedMotion();
   const { setSelectedIntent, openEstimate } = useConversion();
   const [active, setActive] = useState<PathIntentId | null>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   const selected = active ? getIntentById(active) : null;
+
+  // On mobile the detail panel mounts below the fold; bring it into view
+  useEffect(() => {
+    if (!active) return;
+    panelRef.current?.scrollIntoView({
+      behavior: reduceMotion ? "auto" : "smooth",
+      block: "nearest",
+    });
+  }, [active, reduceMotion]);
 
   const onPick = useCallback(
     (id: PathIntentId) => {
@@ -156,6 +166,7 @@ export function NeedPathSelector() {
 
             {selected ? (
               <motion.div
+                ref={panelRef}
                 key={selected.id}
                 initial={reduceMotion ? false : { opacity: 0, y: 10, scale: 0.99 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}

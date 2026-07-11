@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 const linkClass =
-  "font-medium text-[#C8C8D8] underline decoration-transparent underline-offset-4 transition-[text-decoration-color] duration-200 hover:decoration-current";
+  "font-medium text-[#C8C8D8] underline decoration-white/30 underline-offset-4 transition-[text-decoration-color] duration-200 hover:decoration-current";
 
 export default function PrivacyPolicyPage() {
   return (

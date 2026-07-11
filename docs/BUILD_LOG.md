@@ -742,3 +742,20 @@ All four pages: server components, `noindex`/`nofollow` robots metadata, no `"us
 **Verified**
 
 - `npx tsc --noEmit` clean, `eslint` clean, `npm run build` succeeds (33/33 pages).
+
+## 2026-07-10: Mobile UX audit #2, remaining medium items
+
+**What changed**
+
+- **Chat widget:** "New chat" text button raised to a 44px hit area (`.chat-widget-text-btn` min-height, audit item 1).
+- **NeedPathSelector (/services):** triad labels 9px to 11px (item 6); picking a lane now scrolls the detail panel into view with `block: "nearest"`, instant under reduced motion (item 7).
+- **Demo chat:** quick-reply chips stay mounted and disabled while streaming instead of unmounting, so the messages area no longer jumps in height each turn; added `:disabled` chip styling (item 14). Below 640px the intro tightens (smaller title, less margin) and the card height derives from the viewport (`calc(100dvh - 190px)`, min 380px) so the composer sits above the fold on short phones (item 16).
+- **Privacy page:** links get an always-visible underline (`decoration-white/30`) instead of hover-only, so they read as links on touch (item 10, low-med, folded in).
+
+**Not done**
+
+- Item 20 (minimal site chrome on /demo pages) is a product/design decision, awaiting direction.
+
+**Verified**
+
+- `npx tsc --noEmit` clean, `eslint` clean, `npm run build` succeeds (33/33 pages).

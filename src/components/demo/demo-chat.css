@@ -249,10 +249,15 @@
   white-space: nowrap;
 }
 
-.demo-chip:hover {
+.demo-chip:hover:not(:disabled) {
   background: color-mix(in srgb, var(--demo-accent) 16%, transparent);
   border-color: color-mix(in srgb, var(--demo-accent) 60%, transparent);
   color: var(--heading-color);
+}
+
+.demo-chip:disabled {
+  opacity: 0.45;
+  cursor: default;
 }
 
 /* ── Composer ── */
@@ -334,7 +339,9 @@
   to { transform: rotate(360deg); }
 }
 
-/* Mobile: 16px input prevents iOS focus zoom; 44px chips meet the touch floor */
+/* Mobile: 16px input prevents iOS focus zoom; 44px chips meet the touch floor.
+   Tighter intro and a viewport-derived card height keep the composer above
+   the fold on short phones. */
 @media (max-width: 640px) {
   .demo-input {
     font-size: 1rem;
@@ -343,6 +350,23 @@
   .demo-chip {
     min-height: 2.75rem;
     padding: 0.5rem 1rem;
+  }
+
+  .demo-outer {
+    padding: 1.25rem 0 2rem;
+  }
+
+  .demo-intro {
+    margin-bottom: 1rem;
+  }
+
+  .demo-intro-title {
+    font-size: 1.25rem;
+  }
+
+  .demo-card {
+    height: calc(100dvh - 190px);
+    min-height: 380px;
   }
 }
 
