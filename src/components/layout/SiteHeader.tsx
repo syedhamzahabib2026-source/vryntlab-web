@@ -51,11 +51,36 @@ export function SiteHeader() {
       }
     };
     const onScroll = () => setOpen(false);
+    // Focus trap: keep Tab cycling within the header while the drawer is open
+    const onTab = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+      const root = headerRef.current;
+      if (!root) return;
+      const focusables = Array.from(
+        root.querySelectorAll<HTMLElement>("a[href], button:not([disabled])"),
+      ).filter((el) => el.offsetParent !== null);
+      if (focusables.length === 0) return;
+      const first = focusables[0]!;
+      const last = focusables[focusables.length - 1]!;
+      const active = document.activeElement;
+      if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      } else if (active instanceof HTMLElement && !root.contains(active)) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
     window.addEventListener("keydown", onKey);
+    window.addEventListener("keydown", onTab);
     window.addEventListener("pointerdown", onPointerDown);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       window.removeEventListener("keydown", onKey);
+      window.removeEventListener("keydown", onTab);
       window.removeEventListener("pointerdown", onPointerDown);
       window.removeEventListener("scroll", onScroll);
     };

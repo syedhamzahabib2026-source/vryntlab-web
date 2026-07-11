@@ -224,6 +224,15 @@ export function DemoChatPage({
     el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
   }, [messages, streaming]);
 
+  // Auto-grow fallback for browsers without field-sizing (iOS Safari)
+  useEffect(() => {
+    const el = inputRef.current;
+    if (!el) return;
+    if (typeof CSS !== "undefined" && CSS.supports("field-sizing", "content")) return;
+    el.style.height = "auto";
+    el.style.height = `${Math.min(el.scrollHeight, 112)}px`; // cap matches max-height 7rem
+  }, [input]);
+
   const chips = getChips(config, messages);
 
   const send = useCallback(
@@ -345,8 +354,9 @@ export function DemoChatPage({
           </div>
         </div>
 
-        {/* Messages */}
-        <div ref={scrollRef} className="demo-messages" aria-live="polite">
+        {/* Messages (live region is the scoped sr-only div below, so user
+            messages are not echoed back by screen readers) */}
+        <div ref={scrollRef} className="demo-messages">
           <AnimatePresence initial={false}>
             {messages.map((m) => (
               <motion.div
@@ -400,6 +410,11 @@ export function DemoChatPage({
               {error}
             </p>
           )}
+        </div>
+
+        {/* Scoped live region: announces only the newest assistant reply */}
+        <div className="sr-only" aria-live="polite">
+          {[...messages].reverse().find((m) => m.role === "assistant")?.content ?? ""}
         </div>
 
         {/* Quick-reply chips */}

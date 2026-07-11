@@ -759,3 +759,27 @@ All four pages: server components, `noindex`/`nofollow` robots metadata, no `"us
 **Verified**
 
 - `npx tsc --noEmit` clean, `eslint` clean, `npm run build` succeeds (33/33 pages).
+
+## 2026-07-10: Mobile UX audit #2, low items
+
+**What changed**
+
+- **ContactCta:** email link raised to a 44px hit area (item 2).
+- **Hero:** scroll fade/lift/scale transforms now apply only at `lg`+ where the sticky runway exists, gated by a matchMedia state (item 3); mesh drift pauses via IntersectionObserver when the hero is offscreen (item 5).
+- **HomeIntro:** marquee pauses via IntersectionObserver when offscreen (item 5); both pause rules added in globals.css as `[data-active="false"] { animation-play-state: paused }`, reduced-motion guards unchanged.
+- **SiteHeader:** focus trap while the mobile drawer is open; Tab cycles within the header's visible focusables (item 4).
+- **NeedPathSelector:** "See matching service" pulse now targets the anchor it scrolled to instead of the offscreen grid section (item 8).
+- **/services H1:** "What we do at VryntLab" replaces the em-dash construction (item 9).
+- **Demo chat:** JS auto-grow fallback for the composer in browsers without `field-sizing` support (iOS Safari), capped at the existing 7rem max (item 18); container `aria-live` replaced with a scoped sr-only live region announcing only the newest assistant reply (item 19).
+
+**Not done**
+
+- Items 17 (buffered reveal tradeoff) and 20 (minimal /demo chrome) remain design decisions.
+
+**Verified**
+
+- `npx tsc --noEmit` clean, `eslint` clean, `npm run build` succeeds (33/33 pages).
+
+## 2026-07-10: Revert mobile static work cards (audit #2 item 12)
+
+- FeaturedWork cards auto-scroll on all screen sizes again; static cover is reduced-motion only. The original "invisible on mobile" estimate used the card's declared 1600x2600 image ratio, but the actual screenshots are ~2880x14238, giving over 1200px of scroll travel at mobile widths. User confirmed the missing motion on device. Persistent "View case study" touch label kept.

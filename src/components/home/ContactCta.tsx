@@ -75,7 +75,7 @@ export function ContactCta() {
 
                 <a
                   href={`mailto:${siteEmail}`}
-                  className="inline-flex w-fit items-center gap-2 text-[1.125rem] font-normal text-[#F0F0FF] underline decoration-white/20 underline-offset-4 transition-colors duration-200 [@media(hover:hover)]:hover:decoration-white/60"
+                  className="inline-flex min-h-11 w-fit items-center gap-2 text-[1.125rem] font-normal text-[#F0F0FF] underline decoration-white/20 underline-offset-4 transition-colors duration-200 [@media(hover:hover)]:hover:decoration-white/60"
                 >
                   {siteEmail}
                 </a>

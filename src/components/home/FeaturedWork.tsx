@@ -44,19 +44,14 @@ function WorkCard({ study, priority = false }: WorkCardProps) {
   const cardRef = useRef<HTMLElement>(null);
   const [staticPreview, setStaticPreview] = useState(false);
 
-  // Static cover on reduced motion AND on small screens, where the card
-  // window barely exceeds the image height and the auto-scroll is invisible
+  // Static cover only under reduced motion; the tall screenshots give the
+  // auto-scroll plenty of travel at every card width, mobile included
   useEffect(() => {
-    const mqReduce = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const mqSmall = window.matchMedia("(max-width: 639px)");
-    const sync = () => setStaticPreview(mqReduce.matches || mqSmall.matches);
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setStaticPreview(mq.matches);
     sync();
-    mqReduce.addEventListener("change", sync);
-    mqSmall.addEventListener("change", sync);
-    return () => {
-      mqReduce.removeEventListener("change", sync);
-      mqSmall.removeEventListener("change", sync);
-    };
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
   }, []);
 
   // Scroll-linked entry: card lifts in as it enters viewport

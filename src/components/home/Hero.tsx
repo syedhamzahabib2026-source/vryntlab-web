@@ -34,7 +34,30 @@ const parentVariant = {
 export function Hero() {
   const reduceMotion = useReducedMotion() ?? false;
   const [wordIndex, setWordIndex] = useState(0);
+  const [isDesktop, setIsDesktop] = useState(false);
+  const [heroInView, setHeroInView] = useState(true);
   const heroRef = useRef<HTMLElement>(null);
+
+  // Scroll fade-out pairs with the lg-only sticky runway; on mobile the
+  // hero is in normal flow and fading it while visible reads as a glitch
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const sync = () => setIsDesktop(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  // Pause the mesh drift once the hero is offscreen
+  useEffect(() => {
+    const el = heroRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) =>
+      setHeroInView(e?.isIntersecting ?? true),
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -84,7 +107,11 @@ export function Hero() {
 
       {/* 2. Dot grid + animated mesh — on top of the photo */}
       <div aria-hidden className="hero-dot-grid pointer-events-none absolute inset-0" />
-      <div aria-hidden className="hero-gradient-mesh pointer-events-none absolute inset-0" />
+      <div
+        aria-hidden
+        className="hero-gradient-mesh pointer-events-none absolute inset-0"
+        data-active={heroInView ? "true" : "false"}
+      />
       <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
         <div
           className="absolute -left-32 top-0 h-[50rem] w-[50rem] rounded-full blur-[180px]"
@@ -103,7 +130,7 @@ export function Hero() {
           {/* Content — fades/lifts out on desktop as scroll progresses */}
           <motion.div
             className="relative mx-auto w-full max-w-[1290px] px-4 sm:px-8 lg:px-[30px]"
-            style={!reduceMotion ? { opacity: heroOpacity, y: heroY, scale: heroScale } : undefined}
+            style={!reduceMotion && isDesktop ? { opacity: heroOpacity, y: heroY, scale: heroScale } : undefined}
           >
             <motion.div
               initial="hidden"

@@ -18,7 +18,8 @@ function pulseServiceCard(elementId: string) {
   const anchor = document.getElementById(elementId);
   const section = document.getElementById("services");
   if (anchor) anchor.scrollIntoView({ behavior: "smooth", block: "center" });
-  const pulseEl = section ?? anchor;
+  // Pulse the element the user was scrolled to, not the offscreen grid section
+  const pulseEl = anchor ?? section;
   if (!pulseEl) return;
   pulseEl.classList.add(
     "ring-2",

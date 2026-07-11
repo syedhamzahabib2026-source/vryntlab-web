@@ -46,7 +46,7 @@ export default function ServicesPage() {
         className={`${contentWell} border-b border-[var(--border)] pb-8 pt-6 sm:pb-10 sm:pt-8 md:pb-11 md:pt-10`}
       >
         <h1 className="font-display text-balance text-[1.75rem] font-normal leading-[1.08] tracking-[-0.03em] text-[var(--foreground)] sm:text-[2rem] md:text-[2.25rem]">
-          What we do — {siteBrandName}
+          What we do at {siteBrandName}
         </h1>
         <p className="mt-3 max-w-2xl text-pretty text-[0.9375rem] leading-relaxed text-zinc-600 sm:text-[1.0625rem] dark:text-zinc-400">
           Choose a lane, explore the problem grid, then read how we usually

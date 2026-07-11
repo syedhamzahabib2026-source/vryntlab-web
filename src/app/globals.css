@@ -397,6 +397,11 @@ dialog::backdrop {
   animation: hero-mesh-drift 20s ease-in-out infinite;
 }
 
+/* Paused via IntersectionObserver when the hero is offscreen */
+.hero-gradient-mesh[data-active="false"] {
+  animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-gradient-mesh { animation: none; }
 }
@@ -413,6 +418,11 @@ dialog::backdrop {
 
 .marquee-track {
   animation: marquee-scroll 32s linear infinite;
+}
+
+/* Paused via IntersectionObserver when the marquee is offscreen */
+.marquee-track[data-active="false"] {
+  animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {

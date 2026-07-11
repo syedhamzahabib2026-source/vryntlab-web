@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -46,6 +46,19 @@ function SectionLabel({ text }: { text: string }) {
 
 export function HomeIntro() {
   const paragraphRef = useRef<HTMLHeadingElement>(null);
+  const marqueeRef = useRef<HTMLDivElement>(null);
+  const [marqueeInView, setMarqueeInView] = useState(true);
+
+  // Pause the marquee while it is offscreen
+  useEffect(() => {
+    const el = marqueeRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) =>
+      setMarqueeInView(e?.isIntersecting ?? true),
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   // Scroll-linked color: paragraph fades from gray to near-white as it scrolls into center
   const { scrollYProgress } = useScroll({
@@ -124,6 +137,7 @@ export function HomeIntro() {
           transition={{ duration: 0.75, ease, delay: 0.1 }}
         >
           <div
+            ref={marqueeRef}
             className="relative mt-16 overflow-hidden border-t border-[var(--border)] pt-10"
             aria-hidden
           >
@@ -131,7 +145,10 @@ export function HomeIntro() {
             <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-[var(--background)] to-transparent" />
             <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-[var(--background)] to-transparent" />
 
-            <div className="marquee-track flex items-center gap-10 whitespace-nowrap">
+            <div
+              className="marquee-track flex items-center gap-10 whitespace-nowrap"
+              data-active={marqueeInView ? "true" : "false"}
+            >
               {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
                 <span key={i} className="flex items-center gap-10">
                   <span className="text-[14px] font-normal text-[#8888a8]">{item}</span>
